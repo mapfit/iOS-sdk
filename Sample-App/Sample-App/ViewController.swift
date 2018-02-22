@@ -1,0 +1,34 @@
+//
+//  ViewController.swift
+//  Sample-App
+//
+//  Created by Zain N. on 2/21/18.
+//  Copyright © 2018 Mapfit. All rights reserved.
+//
+
+import UIKit
+import Mapfit_iOS_SDK
+import CoreLocation
+
+class ViewController: UIViewController {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+
+
+}
+
+extension ViewController : MapRotateGestureDelegate {
+    func mapView(_ view: MFTMapView, didRotateMap location: CGPoint) {
+        
+    }
+}
+

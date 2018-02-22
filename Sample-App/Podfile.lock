@@ -1,0 +1,19 @@
+PODS:
+  - Mapfit-iOS-SDK (1.0.0):
+    - Tetragon-mobile
+  - Tetragon-mobile (1.0.0)
+
+DEPENDENCIES:
+  - Mapfit-iOS-SDK (from `../`)
+
+EXTERNAL SOURCES:
+  Mapfit-iOS-SDK:
+    :path: ../
+
+SPEC CHECKSUMS:
+  Mapfit-iOS-SDK: 7d34498df39f2a3e42a5b6d20caa36ec8b5910d4
+  Tetragon-mobile: b557178be0cba9713c9bca48817c997c7a9f4ffd
+
+PODFILE CHECKSUM: f43a1f83180aa706d7cda4a67159d28e8a766b44
+
+COCOAPODS: 1.4.0
