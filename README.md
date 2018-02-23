@@ -1,6 +1,6 @@
 
 # Mapfit iOS SDK
-> Short blurb about what your product does.
+> The Mapfit iOS SDK packages up everything you need to use Mapfit's services in your iOS applications.
 
 [![Swift Version][swift-image]][swift-url]
 [![Build Status][travis-image]][travis-url]
@@ -8,8 +8,6 @@
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/EZSwiftExtensions.svg)](https://img.shields.io/cocoapods/v/LFAlertController.svg)  
 [![Platform](https://img.shields.io/cocoapods/p/LFAlertController.svg?style=flat)](http://cocoapods.org/pods/LFAlertController)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
-
-One to two paragraph statement about your product and what it does.
 
 ![](header.png)
 
