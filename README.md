@@ -2,13 +2,6 @@
 # Mapfit iOS SDK
 > The Mapfit iOS SDK packages up everything you need to use Mapfit's services in your iOS applications.
 
-[![Swift Version][swift-image]][swift-url]
-[![Build Status][travis-image]][travis-url]
-[![License][license-image]][license-url]
-[![CocoaPods Compatible](https://img.shields.io/cocoapods/v/EZSwiftExtensions.svg)](https://img.shields.io/cocoapods/v/LFAlertController.svg)  
-
-![](header.png)
-
 ## Features
 
 - [x] Create a map
