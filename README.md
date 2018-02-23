@@ -26,13 +26,6 @@ use_frameworks!
 pod 'Mapfit'
 ```
 
-To get the full benefits import `YourLibrary` wherever you import UIKit
-
-``` swift
-import UIKit
-import Mapfit
-```
-
 ## Usage example
 
 ```swift
