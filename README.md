@@ -1,4 +1,3 @@
-# iOS-sdk
 
 # Mapfit iOS SDK
 > Short blurb about what your product does.
