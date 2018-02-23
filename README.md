@@ -39,6 +39,32 @@ import Mapfit
 import Mapfit
 ```
 
+## Set your API Key
+
+```swift
+class AppDelegate: UIResponder, UIApplicationDelegate {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+      MFTManager.sharedManager.apiKey = "API_KEY"
+      return true
+    }
+}
+```
+
+
+## Create your map
+
+```swift
+let mapView = MFTMapView(frame: view.bounds)
+view.addSubview(mapView)
+```
+
+
+## Add a marker to your map
+
+```swift
+let marker = mapView.addMarker(position:  CLLocationCoordinate2D(latitude: 40.74699, longitude: -73.98742))
+```
+
 ## Contribute
 
 We would love you for the contribution to the Mapfit iOS SDK, check the ``LICENSE`` file for more info.
