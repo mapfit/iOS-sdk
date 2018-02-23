@@ -32,22 +32,22 @@ One to two paragraph statement about your product and what it does.
 You can use [CocoaPods](http://cocoapods.org/) to install `Mapfit` by adding it to your `Podfile`:
 
 ```ruby
-platform :ios, '8.0'
+platform :ios, '11.0'
 use_frameworks!
-pod 'YourLibrary'
+pod 'Mapfit'
 ```
 
 To get the full benefits import `YourLibrary` wherever you import UIKit
 
 ``` swift
 import UIKit
-import YourLibrary
+import Mapfit
 ```
 
 ## Usage example
 
 ```swift
-import Mapfit_iOS_SDK
+import Mapfit
 ```
 
 ## Contribute
