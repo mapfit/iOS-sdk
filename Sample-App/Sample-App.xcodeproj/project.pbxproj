@@ -33,7 +33,6 @@
 		5F9188340C344E6A1C95C333 /* Pods_Sample_AppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sample_AppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6FA9EB2293594FD1F3D27060 /* Pods_Sample_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sample_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF14C54D203F467600BE3783 /* Sample-AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Sample-AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		BF14C54F203F467600BE3783 /* Sample_AppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sample_AppTests.swift; sourceTree = "<group>"; };
 		BF14C551203F467600BE3783 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BF415DC2203E2EF500E641B7 /* Sample-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sample-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF415DC5203E2EF500E641B7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -82,7 +81,6 @@
 			isa = PBXGroup;
 			children = (
 				BF64E228203F567F004E92BC /* Sample-AppTests.swift */,
-				BF14C54F203F467600BE3783 /* Sample_AppTests.swift */,
 				BF14C551203F467600BE3783 /* Info.plist */,
 			);
 			path = "Sample-AppTests";

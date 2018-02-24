@@ -593,26 +593,24 @@ open class MFTMapView: UIView {
                         marker = MFTMarker(position: CLLocationCoordinate2DMake(position.latitude, position.longitude), mapView: self)
                         marker?.title = "\(address.streetAddress ?? ""), \(address.locality ?? ""), \(address.adminArea ?? ""), \(address.postalCode ?? "")"
                         marker?.subtitle1 = "Lat: \(position.latitude), Lon: \(position.longitude)"
+
                         self.addAnnotation(marker!)
 
                     //add building polygon
                     if let building = address.building{
                         var polygon = [CLLocationCoordinate2D]()
-                        if let coordinates = building.coordinates {
+                        if let _ = building.coordinates {
                             guard let polygonCoordinates = building.coordinates else { return }
                             for point in polygonCoordinates[0]{
                                 polygon.append(CLLocationCoordinate2DMake(point[1], point[0]))
                             }
-                            self.addPolygon([polygon])
+                            _ = self.addPolygon([polygon])
                         }
                     }
-                
-                    if let marker = marker{
-                         self.animateTocenter(position: marker.getPosition(), duration: 0.5)
-                    }
+                    completion(marker, nil)
                 }
                 
-                completion(marker, nil)
+                
             } else {
                 completion(nil, error)
             }
@@ -775,7 +773,7 @@ open class MFTMapView: UIView {
         self.position = position
 
         //check if API Key is empty 
-        guard let key = mapfitManger.apiKey else { return }
+        guard let _ = mapfitManger.apiKey else { return }
         
         try? loadMFTStyleSheetAsync(styles[mapOptions.mapTheme]!) { (style) in
         
@@ -813,7 +811,7 @@ open class MFTMapView: UIView {
         
         attributionButtonBottomConstraint.isActive = true
         
-        let attributes: [NSAttributedStringKey: Any] = [NSAttributedStringKey.underlineStyle : NSUnderlineStyle.styleSingle.rawValue, NSAttributedStringKey.foregroundColor : UIColor.darkGray, NSAttributedStringKey.font : UIFont.init(name: "Helvetica Neue", size: 9)]
+        let attributes: [NSAttributedStringKey: Any] = [NSAttributedStringKey.underlineStyle : NSUnderlineStyle.styleSingle.rawValue, NSAttributedStringKey.foregroundColor : UIColor.darkGray, NSAttributedStringKey.font : UIFont.systemFont(ofSize: 9)]
         
         let attributedString = NSMutableAttributedString(string: "Mapfit Legal", attributes: attributes)
         legalButton.addTarget(self, action: #selector(legalButtonTapped), for: .touchUpInside)

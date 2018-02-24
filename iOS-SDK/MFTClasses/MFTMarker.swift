@@ -155,6 +155,8 @@ public class MFTMarker : NSObject, MFTAnnotation {
      - parameter position: The coordinate of the marker.
      */
 
+    private var workItem: DispatchWorkItem?
+    
     public func setPosition(_ position: CLLocationCoordinate2D){
         self.position = position
         tgMarker?.point = TGGeoPoint(coordinate: position)
@@ -178,6 +180,7 @@ public class MFTMarker : NSObject, MFTAnnotation {
      - parameter image: image for marker icon.
      */
     public func setIcon(_ image: UIImage){
+        workItem?.cancel()
         self.icon = image
         tgMarker?.icon = image
     }
@@ -202,7 +205,9 @@ public class MFTMarker : NSObject, MFTAnnotation {
      - parameter urlString: URL for marker icon.
      */
     public func setIcon(_ urlString: String){
-        loadImage(urlString)
+        workItem?.cancel()
+        workItem = DispatchWorkItem { self.loadImage(urlString) }
+        DispatchQueue.main.asyncAfter(deadline: .now(), execute: workItem!)
     }
     
     /**
@@ -210,7 +215,10 @@ public class MFTMarker : NSObject, MFTAnnotation {
      - parameter mapfitMarker: MapfitMarker that will be used for the marker icon.
      */
     public func setIcon(_ mapfitMarker: MFTMarkerImage){
-        loadImage(mapfitMarker.rawValue)
+        workItem?.cancel()
+        workItem = DispatchWorkItem { self.loadImage(mapfitMarker.rawValue) }
+        DispatchQueue.main.asyncAfter(deadline: .now(), execute: workItem!)
+     
     }
 
 
@@ -223,7 +231,11 @@ public class MFTMarker : NSObject, MFTAnnotation {
                 return
             }//make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
             DispatchQueue.main.async {
-                self.setIcon(UIImage(data: data)!)
+                
+                if let image = UIImage(data: data) {
+                    self.setIcon(image)
+                }
+                
             }
         }
     }
@@ -277,9 +289,10 @@ public class MFTMarker : NSObject, MFTAnnotation {
         self.uuid = UUID()
         self.mapView = mapView
         super.init()
-        self.markerOptions = MFTMarkerOptions(self)
         self.setIcon(.defaultLightTheme)
+        self.markerOptions = MFTMarkerOptions(self)
 
+        
     }
     
     internal init(address: String, mapView: MFTMapView) {
@@ -290,10 +303,10 @@ public class MFTMarker : NSObject, MFTAnnotation {
         self.uuid = UUID()
         self.mapView = mapView
         super.init()
-        //self.setIcon(.defaultLightTheme)
+        self.setIcon(.defaultLightTheme)
         self.getPositionFromAddress(Address: address)
         self.markerOptions = MFTMarkerOptions(self)
-        self.setIcon(.defaultLightTheme)
+
     }
 
     internal init(position: CLLocationCoordinate2D, icon: MFTMarkerImage, mapView: MFTMapView) {
@@ -305,6 +318,7 @@ public class MFTMarker : NSObject, MFTAnnotation {
         self.mapView = mapView
         super.init()
         self.markerOptions = MFTMarkerOptions(self)
+        self.setIcon(icon)
 
     }
     

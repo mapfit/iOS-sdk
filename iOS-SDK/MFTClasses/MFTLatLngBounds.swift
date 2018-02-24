@@ -72,6 +72,7 @@ public class MFTLatLngBounds {
         
         northEast = CLLocationCoordinate2D(latitude : north!, longitude : east!)
         southWest = CLLocationCoordinate2D(latitude: south!, longitude: west!)
+        self.center = getCenterLatlng(geoCoordinates: [northEast, southWest])
         
     }
     
@@ -121,58 +122,38 @@ public class MFTLatLngBounds {
     }
     
     public func getVisibleBounds(viewWidth: Float, viewHeight: Float, padding: Float)-> (CLLocationCoordinate2D, Float){
-        
+//
 //        func latRad(lat: Double)-> Double{
 //            let vSin = sin(lat * Double.pi / 180)
 //            let radX2 = log((1 + vSin)) / 2
 //            return max(min(radX2, Double.pi), -Double.pi) / 2
 //        }
-//
-//        func zoom(_ mapPx: Double, _ worldPx: Double, _ fraction: Double)-> Double{
-//            return floor(log(mapPx / worldPx / fraction) / 0.693)
-//        }
-//
-//        let latFraction = (latRad(lat: northEast.latitude) - latRad(lat: southWest.latitude) / Double.pi)
-//        var lngDiff = northEast.longitude - southWest.longitude
-//
-//        if (lngDiff < 0) {
-//            lngDiff += 360
-//        }
-//
-//        let lngFraction = lngDiff / 360
-//        let latZoom = zoom(Double(viewHeight * padding), 256 * Double(UIScreen.main.scale), latFraction)
-//        let lngZoom = zoom(Double(viewWidth * padding), 256 * Double(UIScreen.main.scale), lngFraction)
-//
-//
-//        let result = min(latZoom, lngZoom)
-//        return (center, Float(result))
+
         
+        var mapSideLength = Double(UIScreen.main.scale) * 256
         
-        let ry1 = log((sin(southWest.latitude.degreesToRadians) + 1) / cos(southWest.latitude.degreesToRadians))
-        let ry2 = log((sin(northEast.latitude.degreesToRadians)) + 1) / cos(northEast.latitude.degreesToRadians)
-        let ryc = (ry1 + ry2) / 2
-        let centerX = atan(sinh(ryc)).radiansToDegrees
+        func zoom(_ mapPx: Double, _ fraction: Double)-> Double{
+            return log((mapPx / mapSideLength / fraction) * Double(padding) ) / 0.693
+        }
 
-        let resolutionHorizontal = (northEast.longitude - southWest.longitude) / Double(viewWidth)
+        let latFraction = (northEast.latitude.degreesToRadians - southWest.latitude.degreesToRadians) / Double.pi
+        var lngDiff = northEast.longitude - southWest.longitude
 
-        let vy0 = log(tan(Double.pi * (0.25 + centerX / 360)))
-        let vy1 = log(tan(Double.pi * (0.25 + northEast.latitude / 360)))
+        if (lngDiff < 0) {
+            lngDiff += 360
+        }
 
-        let viewHeightHalf = Double(viewHeight) / 2.0
+        let lngFraction = lngDiff / 360
+        let latZoom = zoom(Double(viewHeight), latFraction)
+        let lngZoom = zoom(Double(viewWidth), lngFraction)
 
-        let zoomFactorPowered = Double(viewHeightHalf) / (40.7436654315252 * (vy1 - vy0))
-        let resolutionVertical = 360.0 / (zoomFactorPowered * 256)
 
-
-        let paddingFactor = 1.6 + Double(padding)
-        let resolution = max(resolutionHorizontal, resolutionVertical) * paddingFactor
-
-        let zoom = logC(val: 360 / (resolution * 512), forBase: 2.0)
-
-        return(center, Float(zoom))
+        let result = min(latZoom, lngZoom)
+        return (center, Float(result))
         
     }
     
+
     func logC(val: Double, forBase base: Double) -> Double {
         return log(val)/log(base)
     }

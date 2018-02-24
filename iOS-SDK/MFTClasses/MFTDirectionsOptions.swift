@@ -81,7 +81,7 @@ public class MFTDirectionsOptions {
      */
     
     public func showDirections(completion:@escaping (_ polyline: MFTPolyline?, _ error: Error?)->Void){
-            MFTDirections.sharedInstance.route(origin: origin, originAddress: originAddress, destination: destination, destinationAddress: destinationAddress, includesBuilding: true, directionsType: directionsType) { (routeObject, error) in
+            MFTDirections.sharedInstance.route(origin: origin, originAddress: originAddress, destination: destination, destinationAddress: destinationAddress, directionsType: directionsType) { (routeObject, error) in
                 if error == nil {
                     guard let route = routeObject else { return }
                     self.drawRoute(route: route, completion: { (polyline, error) in
@@ -100,7 +100,7 @@ public class MFTDirectionsOptions {
      - returns: Optional polyline object or optional error.
      */
     
-    public func drawRoute(route: RouteObject, completion:@escaping (_ polyline: MFTPolyline?, _ error: Error?)->Void){
+    public func drawRoute(route: Route, completion:@escaping (_ polyline: MFTPolyline?, _ error: Error?)->Void){
         
         guard let trip = route.trip else { return }
         guard let legs = trip.legs else { return }

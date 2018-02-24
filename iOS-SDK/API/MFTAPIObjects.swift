@@ -31,7 +31,7 @@ public struct Building: Decodable {
    public var type: String?
 }
 
-public struct RouteObject : Decodable {
+public struct Route : Decodable {
    public var trip: Trip?
    public var sourceLocation: [Double]?
    public var destinationLocation: [Double]?

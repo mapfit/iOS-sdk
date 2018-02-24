@@ -20,7 +20,7 @@ class Sample_AppTests: XCTestCase {
         super.setUp()
         mapView = MFTMapView()
         layer = MFTLayer()
-        MFTManager.sharedManager.apiKey = ""
+        MFTManager.sharedManager.apiKey = "591dccc4e499ca0001a4c6a41a2ed1be54804856508265221862231b"
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
     
@@ -161,7 +161,7 @@ class Sample_AppTests: XCTestCase {
     
     func testDirectionsCallWithJustAddresses(){
         let expect = expectation(description: "Directions should return sourceLocation, destinationLocation, trip")
-        MFTDirections.sharedInstance.route(origin: nil, originAddress: "new york, new york", destination: nil, destinationAddress: "119 w 24th street,new york NY", includesBuilding: true, directionsType: .driving) { (routeObject, error) in
+        MFTDirections.sharedInstance.route(origin: nil, originAddress: "new york, new york", destination: nil, destinationAddress: "119 w 24th street,new york NY", directionsType: .driving) { (routeObject, error) in
             
             if let routeObject = routeObject {
                 
@@ -187,7 +187,7 @@ class Sample_AppTests: XCTestCase {
     
     func testDirectionsCallWithLatLon(){
         let expect = expectation(description: "Directions should return sourceLocation, destinationLocation, trip")
-        MFTDirections.sharedInstance.route(origin: CLLocationCoordinate2D(latitude: 40.71455, longitude: -74.00714), originAddress: "new york, new york", destination: CLLocationCoordinate2D(latitude:  40.74405, longitude: -73.99324), destinationAddress: "119 w 24th street,new york NY", includesBuilding: true, directionsType: .driving) { (routeObject, error) in
+        MFTDirections.sharedInstance.route(origin: CLLocationCoordinate2D(latitude: 40.71455, longitude: -74.00714), originAddress: "new york, new york", destination: CLLocationCoordinate2D(latitude:  40.74405, longitude: -73.99324), destinationAddress: "119 w 24th street,new york NY", directionsType: .driving) { (routeObject, error) in
             
             if let routeObject = routeObject {
                 
@@ -213,7 +213,7 @@ class Sample_AppTests: XCTestCase {
     
     func testDirectionsCallOneAddressAndOneLatLon(){
         let expect = expectation(description: "Directions should return sourceLocation, destinationLocation, trip")
-        MFTDirections.sharedInstance.route(origin: nil, originAddress: "new york, new york", destination: CLLocationCoordinate2D(latitude:  40.74405, longitude: -73.99324), destinationAddress: nil, includesBuilding: true, directionsType: .driving) { (routeObject, error) in
+        MFTDirections.sharedInstance.route(origin: nil, originAddress: "new york, new york", destination: CLLocationCoordinate2D(latitude:  40.74405, longitude: -73.99324), destinationAddress: nil, directionsType: .driving) { (routeObject, error) in
             
             if let routeObject = routeObject {
                 
@@ -325,9 +325,22 @@ class Sample_AppTests: XCTestCase {
         
         let (center, zoomLevel) = bounds.getVisibleBounds(viewWidth: viewHeight, viewHeight: viewWidth, padding: Float(1))
         
-//        XCTAssertEqual(expectedCenter.latitude, center.latitude, file: "center latitude was not computed correctly")
-//        XCTAssertEqual(expectedCenter.longitude, center.longitude, file: "center longitude was not computed correctly")
-//        XCTAssertEqual(expectedZoomLevel, zoomLevel, accuracy: 1, file: "Zoom not calculated correctly")
+        XCTAssertEqual(expectedCenter.latitude, center.latitude, accuracy: 0.001, file: "center latitude was not computed correctly")
+        XCTAssertEqual(expectedCenter.longitude, center.longitude, accuracy: 0.001, file: "center longitude was not computed correctly")
+        XCTAssertEqual(expectedZoomLevel, zoomLevel, accuracy: 1, file: "Zoom not calculated correctly")
+
+    }
+    
+    
+    func testMinAndMaxZoom(){
+        mapView.mapOptions.setMaxZoomLevel(zoomLevel: 17)
+        mapView.mapOptions.setMinZoomLevel(zoomLevel: 5)
+        
+        mapView.setZoom(zoomLevel: 3)
+        XCTAssertEqual(mapView.getZoom(), 5, file: "Mapview was not set to min zoom level")
+        
+        mapView.setZoom(zoomLevel: 19)
+        XCTAssertEqual(mapView.getZoom(), 17, file: "Mapview was not set to min zoom level")
 
     }
     

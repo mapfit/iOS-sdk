@@ -30,7 +30,7 @@ public class MFTDirections {
      - returns: completion with optional route and optional Error
      */
     
-    public func route(origin: CLLocationCoordinate2D?, originAddress: String?, destination: CLLocationCoordinate2D?, destinationAddress: String?, includesBuilding: Bool, directionsType: MFTDirectionsType, completion: @escaping (_ routeDict: RouteObject?, _ error: Error?) -> Void) {
+    public func route(origin: CLLocationCoordinate2D?, originAddress: String?, destination: CLLocationCoordinate2D?, destinationAddress: String?, directionsType: MFTDirectionsType, completion: @escaping (_ routeDict: Route?, _ error: Error?) -> Void) {
         
         //Check if there is a valid api key
         guard let key = apiKey else { return }
@@ -97,7 +97,7 @@ public class MFTDirections {
                     print("invalid json")
                 }
                 
-                let route = try JSONDecoder().decode(RouteObject.self, from: data)
+                let route = try JSONDecoder().decode(Route.self, from: data)
                 completion(route, nil)
                 
                 
