@@ -1,6 +1,0 @@
-framework module Mapfit_iOS_SDK {
-  umbrella header "Mapfit-iOS-SDK-umbrella.h"
-
-  export *
-  module * { export * }
-}

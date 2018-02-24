@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Mapfit_iOS_SDKVersionNumber;
-FOUNDATION_EXPORT const unsigned char Mapfit_iOS_SDKVersionString[];
+FOUNDATION_EXPORT double MapfitVersionNumber;
+FOUNDATION_EXPORT const unsigned char MapfitVersionString[];
 

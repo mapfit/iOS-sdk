@@ -4,14 +4,14 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Mapfit-iOS-SDK-houseStyles.xcscheme</key>
+		<key>Mapfit-houseStyles.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
-		<key>Mapfit-iOS-SDK.xcscheme</key>
+		<key>Mapfit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>

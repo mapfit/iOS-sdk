@@ -275,12 +275,12 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Sample-AppTests/Pods-Sample-AppTests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Mapfit-iOS-SDK/Mapfit_iOS_SDK.framework",
+				"${BUILT_PRODUCTS_DIR}/Mapfit/Mapfit.framework",
 				"${PODS_ROOT}/Tetragon-mobile/Release/TangramMap.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapfit_iOS_SDK.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapfit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TangramMap.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -295,12 +295,12 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Sample-App/Pods-Sample-App-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Mapfit-iOS-SDK/Mapfit_iOS_SDK.framework",
+				"${BUILT_PRODUCTS_DIR}/Mapfit/Mapfit.framework",
 				"${PODS_ROOT}/Tetragon-mobile/Release/TangramMap.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapfit_iOS_SDK.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapfit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TangramMap.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -7,14 +7,14 @@ target 'Sample-App' do
 
   # Pods for Sample-App
 	 
-   pod 'Mapfit-iOS-SDK' , :path => "../"
+   pod 'Mapfit' , :path => "../"
 
 
   target 'Sample-AppTests' do
     inherit! :search_paths
     # Pods for testing
 
-     pod 'Mapfit-iOS-SDK' , :path => "../"
+     pod 'Mapfit' , :path => "../"
   end
 
 

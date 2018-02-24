@@ -1,0 +1,6 @@
+framework module Mapfit {
+  umbrella header "Mapfit-umbrella.h"
+
+  export *
+  module * { export * }
+}

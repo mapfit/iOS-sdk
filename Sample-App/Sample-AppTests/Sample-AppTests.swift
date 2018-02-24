@@ -8,7 +8,7 @@
 
 import XCTest
 import CoreLocation
-import Mapfit_iOS_SDK
+import Mapfit
 @testable import Sample_App
 
 class Sample_AppTests: XCTestCase {
