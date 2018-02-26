@@ -9,22 +9,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../iOS-SDK/MFTClasses/MFTMarker.swift"
-            timestampString = "541355401.693462"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "294"
-            endingLineNumber = "294"
-            landmarkName = "init(position:mapView:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "../iOS-SDK/MFTClasses/MFTMapView.swift"
             timestampString = "541355542.118517"
             startingColumnNumber = "9223372036854775807"

@@ -36,6 +36,7 @@
 		BF462C802034AF5B001EE738 /* MFTManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C7E2034AF5B001EE738 /* MFTManager.swift */; };
 		BF462C832034AFFF001EE738 /* MFTMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C812034AFFF001EE738 /* MFTMapView.swift */; };
 		BF462C842034AFFF001EE738 /* MFTZoomButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C822034AFFF001EE738 /* MFTZoomButtonView.swift */; };
+		BFC5B5532044AFBE00696417 /* DecodeFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC5B5522044AFBE00696417 /* DecodeFunctions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,6 +72,7 @@
 		BF462C7E2034AF5B001EE738 /* MFTManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTManager.swift; path = Helper/MFTManager.swift; sourceTree = "<group>"; };
 		BF462C812034AFFF001EE738 /* MFTMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTMapView.swift; path = MFTClasses/MFTMapView.swift; sourceTree = "<group>"; };
 		BF462C822034AFFF001EE738 /* MFTZoomButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTZoomButtonView.swift; path = MFTClasses/MFTZoomButtonView.swift; sourceTree = "<group>"; };
+		BFC5B5522044AFBE00696417 /* DecodeFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DecodeFunctions.swift; path = Extensions/DecodeFunctions.swift; sourceTree = "<group>"; };
 		E47C08BF50D46AC96C60A204 /* Pods-iOS-SDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-SDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iOS-SDK/Pods-iOS-SDK.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -129,6 +131,7 @@
 				BF462C652034AF06001EE738 /* MFTAPIObjects.swift */,
 				BF462C672034AF06001EE738 /* MFTDirections.swift */,
 				BF462C662034AF06001EE738 /* MFTGeocoder.swift */,
+				BFC5B5522044AFBE00696417 /* DecodeFunctions.swift */,
 				BF462C4D2034AEE1001EE738 /* MFTAnnotations.swift */,
 				BF462C4F2034AEE2001EE738 /* MFTDirectionsOptions.swift */,
 				BF462C552034AEE2001EE738 /* MFTLatLngBounds.swift */,
@@ -286,6 +289,7 @@
 				BF462C742034AF13001EE738 /* TangramExtensions.swift in Sources */,
 				BF462C5B2034AEE2001EE738 /* MFTAnnotations.swift in Sources */,
 				BF462C832034AFFF001EE738 /* MFTMapView.swift in Sources */,
+				BFC5B5532044AFBE00696417 /* DecodeFunctions.swift in Sources */,
 				BF462C642034AEE2001EE738 /* MFTPlaceInfoAdapter.swift in Sources */,
 				BF462C762034AF13001EE738 /* UIKitExtensions.swift in Sources */,
 				BF462C692034AF06001EE738 /* MFTGeocoder.swift in Sources */,

@@ -98,7 +98,7 @@ public class MFTMapOptions  {
         guard let theme = styles[theme] else { print("Could not load theme")
             return
         }
-        try? mapView?.loadMFTStyleSheetAsync(theme) { (style) in
+        try? mapView?.loadMFTStyleSheetAsync(theme   ) { (style) in
            
         }
         

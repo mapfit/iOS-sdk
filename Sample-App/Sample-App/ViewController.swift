@@ -15,6 +15,13 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
+        let mapview = MFTMapView(frame: view.bounds)
+        self.view.addSubview(mapview)
+        
+        
+
     }
     
     override func didReceiveMemoryWarning() {

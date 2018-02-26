@@ -18,13 +18,13 @@ import CoreLocation
 @objc(MFTMarkerOptions)
 public class MFTMarkerOptions : NSObject{
     //set width of the marker -- pixels
-    internal var width: Int
+    public var width: Int
     //set height of the marker -- pixels
-    internal var height: Int
-    //Set color of maker
-    internal var color: String
+    public var height: Int
     //Marker for map options
     internal var marker: MFTMarker
+   // Sets the draw order for the marker. The draw order is relative to other annotations. Note that higher values are drawn above lower ones.
+    public var drawOrder: Int
     
     /**
      Sets the height for the marker icon.
@@ -51,16 +51,23 @@ public class MFTMarkerOptions : NSObject{
      
      - parameter color: color of marker icon.
      */
-    private func setColor(color: String){
-        self.color = color
+    
+    public func setDrawOrder(drawOrder: Int){
+        marker.tgMarker?.drawOrder = drawOrder
         marker.setStyle()
     }
+    /**
+     Sets the color for the marker icon.
+     
+     - parameter color: color of marker icon.
+     */
+
    
     //Default Init
     internal init(_ marker: MFTMarker) {
         height = 59
         width = 55
-        color = "white"
+        drawOrder = 2000
         self.marker = marker
         super.init()
     }
@@ -97,7 +104,6 @@ public class MFTMarker : NSObject, MFTAnnotation {
     internal var tgMarker: TGMarker?  {
         didSet {
             tgMarker?.visible = isVisible
-            tgMarker?.drawOrder = drawOrder
             tgMarker?.point = TGGeoPoint(coordinate: position)
             
             setStyle()
@@ -132,11 +138,6 @@ public class MFTMarker : NSObject, MFTAnnotation {
     
     public var isVisible: Bool
     
-    /**
-     Draworder of marker. Can only be changed by calling 'setDrawOrder(index: Int)'.
-     */
-
-    public var drawOrder: Int
 
     /**
      Position of marker. Can only be changed by calling 'setPosition(position: CLLocationCoordinate2D)'.
@@ -254,16 +255,7 @@ public class MFTMarker : NSObject, MFTAnnotation {
     }
     
     private func generateStyle(_ markerOptions: MFTMarkerOptions) -> String{
-        return "{ style: 'sdk-point-overlay', anchor: top, color: '\(markerOptions.color)', size: [\(markerOptions.width)px, \(markerOptions.height)px], order: 20000, interactive: true, collide: false }"
-    }
-    
-    /**
-     Sets the draw order for the marker. The draw order is relative to other annotations. Note that higher values are drawn above lower ones.
-     - parameter index: The value for the draw order.
-     */
-    @objc public func setDrawOrder(index: Int) {
-        self.drawOrder = index
-        tgMarker?.drawOrder = index
+        return "{ style: 'sdk-point-overlay', anchor: top, color: 'white', size: [\(markerOptions.width)px, \(markerOptions.height)px], order: \(markerOptions.drawOrder), interactive: true, collide: false }"
     }
     
     /**
@@ -284,7 +276,6 @@ public class MFTMarker : NSObject, MFTAnnotation {
     internal init(position: CLLocationCoordinate2D, mapView: MFTMapView) {
         self.position = position
         self.isVisible = true
-        self.drawOrder = 1
         self.style = MFTAnnotationStyle.point
         self.uuid = UUID()
         self.mapView = mapView
@@ -298,7 +289,6 @@ public class MFTMarker : NSObject, MFTAnnotation {
     internal init(address: String, mapView: MFTMapView) {
         self.position = CLLocationCoordinate2DMake(0.0, 0.0)
         self.isVisible = true
-        self.drawOrder = 2000
         self.style = MFTAnnotationStyle.point
         self.uuid = UUID()
         self.mapView = mapView
@@ -312,7 +302,6 @@ public class MFTMarker : NSObject, MFTAnnotation {
     internal init(position: CLLocationCoordinate2D, icon: MFTMarkerImage, mapView: MFTMapView) {
         self.position = position
         self.isVisible = true
-        self.drawOrder = 2000
         self.style = MFTAnnotationStyle.point
         self.uuid = UUID()
         self.mapView = mapView
