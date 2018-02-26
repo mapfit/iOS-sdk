@@ -95,7 +95,10 @@ public class MFTMapOptions  {
     
     
     public func setTheme(theme: MFTMapTheme) {
-        try? mapView?.loadMFTStyleSheetAsync(styles[theme]!) { (style) in
+        guard let theme = styles[theme] else { print("Could not load theme")
+            return
+        }
+        try? mapView?.loadMFTStyleSheetAsync(theme) { (style) in
            
         }
         

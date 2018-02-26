@@ -39,7 +39,7 @@ public class MFTGeocoder {
         let task = URLSession.shared.dataTask(with: url!) { data, response, error in
             guard let data = data, error == nil else {
                 // check for fundamental networking error
-                print("error=\(String(describing: error))")
+                
                 
                 completion(nil, error!)
                 return
@@ -47,8 +47,7 @@ public class MFTGeocoder {
             
             if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {
                 // check for http errors
-                print("statusCode should be 200, but is \(httpStatus.statusCode)")
-                print("response = \(String(describing: response))")
+                
             }
 
             do {
@@ -57,7 +56,7 @@ public class MFTGeocoder {
                 completion(address, nil)
                 
             } catch {
-                print(error.localizedDescription)
+                
                 completion(nil, error)
             }
             

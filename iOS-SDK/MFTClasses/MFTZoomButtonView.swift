@@ -73,7 +73,7 @@ internal class MFTZoomButtonsView: UIView {
         if let delegate = self.delegate {
             delegate.plusButtonTapped(sender)
         } else {
-            print("I think you forgot to set the delegate for zoomView")
+        
         }
     }
     
@@ -82,7 +82,7 @@ internal class MFTZoomButtonsView: UIView {
         if let delegate = self.delegate {
             delegate.minusButtonTapped(sender)
         } else {
-            print("I think you forgot to set the delegate for zoomView")
+            
         }
     }
 }

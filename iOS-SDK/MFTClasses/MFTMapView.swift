@@ -18,6 +18,7 @@ open class MFTMapView: UIView {
     /*
      Decalared all out of scope funtionalities as internal
     */
+     
     
     //CHANGE TO PUBLIC AS NEEDED
     internal var uuid: UUID = UUID()
@@ -196,6 +197,11 @@ open class MFTMapView: UIView {
         self.application = UIApplication.shared
         self.mapfitManger = MFTManager.sharedManager
         self.position = CLLocationCoordinate2D(latitude: 40.6892, longitude: -74.0445)
+        
+        let httpHandler = TGHttpHandler()
+        httpHandler.httpAdditionalHeaders = NSMutableDictionary(dictionary: MFTManager.sharedManager.httpHeaders())
+        mapView.httpHandler = httpHandler
+        
         super.init(frame: frame)
         self.directionsOptions.setMapView(self)
         self.mapOptions.setMapView(mapView: self)
@@ -220,6 +226,11 @@ open class MFTMapView: UIView {
         self.application = UIApplication.shared
         self.mapfitManger = MFTManager.sharedManager
         self.position = position
+        
+        let httpHandler = TGHttpHandler()
+        httpHandler.httpAdditionalHeaders = NSMutableDictionary(dictionary: MFTManager.sharedManager.httpHeaders())
+        mapView.httpHandler = httpHandler
+        
         super.init(frame: frame)
         self.setCenter(position: position)
         self.directionsOptions.setMapView(self)
@@ -237,6 +248,8 @@ open class MFTMapView: UIView {
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    
     
     
 
@@ -775,7 +788,10 @@ open class MFTMapView: UIView {
         //check if API Key is empty 
         guard let _ = mapfitManger.apiKey else { return }
         
-        try? loadMFTStyleSheetAsync(styles[mapOptions.mapTheme]!) { (style) in
+        guard let theme = styles[mapOptions.mapTheme] else  { print("Could no find theme to set")
+            return }
+        
+        try? loadMFTStyleSheetAsync(theme) { (style) in
         
 
         }
@@ -1122,15 +1138,13 @@ extension MFTMapView : TGMapViewDelegate, MapPlaceInfoSelectDelegate {
         mapView.pickLabel(at: location)
         mapView.pickMarker(at: location)
         mapView.pickFeature(at: location)
-        
-        print("MTF mapview should recognize")
+
         guard let recognize = singleTapGestureDelegate?.mapView(self, recognizer: recognizer, shouldRecognizeSingleTapGesture: location) else { return true }
         
         return recognize
     }
     
     open func mapView(_ view: TGMapViewController, recognizer: UIGestureRecognizer, didRecognizeSingleTapGesture location: CGPoint) {
-        print("MTF mapview did recognize")
         singleTapGestureDelegate?.mapView(self, recognizer: recognizer, didRecognizeSingleTapGesture: location)
         
         guard let placeInfo = placeInfo else { return }
@@ -1290,8 +1304,6 @@ extension MFTMapView {
        
         if let sceneURL = bundle {
             latestSceneId = mapView.loadScene(from: sceneURL)
-            
-            
             reDrawAnnotations()
             
         }

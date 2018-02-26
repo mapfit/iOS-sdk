@@ -76,7 +76,7 @@ public class MFTDirections {
             guard let data = data, error == nil else {
                 // check for fundamental networking error
                 
-                print("error=\(String(describing: error))")
+               
                 
                 completion(nil, error)
                 return
@@ -84,17 +84,15 @@ public class MFTDirections {
             
             if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {
                 // check for http errors
-                print("statusCode should be 200, but is \(httpStatus.statusCode)")
-                print("response = \(String(describing: response))")
             }
             
             do { // try to parse JSON
                 let json = try JSONSerialization.jsonObject(with: data, options: [])
                 
                 if JSONSerialization.isValidJSONObject(json) {
-                    print("valid json")
+                    
                 } else {
-                    print("invalid json")
+                    
                 }
                 
                 let route = try JSONDecoder().decode(Route.self, from: data)
@@ -103,7 +101,6 @@ public class MFTDirections {
                 
                 
             } catch let error as NSError {
-                print("error getting directions: \(error.localizedDescription)")
                 completion(nil, error)
             }
             

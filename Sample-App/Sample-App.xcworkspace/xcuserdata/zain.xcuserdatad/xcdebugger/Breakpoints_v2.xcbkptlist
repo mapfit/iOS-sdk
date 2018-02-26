@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../iOS-SDK/MFTClasses/MFTMarker.swift"
-            timestampString = "541106567.066339"
+            timestampString = "541355401.693462"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "294"
@@ -25,13 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../iOS-SDK/MFTClasses/MFTLatLngBounds.swift"
-            timestampString = "541106567.0668679"
+            filePath = "../iOS-SDK/MFTClasses/MFTMapView.swift"
+            timestampString = "541355542.118517"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "152"
-            endingLineNumber = "152"
-            landmarkName = "getVisibleBounds(viewWidth:viewHeight:padding:)"
+            startingLineNumber = "1306"
+            endingLineNumber = "1306"
+            landmarkName = "loadMFTStyleSheetAsync(_:locale:onStyleLoaded:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -41,174 +41,62 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../iOS-SDK/MFTClasses/MFTLatLngBounds.swift"
-            timestampString = "541106567.066933"
+            filePath = "../iOS-SDK/MFTClasses/MFTMapView.swift"
+            timestampString = "541355542.119031"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "133"
-            endingLineNumber = "133"
-            landmarkName = "getVisibleBounds(viewWidth:viewHeight:padding:)"
+            startingLineNumber = "1280"
+            endingLineNumber = "1280"
+            landmarkName = "loadMFTStyleSheetAsync(_:onStyleLoaded:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../iOS-SDK/MFTClasses/MFTMapView.swift"
+            timestampString = "541355542.119328"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "794"
+            endingLineNumber = "794"
+            landmarkName = "setUpView(frame:position:)"
             landmarkType = "7">
             <Locations>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Mapfit_iOS_SDK.MFTLatLngBounds.getVisibleBounds(viewWidth: Swift.Float, viewHeight: Swift.Float, padding: Swift.Float) -&gt; (__C.CLLocationCoordinate2D, Swift.Float)"
-                  moduleName = "Mapfit_iOS_SDK"
+                  symbolName = "Mapfit.MFTMapView.(setUpView in _7536E41698CEEE5E20BC96C88E61D1BD)(frame: __C.CGRect, position: __C.CLLocationCoordinate2D) -&gt; ()"
+                  moduleName = "Mapfit"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zain/Desktop/iOS-sdk/iOS-SDK/MFTClasses/MFTLatLngBounds.swift"
-                  timestampString = "541105635.899368"
+                  urlString = "file:///Users/zain/Desktop/iOS-sdk/iOS-SDK/MFTClasses/MFTMapView.swift"
+                  timestampString = "541355401.893733"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "133"
-                  endingLineNumber = "133"
-                  offsetFromSymbolStart = "91">
+                  startingLineNumber = "794"
+                  endingLineNumber = "794"
+                  offsetFromSymbolStart = "4071">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "zoom #1 (Swift.Double, Swift.Double) -&gt; Swift.Double in Mapfit_iOS_SDK.MFTLatLngBounds.getVisibleBounds(viewWidth: Swift.Float, viewHeight: Swift.Float, padding: Swift.Float) -&gt; (__C.CLLocationCoordinate2D, Swift.Float)"
-                  moduleName = "Mapfit_iOS_SDK"
+                  symbolName = "closure #1 (Mapfit.MFTMapTheme) -&gt; () in Mapfit.MFTMapView.(setUpView in _7536E41698CEEE5E20BC96C88E61D1BD)(frame: __C.CGRect, position: __C.CLLocationCoordinate2D) -&gt; ()"
+                  moduleName = "Mapfit"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zain/Desktop/iOS-sdk/iOS-SDK/MFTClasses/MFTLatLngBounds.swift"
-                  timestampString = "541105635.9015549"
+                  urlString = "file:///Users/zain/Desktop/iOS-sdk/iOS-SDK/MFTClasses/MFTMapView.swift"
+                  timestampString = "541355401.895993"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "133"
-                  endingLineNumber = "133"
-                  offsetFromSymbolStart = "21">
+                  startingLineNumber = "797"
+                  endingLineNumber = "797"
+                  offsetFromSymbolStart = "8">
                </Location>
             </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../iOS-SDK/MFTClasses/MFTLatLngBounds.swift"
-            timestampString = "541106567.066991"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "135"
-            endingLineNumber = "135"
-            landmarkName = "zoom(_:_:)"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../iOS-SDK/MFTClasses/MFTLatLngBounds.swift"
-            timestampString = "541106567.067049"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "139"
-            endingLineNumber = "139"
-            landmarkName = "getVisibleBounds(viewWidth:viewHeight:padding:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../iOS-SDK/MFTClasses/MFTLatLngBounds.swift"
-            timestampString = "541106567.067102"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "140"
-            endingLineNumber = "140"
-            landmarkName = "getVisibleBounds(viewWidth:viewHeight:padding:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../iOS-SDK/MFTClasses/MFTLatLngBounds.swift"
-            timestampString = "541106567.0671591"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "142"
-            endingLineNumber = "142"
-            landmarkName = "getVisibleBounds(viewWidth:viewHeight:padding:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../iOS-SDK/MFTClasses/MFTLatLngBounds.swift"
-            timestampString = "541106567.0672131"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "146"
-            endingLineNumber = "146"
-            landmarkName = "getVisibleBounds(viewWidth:viewHeight:padding:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../iOS-SDK/MFTClasses/MFTLatLngBounds.swift"
-            timestampString = "541106567.067266"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "148"
-            endingLineNumber = "148"
-            landmarkName = "getVisibleBounds(viewWidth:viewHeight:padding:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../iOS-SDK/MFTClasses/MFTLatLngBounds.swift"
-            timestampString = "541106567.067319"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "147"
-            endingLineNumber = "147"
-            landmarkName = "getVisibleBounds(viewWidth:viewHeight:padding:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../iOS-SDK/MFTClasses/MFTLatLngBounds.swift"
-            timestampString = "541106567.067369"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "151"
-            endingLineNumber = "151"
-            landmarkName = "getVisibleBounds(viewWidth:viewHeight:padding:)"
-            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
