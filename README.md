@@ -6,9 +6,6 @@
 
 - [x] Create a map
 - [x] Add a marker to your map
-- [x] Draw a route on your map
-- [x] Display directions
-- [x] Show info for a place
 
 ## Requirements
 
