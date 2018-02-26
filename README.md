@@ -2,6 +2,9 @@
 # Mapfit iOS SDK
 > The Mapfit iOS SDK packages up everything you need to use Mapfit's services in your iOS applications.
 
+![alt text](https://files.readme.io/4f8fbd6-DefaultMaker.png)
+
+
 ## Features
 
 - [x] Create a map
