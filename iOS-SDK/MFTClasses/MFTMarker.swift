@@ -85,19 +85,19 @@ public class MFTMarker : NSObject, MFTAnnotation {
      Title of Marker.
      */
     
-    lazy public var title: String = String()
+    lazy public var title: String = ""
     
     /**
      First subtitle for Marker.
      */
     
-    lazy public var subtitle1: String = String()
+    lazy public var subtitle1: String = ""
     
     /**
      Second subtitle for Marker.
      */
     
-    lazy public var subtitle2: String = String()
+    lazy public var subtitle2: String = ""
     
     internal var subAnnotation: MFTAnnotation?
     
@@ -332,6 +332,7 @@ public class MFTMarker : NSObject, MFTAnnotation {
         }
 
     }
+}
     
     
     /**
@@ -348,39 +349,40 @@ public class MFTMarker : NSObject, MFTAnnotation {
 //
 //    }
     
-}
 
 /**
  Default icons provided by Mapfit.
  */
+    
 
 public enum MFTMarkerImage : String {
-    case defaultLightTheme = "https://cdn.stg.mapfit.com/v2/assets/images/markers/pngs/lighttheme/default.png"
-    case activeLightTheme = "https://cdn.stg.mapfit.com/v2/assets/images/markers/pngs/lighttheme/active.png"
-    case airportLightTheme = "https://cdn.stg.mapfit.com/v2/assets/images/markers/pngs/lighttheme/airport.png"
-    case artsLightTheme = "https://cdn.stg.mapfit.com/v2/assets/images/markers/pngs/lighttheme/arts.png"
-    case autoLightTheme = "https://cdn.stg.mapfit.com/v2/assets/images/markers/pngs/lighttheme/auto.png"
-    case financeLightTheme = "https://cdn.stg.mapfit.com/v2/assets/images/markers/pngs/lighttheme/finance.png"
-    case commercialLightTheme = "https://cdn.stg.mapfit.com/v2/assets/images/markers/pngs/lighttheme/commercial.png"
-    case cafeLightTheme = "https://cdn.stg.mapfit.com/v2/assets/images/markers/pngs/lighttheme/cafe.png"
-    case conferenceLightTheme = "https://cdn.stg.mapfit.com/v2/assets/images/markers/pngs/lighttheme/conference.png"
-    case sportsLightTheme = "https://cdn.stg.mapfit.com/v2/assets/images/markers/pngs/lighttheme/sports.png"
-    case educationLightTheme = "https://cdn.stg.mapfit.com/v2/assets/images/markers/pngs/lighttheme/education.png"
-    case marketLightTheme = "lhttps://cdn.stg.mapfit.com/v2/assets/images/markers/pngs/ighttheme/market/png"
-    case cookingLightTheme = "https://cdn.stg.mapfit.com/v2/assets/images/markers/pngs/lighttheme/cooking.png"
-    case gasLightTheme = "https://cdn.stg.mapfit.com/v2/assets/images/markers/pngs/lighttheme/gas.png"
-    case homegardenLightTheme = "https://cdn.stg.mapfit.com/v2/assets/images/markers/pngs/lighttheme/homegarden.png"
-    case hospitalLightTheme = "https://cdn.stg.mapfit.com/v2/assets/images/markers/pngs/lighttheme/hospital.png"
-    case hotelLightTheme = "https://cdn.stg.mapfit.com/v2/assets/images/markers/pngs/lighttheme/hotel.png"
-    case lawLightTheme = "https://cdn.stg.mapfit.com/v2/assets/images/markers/pngs/lighttheme/law.png"
-    case medicalLightTheme = "https://cdn.stg.mapfit.com/v2/assets/images/markers/pngs/lighttheme/medical.png"
-    case barLightTheme = "https://cdn.stg.mapfit.com/v2/assets/images/markers/pngs/lighttheme/bar.png"
-    case parkLightTheme = "https://cdn.stg.mapfit.com/v2/assets/images/markers/pngs/lighttheme/park.png"
-    case pharmacyLightTheme = "https://cdn.stg.mapfit.com/v2/assets/images/markers/pngs/lighttheme/pharmacy.png"
-    case communityLightTheme = "https://cdn.stg.mapfit.com/v2/assets/images/markers/pngs/lighttheme/community.png"
-    case religionLightTheme = "https://cdn.stg.mapfit.com/v2/assets/images/markers/pngs/lighttheme/religion.png"
-    case restaurantLightTheme = "https://cdn.stg.mapfit.com/v2/assets/images/markers/pngs/lighttheme/restaurant.png"
-    case shoppingLightTheme = "https://cdn.stg.mapfit.com/v2/assets/images/markers/pngs/lighttheme/shopping.png"
+
+    case defaultLightTheme = "https://cdn.mapfit.com/m1/assets/images/markers/pngs/lighttheme/default.png"
+    case activeLightTheme = "https://cdn.mapfit.com/m1/assets/images/markers/pngs/lighttheme/active.png"
+    case airportLightTheme = "https://cdn.mapfit.com/m1/assets/images/markers/pngs/lighttheme/airport.png"
+    case artsLightTheme = "https://cdn.mapfit.com/m1/assets/images/markers/pngs/lighttheme/arts.png"
+    case autoLightTheme = "https://cdn.mapfit.com/m1/assets/images/markers/pngs/lighttheme/auto.png"
+    case financeLightTheme = "https://cdn.mapfit.com/m1/assets/images/markers/pngs/lighttheme/finance.png"
+    case commercialLightTheme = "https://cdn.mapfit.com/m1/assets/images/markers/pngs/lighttheme/commercial.png"
+    case cafeLightTheme = "https://cdn.mapfit.com/m1/assets/images/markers/pngs/lighttheme/cafe.png"
+    case conferenceLightTheme = "https://cdn.mapfit.com/m1/assets/images/markers/pngs/lighttheme/conference.png"
+    case sportsLightTheme = "https://cdn.mapfit.com/m1/assets/images/markers/pngs/lighttheme/sports.png"
+    case educationLightTheme = "https://cdn.mapfit.com/m1/assets/images/markers/pngs/lighttheme/education.png"
+    case marketLightTheme = "lhttps://cdn.mapfit.com/m1/assets/images/markers/pngs/ighttheme/market/png"
+    case cookingLightTheme = "https://cdn.mapfit.com/m1/assets/images/markers/pngs/lighttheme/cooking.png"
+    case gasLightTheme = "https://cdn.mapfit.com/m1/assets/images/markers/pngs/lighttheme/gas.png"
+    case homegardenLightTheme = "https://cdn.mapfit.com/m1/assets/images/markers/pngs/lighttheme/homegarden.png"
+    case hospitalLightTheme = "https://cdn.mapfit.com/m1/assets/images/markers/pngs/lighttheme/hospital.png"
+    case hotelLightTheme = "https://cdn.mapfit.com/m1/assets/images/markers/pngs/lighttheme/hotel.png"
+    case lawLightTheme = "https://cdn.mapfit.com/m1/assets/images/markers/pngs/lighttheme/law.png"
+    case medicalLightTheme = "https://cdn.mapfit.com/m1/assets/images/markers/pngs/lighttheme/medical.png"
+    case barLightTheme = "https://cdn.mapfit.com/m1/assets/images/markers/pngs/lighttheme/bar.png"
+    case parkLightTheme = "https://cdn.mapfit.com/m1/assets/images/markers/pngs/lighttheme/park.png"
+    case pharmacyLightTheme = "https://cdn.mapfit.com/m1/assets/images/markers/pngs/lighttheme/pharmacy.png"
+    case communityLightTheme = "https://cdn.mapfit.com/m1/assets/images/markers/pngs/lighttheme/community.png"
+    case religionLightTheme = "https://cdn.mapfit.com/m1/assets/images/markers/pngs/lighttheme/religion.png"
+    case restaurantLightTheme = "https://cdn.mapfit.com/m1/assets/images/markers/pngs/lighttheme/restaurant.png"
+    case shoppingLightTheme = "https://cdn.mapfit.com/m1/assets/images/markers/pngs/lighttheme/shopping.png"
     
 }
 

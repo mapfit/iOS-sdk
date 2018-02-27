@@ -47,7 +47,7 @@ public class MFTMapOptions  {
     public var mapView: MFTMapView?
 
     
-    public var mapTheme: MFTMapTheme
+    internal var mapTheme: MFTMapTheme
     public var cameraType: TGCameraType?
     public var showUserLocation: Bool?
     public var isPanEnabled: Bool
@@ -95,13 +95,18 @@ public class MFTMapOptions  {
     
     
     public func setTheme(theme: MFTMapTheme) {
-        guard let theme = styles[theme] else { print("Could not load theme")
+        guard let style = styles[theme] else { print("Could not load theme")
             return
         }
-        try? mapView?.loadMFTStyleSheetAsync(theme   ) { (style) in
+        self.mapTheme = theme
+        try? mapView?.loadMFTStyleSheetAsync(style) { (style) in
            
         }
         
+    }
+    
+    public func getTheme()->MFTMapTheme {
+        return self.mapTheme
     }
 
     private func setTheme(filepath: String) {

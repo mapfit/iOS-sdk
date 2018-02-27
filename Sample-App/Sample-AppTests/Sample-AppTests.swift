@@ -287,7 +287,7 @@ class Sample_AppTests: XCTestCase {
         XCTAssertEqual(mapView.mapOptions.isRotateEnabled, true, file: "rotate is turned off by default")
         XCTAssertEqual(mapView.mapOptions.isZoomControlVisible, false, file: "zoom buttons are turned on by default")
         XCTAssertEqual(mapView.mapOptions.isRotateEnabled, true, file: "rotate is turned off by default")
-        XCTAssertEqual(mapView.mapOptions.mapTheme, .day, file: "Day theme not set as default")
+        XCTAssertEqual(mapView.mapOptions.getTheme(), .day, file: "Day theme not set as default")
         
     }
     

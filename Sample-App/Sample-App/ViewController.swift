@@ -16,9 +16,15 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         
-        
+        MFTManager.sharedManager.apiKey = ""
         let mapview = MFTMapView(frame: view.bounds)
         self.view.addSubview(mapview)
+        
+        mapview.addMarker(address: "119 w 24th street ny ny") { (marker, error) in
+     
+        }
+        
+        
         
         
 

@@ -604,9 +604,6 @@ open class MFTMapView: UIView {
                     let address = addressObject[0]
                         //add Marker
                         marker = MFTMarker(position: CLLocationCoordinate2DMake(position.latitude, position.longitude), mapView: self)
-                        marker?.title = "\(address.streetAddress ?? ""), \(address.locality ?? ""), \(address.adminArea ?? ""), \(address.postalCode ?? "")"
-                        marker?.subtitle1 = "Lat: \(position.latitude), Lon: \(position.longitude)"
-
                         self.addAnnotation(marker!)
 
                     //add building polygon
@@ -1036,7 +1033,7 @@ extension MFTMapView : TGMapViewDelegate, MapPlaceInfoSelectDelegate {
         guard let markerPickResult = markerPickResult else { return }
         
         let tgMarker = markerPickResult.marker
-
+        
             if let marker = currentMarkers[tgMarker] {
                 markerSelectDelegate?.mapView(self, didSelectMarker: marker, atScreenPosition: position)
                 
@@ -1048,8 +1045,9 @@ extension MFTMapView : TGMapViewDelegate, MapPlaceInfoSelectDelegate {
                 }
 
                 self.animateTocenter(position: marker.getPosition(), duration: 0.5)
+                if !(marker.title == "") || !(marker.subtitle1 == "") || !(marker.subtitle2 == "") {
                 createMFTPlaceInfoView(marker: marker)
-                
+                }
             }
             return
         
