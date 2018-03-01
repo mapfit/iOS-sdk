@@ -2,6 +2,7 @@
 # Mapfit iOS SDK
 > The Mapfit iOS SDK packages up everything you need to use Mapfit's services in your iOS applications.
 
+![alt text](https://github.com/mapfit/iOS-sdk/blob/master/READMEImage.png)
 
 ## Features
 
