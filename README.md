@@ -1,7 +1,6 @@
 
 # Mapfit iOS SDK
 ![alt text](https://github.com/mapfit/iOS-sdk/blob/master/READMEImage.png)
-> The Mapfit iOS SDK packages up everything you need to use Mapfit's services in your iOS applications.
 
 ## Features
 
@@ -55,3 +54,7 @@ view.addSubview(mapView)
 ```swift
 let marker = mapView.addMarker(position:  CLLocationCoordinate2D(latitude: 40.74699, longitude: -73.98742))
 ```
+## Full Documentation
+
+https://ios.mapfit.com/docs
+
