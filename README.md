@@ -31,6 +31,7 @@ import Mapfit
 
 ## Set your API Key
 
+[Get an API Key](https://mapfit.com/getstarted)
 ```swift
 class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -39,6 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 ```
+
 
 
 ## Create your map
@@ -54,7 +56,6 @@ view.addSubview(mapView)
 ```swift
 let marker = mapView.addMarker(position:  CLLocationCoordinate2D(latitude: 40.74699, longitude: -73.98742))
 ```
-## Full Documentation
+## [Full Documentation](https://ios.mapfit.com/docs)
 
-https://ios.mapfit.com/docs
 
