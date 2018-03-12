@@ -105,7 +105,7 @@ public class MFTMapOptions  {
         }
     }
     
-    public func setTheme(customTheme: String){
+    public func setCustomTheme(_ customTheme: String){
         
        self.mapTheme = .custom
        try? mapView?.loadCustomStyleSheetAsync(customTheme)

@@ -15,12 +15,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        MFTManager.sharedManager.apiKey = ""
         let mapview = MFTMapView(frame: view.bounds)
         mapview.mapOptions.setCustomTheme("https://cdn.mapfit.com/v2/themes/mapfit-grayscale.yaml")
         self.view.addSubview(mapview)
-        
         mapview.addMarker(address: "119 w 24th street ny ny") { (marker, error) in
             
         }

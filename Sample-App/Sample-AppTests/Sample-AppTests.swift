@@ -20,7 +20,7 @@ class Sample_AppTests: XCTestCase {
         super.setUp()
         mapView = MFTMapView()
         layer = MFTLayer()
-        MFTManager.sharedManager.apiKey = ""
+        MFTManager.sharedManager.apiKey = "591dccc4e499ca0001a4c6a4abab8998a9ec4e0d8efce03e489a00ea"
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
     
