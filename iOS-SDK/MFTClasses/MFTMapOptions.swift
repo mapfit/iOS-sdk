@@ -98,20 +98,26 @@ public class MFTMapOptions  {
         guard let style = styles[theme] else { print("Could not load theme")
             return
         }
+        
         self.mapTheme = theme
         try? mapView?.loadMFTStyleSheetAsync(style) { (style) in
            
         }
+    }
+    
+    public func setTheme(customTheme: String){
+        
+       self.mapTheme = .custom
+       try? mapView?.loadCustomStyleSheetAsync(customTheme)
+    
         
     }
+    
     
     public func getTheme()->MFTMapTheme {
         return self.mapTheme
     }
 
-    private func setTheme(filepath: String) {
-
-    }
     
     /**
      Sets zoom controls visibility.

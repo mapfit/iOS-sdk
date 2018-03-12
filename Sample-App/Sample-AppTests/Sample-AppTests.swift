@@ -20,7 +20,7 @@ class Sample_AppTests: XCTestCase {
         super.setUp()
         mapView = MFTMapView()
         layer = MFTLayer()
-        MFTManager.sharedManager.apiKey = ""
+        MFTManager.sharedManager.apiKey = "591dccc4e499ca0001a4c6a4abab8998a9ec4e0d8efce03e489a00ea"
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
     
@@ -111,7 +111,7 @@ class Sample_AppTests: XCTestCase {
             
             XCTAssertNil(error, "Unexpected error occured: \(String(describing: error?.localizedDescription))")
             XCTAssertEqual(addresses![0].locality, "New York", file: "Locality was incorrect")
-            XCTAssertEqual(addresses![0].postalCode, "10011", file: "Locality was incorrect")
+            XCTAssertEqual(addresses![0].postalCode, "10001", file: "Locality was incorrect")
             
             expect.fulfill()
             
@@ -329,6 +329,15 @@ class Sample_AppTests: XCTestCase {
         XCTAssertEqual(expectedCenter.longitude, center.longitude, accuracy: 0.001, file: "center longitude was not computed correctly")
         XCTAssertEqual(expectedZoomLevel, zoomLevel, accuracy: 1, file: "Zoom not calculated correctly")
 
+    }
+    
+    func testCustomThemes(){
+        mapView.mapOptions.setTheme(customTheme: "https://cdn.mapfit.com/v2/themes/mapfit-grayscale.yaml")
+        XCTAssertEqual(mapView.mapOptions.getTheme(), .custom, file: "Theme was not set to custom")
+        
+        
+        mapView.mapOptions.setTheme(customTheme: "file:/Users/zain/Desktop/iOS-sdk/Sample-App/Sample-App/bubble-wrap-style.yaml")
+        XCTAssertEqual(mapView.mapOptions.getTheme(), .custom, file: "Theme was not set to custom on local yaml load")
     }
     
     

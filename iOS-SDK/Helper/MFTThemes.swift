@@ -10,7 +10,7 @@ import Foundation
 
 /// An Enum showing map style
 @objc public enum MFTMapTheme: Int {
-    case day, night, grayScale
+    case day, night, grayScale, custom
 }
 
 internal enum GlobalStyleVars : String {

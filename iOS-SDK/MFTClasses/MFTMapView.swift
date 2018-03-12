@@ -1278,6 +1278,17 @@ extension MFTMapView {
         try loadMFTStyleSheetAsync(styleSheet, locale: Locale.current, onStyleLoaded: onStyleLoaded)
     }
     
+    
+    /**
+     Loads the map style asynchronously. Recommended for production apps. Uses the system's current locale.
+     - parameter styleSheet: The map style / theme combination to load.
+     - parameter onStyleLoaded: Closure called on scene loaded.
+     - throws: A MFError `apiKeyNotSet` error if an API Key has not been sent on the MFTManager class.
+     */
+    internal func loadCustomStyleSheetAsync(_ customPath: String) throws {
+        try loadCustomStyleSheetAsync(customPath, locale: Locale.current)
+    }
+    
     /**
      Loads the map style asynchronously. Recommended for production apps.
      - parameter styleSheet: The map style / theme combination to load.
@@ -1306,6 +1317,17 @@ extension MFTMapView {
             
         }
         
+       
+    }
+    
+    
+    internal func loadCustomStyleSheetAsync(_ path: String, locale: Locale) throws {
+        self.locale = locale
+        self.mapOptions.mapTheme = .custom
+
+        if let urlPath = URL(string: path) {
+                mapView.loadSceneAsync(from: urlPath)
+    }
        
     }
   
