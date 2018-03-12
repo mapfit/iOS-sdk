@@ -141,6 +141,27 @@ class Sample_AppTests: XCTestCase {
         
     }
     
+    func testReverseGeocodeCallIsSuccessful() {
+        let expect = expectation(description: "Download should succeed")
+        MFTGeocoder.sharedInstance.reverseGeocode(latLng: CLLocationCoordinate2DMake(40.74405, -73.99324), includeBuilding: true) { (addresses, error) in
+            if let error = error {
+                XCTFail("geocode server error: \(error)")
+            }
+            
+            XCTAssertNil(error, "Unexpected error occured: \(String(describing: error?.localizedDescription))")
+            XCTAssertEqual(addresses![0].locality, "New York", file: "Locality was incorrect")
+            XCTAssertEqual(addresses![0].postalCode, "10001", file: "Locality was incorrect")
+            XCTAssertEqual(addresses![0].streetAddress, "119 W 24th St", file: "address was incorrect")
+            
+            expect.fulfill()
+            
+        }
+        waitForExpectations(timeout: 10) { (error) in
+            XCTAssertNil(error, "Test timed out. \(String(describing: error?.localizedDescription))")
+        }
+        
+    }
+    
     func testMarkerPositionAfterGeocoding(){
         let expect = expectation(description: "Marker postion should have valid lat long")
         
@@ -332,11 +353,11 @@ class Sample_AppTests: XCTestCase {
     }
     
     func testCustomThemes(){
-        mapView.mapOptions.setTheme(customTheme: "https://cdn.mapfit.com/v2/themes/mapfit-grayscale.yaml")
+        mapView.mapOptions.setCustomTheme("https://cdn.mapfit.com/v2/themes/mapfit-grayscale.yaml")
         XCTAssertEqual(mapView.mapOptions.getTheme(), .custom, file: "Theme was not set to custom")
         
         
-        mapView.mapOptions.setTheme(customTheme: "file:/Users/zain/Desktop/iOS-sdk/Sample-App/Sample-App/bubble-wrap-style.yaml")
+        mapView.mapOptions.setCustomTheme("file:/Users/zain/Desktop/iOS-sdk/Sample-App/Sample-App/bubble-wrap-style.yaml")
         XCTAssertEqual(mapView.mapOptions.getTheme(), .custom, file: "Theme was not set to custom on local yaml load")
     }
     
