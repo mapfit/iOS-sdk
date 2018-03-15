@@ -16,7 +16,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         
-        MFTManager.sharedManager.apiKey = "591dccc4e499ca0001a4c6a4abab8998a9ec4e0d8efce03e489a00ea"
+        MFTManager.sharedManager.apiKey = ""
         let mapview = MFTMapView(frame: view.bounds)
         mapview.mapOptions.setTheme(customTheme: "https://cdn.mapfit.com/v2/themes/mapfit-grayscale.yaml")
         self.view.addSubview(mapview)
