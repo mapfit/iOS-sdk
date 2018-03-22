@@ -18,9 +18,10 @@ class Sample_AppTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
+        MFTManager.sharedManager.apiKey = "591dccc4e499ca0001a4c6a4abab8998a9ec4e0d8efce03e489a00ea"
         mapView = MFTMapView()
         layer = MFTLayer()
-        MFTManager.sharedManager.apiKey = "591dccc4e499ca0001a4c6a4abab8998a9ec4e0d8efce03e489a00ea"
+        
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
     
@@ -122,17 +123,46 @@ class Sample_AppTests: XCTestCase {
         
     }
     
+    func testGeocodeCallWithViewPortIsSuccessful() {
+        let expect = expectation(description: "Download should succeed")
+        MFTGeocoder.sharedInstance.geocode(address: "new york", includeBuilding: true) { (addresses, error) in
+            if let error = error {
+                XCTFail("geocode server error: \(error)")
+                expect.fulfill()
+            }
+            
+            
+            
+            XCTAssertNil(error, "Unexpected error occured: \(String(describing: error?.localizedDescription))")
+            XCTAssertEqual(addresses![0].viewport!.southwest!.lng,  -80.809183, file: "southwest lon was incorrect")
+            XCTAssertEqual(addresses![0].viewport!.southwest!.lat, 41.755976, file: "southwest lat was incorrect")
+            XCTAssertEqual(addresses![0].viewport!.northeast!.lng,  -70.809183, file: "northeast lon was incorrect")
+            XCTAssertEqual(addresses![0].viewport!.northeast!.lat, 43.755976, file: "northeat lat was incorrect")
+            
+            expect.fulfill()
+            
+        }
+        waitForExpectations(timeout: 10) { (error) in
+            XCTAssertNil(error, "Test timed out. \(String(describing: error?.localizedDescription))")
+        }
+        
+    }
+    
     func testCityGeocodeCallIsSuccessful() {
         let expect = expectation(description: "Download should succeed")
         
         MFTGeocoder.sharedInstance.geocode(address: "orlando, florida", includeBuilding: true) { (addresses, error) in
             if let error = error {
                 XCTFail("geocode server error: \(error)")
+                expect.fulfill()
             }
             
-            XCTAssertNil(error, "Unexpected error occured: \(String(describing: error?.localizedDescription))")
-            XCTAssertEqual(addresses![0].locality, "Orlando", file: "Locality was incorrect")
-            expect.fulfill()
+            if let addresses = addresses {
+                XCTAssertNil(error, "Unexpected error occured: \(String(describing: error?.localizedDescription))")
+                XCTAssertEqual(addresses[0].locality, "Orlando", file: "Locality was incorrect")
+                expect.fulfill()
+            }
+            
             
         }
         waitForExpectations(timeout: 5) { (error) in
@@ -246,7 +276,7 @@ class Sample_AppTests: XCTestCase {
                 
                 XCTAssertEqual(routeObject.trip?.status, 0, file: "destination location longitude for NY is not correct")
                 XCTAssertEqual(routeObject.trip?.statusMessage, "Found route between points", file: "status message did not find route")
-                
+  
             }
             
             expect.fulfill()
@@ -256,6 +286,7 @@ class Sample_AppTests: XCTestCase {
         }
         
     }
+    
     
     
     func testDirectionsOptions(){

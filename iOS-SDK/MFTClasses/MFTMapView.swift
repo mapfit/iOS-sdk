@@ -104,8 +104,14 @@ open class MFTMapView: UIView {
     
     weak public var placeInfoSelectDelegate: MapPlaceInfoSelectDelegate?
     
+    weak public var polygonSelectDelegate: MapPolygonSelectDelegate?
+    
+    weak public var polylineSelectDelegate: MapPolylineSelectDelegate?
+    
     /// Receiver for tile load completion callbacks
     weak internal var tileLoadDelegate: MapTileLoadDelegate?
+    
+    
     
 
     private var isUserLocationEnabled: Bool = false
@@ -706,7 +712,7 @@ open class MFTMapView: UIView {
             let layer = mapView.addDataLayer("mz_default_line")
         if let dataLayer = layer {
             self.dataLayers[rPolyline.uuid] = dataLayer
-            dataLayer.add(tgPolyline, withProperties: ["" : ""])
+            dataLayer.add(tgPolyline, withProperties: ["type" : "polyline", "uuid" : "\(rPolyline.uuid)"])
             currentPolylines[rPolyline.tgPolyline!] = rPolyline
             currentAnnotations[rPolyline.uuid] = rPolyline
             mapView.update()
@@ -726,7 +732,7 @@ open class MFTMapView: UIView {
         let layer = mapView.addDataLayer("mz_default_polygon")
         if let dataLayer = layer {
             self.dataLayers[rPolygon.uuid] = dataLayer
-            dataLayer.add(tgPolygon, withProperties: ["":""])
+            dataLayer.add(tgPolygon, withProperties: ["type":"polygon", "uuid" : "\(rPolygon.uuid)"])
             currentPolygons[rPolygon.tgPolygon!] = rPolygon
             currentAnnotations[rPolygon.uuid] = rPolygon
             
@@ -1029,6 +1035,23 @@ extension MFTMapView : TGMapViewDelegate, MapPlaceInfoSelectDelegate {
     open func mapView(_ mapView: TGMapViewController, didSelectFeature feature: [String : String]?, atScreenPosition position: CGPoint) {
         guard let feature = feature else { return }
         featureSelectDelegate?.mapView(self, didSelectFeature: feature, atScreenPosition: position)
+        guard let featureID = feature["uuid"] else { return }
+        
+        for annotation in currentAnnotations {
+            if annotation.key.uuidString == featureID {
+                
+                
+                if feature["type"] == "polygon" {
+                    polygonSelectDelegate?.mapView(self, didSelectPolygon: annotation.value as! MFTPolygon, atScreenPosition: position)
+                }
+                
+                
+                if feature["type"] == "polyline" {
+                     polylineSelectDelegate?.mapView(self, didSelectPolyline: annotation.value as! MFTPolyline, atScreenPosition: position)
+                }
+            }
+        }
+        
     }
     
     open func mapView(_ mapView: TGMapViewController, didSelectLabel labelPickResult: TGLabelPickResult?, atScreenPosition position: CGPoint) {

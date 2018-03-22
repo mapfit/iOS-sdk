@@ -10,12 +10,20 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../iOS-SDK/MFTClasses/MFTMapView.swift"
+<<<<<<< HEAD
             timestampString = "543254465.466132"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1336"
             endingLineNumber = "1336"
             landmarkName = "loadCustomStyleSheetAsync(_:locale:)"
+=======
+            timestampString = "543392197.812929"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "610"
+            endingLineNumber = "610"
+            landmarkName = "addMarker(address:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,12 +34,38 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../iOS-SDK/MFTClasses/MFTMapView.swift"
+            timestampString = "543392197.813002"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1159"
+            endingLineNumber = "1159"
+            landmarkName = "mapView(_:recognizer:shouldRecognizeSingleTapGesture:)"
+>>>>>>> development
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../iOS-SDK/MFTClasses/MFTMapView.swift"
+<<<<<<< HEAD
             timestampString = "543254465.4662091"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "198"
             endingLineNumber = "198"
             landmarkName = "init(frame:)"
+=======
+            timestampString = "543392197.813071"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1160"
+            endingLineNumber = "1160"
+            landmarkName = "mapView(_:recognizer:shouldRecognizeSingleTapGesture:)"
+>>>>>>> development
             landmarkType = "7">
             <Locations>
                <Location
@@ -73,6 +107,7 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
+<<<<<<< HEAD
             filePath = "../iOS-SDK/MFTClasses/MFTMapOptions.swift"
             timestampString = "543275627.293215"
             startingColumnNumber = "9223372036854775807"
@@ -80,6 +115,15 @@
             startingLineNumber = "277"
             endingLineNumber = "277"
             landmarkName = "adjustAccuracyCircle()"
+=======
+            filePath = "../iOS-SDK/MFTClasses/MFTMapView.swift"
+            timestampString = "543392197.813127"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1161"
+            endingLineNumber = "1161"
+            landmarkName = "mapView(_:recognizer:shouldRecognizeSingleTapGesture:)"
+>>>>>>> development
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

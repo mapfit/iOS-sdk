@@ -49,6 +49,14 @@ public class MFTDirectionsOptions {
     }
     
     /**
+     Sets origin point for the directions view given a marker.
+     - parameter marker: The string representation of the address to be geocoded.
+     */
+    public func setOrigin(_ marker: MFTMarker){
+        self.origin = marker.position
+    }
+    
+    /**
      Sets destination point for the directions view.
      - parameter position: The destination coordinate for the directions view.
      */
@@ -64,6 +72,14 @@ public class MFTDirectionsOptions {
      */
     public func setDestination(_ address: String){
        self.destinationAddress = address
+    }
+    
+    /**
+     Sets origin point for the directions view given a marker.
+     - parameter marker: The string representation of the address to be geocoded.
+     */
+    public func setDestination(_ marker: MFTMarker){
+        self.destination = marker.position
     }
 
     
@@ -111,6 +127,27 @@ public class MFTDirectionsOptions {
         let polyline = mapView?.addPolyline([path])
         completion(polyline, nil)
         
+    }
+    
+    public func extendRoute(route: Route, addressOfExtension: String, completion:@escaping (_ polyline: MFTPolyline?, _ error: Error?)->Void){
+        guard let destinationLocation = route.destinationLocation else { return }
+        
+        let pointToExtendfrom = CLLocationCoordinate2D(latitude: destinationLocation[1], longitude: destinationLocation[0])
+        
+        
+        
+        MFTDirections.sharedInstance.route(origin: pointToExtendfrom, originAddress: nil, destination: nil, destinationAddress: addressOfExtension, directionsType: directionsType) { (routeObject, error) in
+            if error == nil {
+                guard let route = routeObject else { return }
+                self.drawRoute(route: route, completion: { (polyline, error) in
+                    if error == nil {
+                        completion(polyline, nil)
+                    }
+                })
+            } else {
+                completion(nil, error)
+            }
+        }
     }
     
     

@@ -17,9 +17,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate  {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        mapview.frame = view.bounds
-        mapview.mapOptions.setTheme(theme: .grayScale)
         
+
+        MFTManager.sharedManager.apiKey = "591dccc4e499ca0001a4c6a4abab8998a9ec4e0d8efce03e489a00ea"
+        let mapview = MFTMapView(frame: view.bounds)
         self.view.addSubview(mapview)
         mapview.setZoom(zoomLevel: 8)
         
@@ -40,7 +41,26 @@ class ViewController: UIViewController, CLLocationManagerDelegate  {
     case .restricted, .denied:
         // Disable your app's location features
         
-        break
+
+        MFTDirections.sharedInstance.route(origin: nil, originAddress: "72 smith street hicksville, ny 11801", destination: nil, destinationAddress: "119 w 24th street, NY, NY", directionsType: .cycling) { (route, error) in
+            
+            if error != nil {
+                return
+            }
+            
+            
+            self.mapview.directionsOptions.drawRoute(route: route!, completion: { (polyline, error) in
+               self.mapview.directionsOptions.extendRoute(route: route!, addressOfExtension: "81 pearl street brooklyn", completion: { (polyline, error) in
+                    
+                })
+            })
+            
+            
+        }
+
+        mapview.polygonSelectDelegate = self
+        mapview.polylineSelectDelegate = self
+
         
     case .authorizedWhenInUse:
         // Enable only your app's when-in-use features.
@@ -58,6 +78,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate  {
     case .notDetermined:
         break
         }
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -74,6 +95,7 @@ extension ViewController : MapRotateGestureDelegate {
     }
 }
 
+
 extension ViewController : LocationUpdateDelegate {
     func didRecieveLocationUpdate(_ location: CLLocation) {
         print("User has location : \(location.coordinate)")
@@ -81,4 +103,19 @@ extension ViewController : LocationUpdateDelegate {
     
 }
 
+extension ViewController : MapPolygonSelectDelegate {
+    func mapView(_ view: MFTMapView, didSelectPolygon polygon: MFTPolygon, atScreenPosition position: CGPoint) {
+        
+    }
+    
+    
+}
+
+extension ViewController : MapPolylineSelectDelegate {
+    func mapView(_ view: MFTMapView, didSelectPolyline polygon: MFTPolyline, atScreenPosition position: CGPoint) {
+        
+    }
+    
+    
+}
 
