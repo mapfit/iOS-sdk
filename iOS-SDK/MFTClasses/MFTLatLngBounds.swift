@@ -9,7 +9,7 @@
 import Foundation
 import CoreLocation
 
-public class MFTLatLngBounds {
+public class MFTLatLngBounds  {
     
     public var northEast: CLLocationCoordinate2D = CLLocationCoordinate2D()
     public var southWest: CLLocationCoordinate2D = CLLocationCoordinate2D()

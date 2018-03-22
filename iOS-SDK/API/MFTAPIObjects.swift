@@ -19,12 +19,21 @@ public struct Address : Decodable {
    public var building: Building?
    public var country: String?
    public var location: Location?
+    public var viewport: Viewport?
     
     private enum CodingKeys: String, CodingKey {
-        case streetAddress = "street_address", adminArea = "admin_1", responseType = "response_type", postalCode = "postal_code", locality, neighborhood, entrances, building, country, location
+        case streetAddress = "street_address", adminArea = "admin_1", responseType = "response_type", postalCode = "postal_code", locality, neighborhood, entrances, building, country, location, viewport
     }
     
 }
+
+public struct Viewport: Decodable {
+    public var southwest : Location?
+    public var northeast : Location?
+}
+
+
+
 
 public struct Building: Decodable {
    public var coordinates : [[[Double]]]?
