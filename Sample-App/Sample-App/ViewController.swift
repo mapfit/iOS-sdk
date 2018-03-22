@@ -14,6 +14,9 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
         MFTManager.sharedManager.apiKey = "591dccc4e499ca0001a4c6a4abab8998a9ec4e0d8efce03e489a00ea"
         let mapview = MFTMapView(frame: view.bounds)
         self.view.addSubview(mapview)
@@ -21,12 +24,24 @@ class ViewController: UIViewController {
             
         }
         
-        
-        
-      
-        
-        
+        MFTDirections.sharedInstance.route(origin: nil, originAddress: "72 smith street hicksville, ny 11801", destination: nil, destinationAddress: "119 w 24th street, NY, NY", directionsType: .cycling) { (route, error) in
+            
+            if error != nil {
+                return
+            }
+            
+            
+            mapview.directionsOptions.drawRoute(route: route!, completion: { (polyline, error) in
+                
+            })
+            
+            
+        }
 
+        mapview.polygonSelectDelegate = self
+        mapview.polylineSelectDelegate = self
+        
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -43,3 +58,18 @@ extension ViewController : MapRotateGestureDelegate {
     }
 }
 
+extension ViewController : MapPolygonSelectDelegate {
+    func mapView(_ view: MFTMapView, didSelectPolygon polygon: MFTPolygon, atScreenPosition position: CGPoint) {
+        
+    }
+    
+    
+}
+
+extension ViewController : MapPolylineSelectDelegate {
+    func mapView(_ view: MFTMapView, didSelectPolyline polygon: MFTPolyline, atScreenPosition position: CGPoint) {
+        
+    }
+    
+    
+}

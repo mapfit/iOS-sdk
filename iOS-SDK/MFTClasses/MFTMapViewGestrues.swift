@@ -159,10 +159,31 @@ public protocol MapMarkerSelectDelegate : class {
     func mapView(_ view: MFTMapView, didSelectMarker marker: MFTMarker, atScreenPosition position: CGPoint)
 }
 
+public protocol MapPolygonSelectDelegate : class {
+    /**
+     Informs the delegate a marker of the map was just selected
+     
+     - parameter controller: The MFTMapView that recognized the selection.
+     - parameter polygon: A marker selection returned.
+     - parameter atScreenPosition: The screen coordinates of the picked marker.
+     */
+    func mapView(_ view: MFTMapView, didSelectPolygon polygon: MFTPolygon, atScreenPosition position: CGPoint)
+}
+
+public protocol MapPolylineSelectDelegate : class {
+    /**
+     Informs the delegate a marker of the map was just selected
+     
+     - parameter controller: The MFTMapView that recognized the selection.
+     - parameter polylin: A polyline selection returned.
+     - parameter atScreenPosition: The screen coordinates of the picked marker.
+     */
+    func mapView(_ view: MFTMapView, didSelectPolyline polyline: MFTPolyline, atScreenPosition position: CGPoint)
+}
+
 
 //MapPlaceInfoSelectDelegate
 public protocol MapPlaceInfoSelectDelegate : class {
-
     func mapView(_ view: MFTMapView, didSelectPlaceInfoView marker: MFTMarker)
     
 }
