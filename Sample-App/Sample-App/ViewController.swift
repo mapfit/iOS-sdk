@@ -32,7 +32,9 @@ class ViewController: UIViewController {
             
             
             mapview.directionsOptions.drawRoute(route: route!, completion: { (polyline, error) in
-                
+                mapview.directionsOptions.extendRoute(route: route!, addressOfExtension: "81 pearl street brooklyn", completion: { (polyline, error) in
+                    
+                })
             })
             
             

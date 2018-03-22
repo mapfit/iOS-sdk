@@ -276,7 +276,7 @@ class Sample_AppTests: XCTestCase {
                 
                 XCTAssertEqual(routeObject.trip?.status, 0, file: "destination location longitude for NY is not correct")
                 XCTAssertEqual(routeObject.trip?.statusMessage, "Found route between points", file: "status message did not find route")
-                
+  
             }
             
             expect.fulfill()
@@ -286,6 +286,7 @@ class Sample_AppTests: XCTestCase {
         }
         
     }
+    
     
     
     func testDirectionsOptions(){
