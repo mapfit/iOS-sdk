@@ -10,7 +10,6 @@
 		BF415DC6203E2EF500E641B7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF415DC5203E2EF500E641B7 /* AppDelegate.swift */; };
 		BF415DC8203E2EF500E641B7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF415DC7203E2EF500E641B7 /* ViewController.swift */; };
 		BF415DCB203E2EF500E641B7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF415DC9203E2EF500E641B7 /* Main.storyboard */; };
-		BF415DCD203E2EF500E641B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF415DCC203E2EF500E641B7 /* Assets.xcassets */; };
 		BF415DD0203E2EF500E641B7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF415DCE203E2EF500E641B7 /* LaunchScreen.storyboard */; };
 		BF47E9F4203F574B00EA046A /* Sample-AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF64E228203F567F004E92BC /* Sample-AppTests.swift */; };
 		BF88CE5B2056C308006D4A8A /* bubble-wrap-style.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BF88CE5A2056C308006D4A8A /* bubble-wrap-style.yaml */; };
@@ -39,7 +38,6 @@
 		BF415DC5203E2EF500E641B7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BF415DC7203E2EF500E641B7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		BF415DCA203E2EF500E641B7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		BF415DCC203E2EF500E641B7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BF415DCF203E2EF500E641B7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BF415DD1203E2EF500E641B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BF64E228203F567F004E92BC /* Sample-AppTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Sample-AppTests.swift"; sourceTree = "<group>"; };
@@ -115,7 +113,6 @@
 				BF415DC5203E2EF500E641B7 /* AppDelegate.swift */,
 				BF415DC7203E2EF500E641B7 /* ViewController.swift */,
 				BF415DC9203E2EF500E641B7 /* Main.storyboard */,
-				BF415DCC203E2EF500E641B7 /* Assets.xcassets */,
 				BF415DCE203E2EF500E641B7 /* LaunchScreen.storyboard */,
 				BF415DD1203E2EF500E641B7 /* Info.plist */,
 			);
@@ -231,7 +228,6 @@
 			files = (
 				BF88CE5B2056C308006D4A8A /* bubble-wrap-style.yaml in Resources */,
 				BF415DD0203E2EF500E641B7 /* LaunchScreen.storyboard in Resources */,
-				BF415DCD203E2EF500E641B7 /* Assets.xcassets in Resources */,
 				BF415DCB203E2EF500E641B7 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

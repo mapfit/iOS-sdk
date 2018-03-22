@@ -40,6 +40,9 @@ open class MFTMapView: UIView {
 
     internal var position: CLLocationCoordinate2D
     
+    
+    
+    
     internal var tilt: Float {
         set {
             mapView.tilt = newValue
@@ -234,7 +237,8 @@ open class MFTMapView: UIView {
         super.init(frame: frame)
         self.setCenter(position: position)
         self.directionsOptions.setMapView(self)
-        self.mapOptions.setMapView(mapView: self)
+        self.mapOptions = MFTMapOptions(mapView: self
+        )
         self.mapOptions.setTheme(theme: mapStyle)
 
         self.setUpView(frame: frame, position: position)
@@ -718,16 +722,19 @@ open class MFTMapView: UIView {
         rPolygon.tgPolygon = tgPolygon
         rPolygon.addPoints(polygon)
         drawPolygon(polygon: rPolygon)
+ 
         let layer = mapView.addDataLayer("mz_default_polygon")
         if let dataLayer = layer {
             self.dataLayers[rPolygon.uuid] = dataLayer
             dataLayer.add(tgPolygon, withProperties: ["":""])
             currentPolygons[rPolygon.tgPolygon!] = rPolygon
             currentAnnotations[rPolygon.uuid] = rPolygon
+            
             mapView.requestRender()
             mapView.update()
             
         }
+        
         
         return rPolygon
     }
@@ -1185,6 +1192,7 @@ extension MFTMapView : TGMapViewDelegate, MapPlaceInfoSelectDelegate {
         panDelegate?.mapView(self, didPanMap: location)
         updateMFTPlaceInfoPosition()
         
+        
         if self.position.latitude == mapView.screenPosition(toLngLat: location).latitude || self.position.longitude == mapView.screenPosition(toLngLat: location).longitude{
             recenterButton.setImage(UIImage(named: "reCenter.png", in: Bundle.houseStylesBundle(), compatibleWith: nil), for: .normal)
         }else{
@@ -1196,7 +1204,8 @@ extension MFTMapView : TGMapViewDelegate, MapPlaceInfoSelectDelegate {
     
     
     open func mapView(_ view: TGMapViewController, recognizer: UIGestureRecognizer, shouldRecognizePinchGesture location: CGPoint) -> Bool {
-         let pinch = recognizer as! UIPinchGestureRecognizer
+        
+        let pinch = recognizer as! UIPinchGestureRecognizer
          minMaxZoomTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(checkZoomLevels), userInfo: nil, repeats: true)
         
         if self.zoom > mapOptions.getMaxZoomLevel() && self.zoom * Float(pinch.scale) > mapOptions.getMaxZoomLevel() {
@@ -1215,9 +1224,8 @@ extension MFTMapView : TGMapViewDelegate, MapPlaceInfoSelectDelegate {
     }
     
     open func mapView(_ view: TGMapViewController, recognizer: UIGestureRecognizer, didRecognizePinchGesture location: CGPoint) {
-        
         let pinch = recognizer as! UIPinchGestureRecognizer
-        
+        self.mapOptions.adjustAccuracyCircle()
         if self.zoom > mapOptions.getMaxZoomLevel() && self.zoom * Float(pinch.scale) > mapOptions.getMaxZoomLevel() {
             setZoom(zoomLevel: mapOptions.getMaxZoomLevel(), duration: 0.123)
         }

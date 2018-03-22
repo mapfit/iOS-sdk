@@ -36,6 +36,9 @@
 		BF462C802034AF5B001EE738 /* MFTManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C7E2034AF5B001EE738 /* MFTManager.swift */; };
 		BF462C832034AFFF001EE738 /* MFTMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C812034AFFF001EE738 /* MFTMapView.swift */; };
 		BF462C842034AFFF001EE738 /* MFTZoomButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C822034AFFF001EE738 /* MFTZoomButtonView.swift */; };
+		BF4BA7A020616845001F2FE3 /* LocationCorrectionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4BA79F20616845001F2FE3 /* LocationCorrectionEngine.swift */; };
+		BF4BA7A220616B45001F2FE3 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4BA7A120616B45001F2FE3 /* Utilities.swift */; };
+		BF4BA7A420616B69001F2FE3 /* MFTLocationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4BA7A320616B68001F2FE3 /* MFTLocationProvider.swift */; };
 		BFC5B5532044AFBE00696417 /* DecodeFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC5B5522044AFBE00696417 /* DecodeFunctions.swift */; };
 /* End PBXBuildFile section */
 
@@ -72,6 +75,9 @@
 		BF462C7E2034AF5B001EE738 /* MFTManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTManager.swift; path = Helper/MFTManager.swift; sourceTree = "<group>"; };
 		BF462C812034AFFF001EE738 /* MFTMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTMapView.swift; path = MFTClasses/MFTMapView.swift; sourceTree = "<group>"; };
 		BF462C822034AFFF001EE738 /* MFTZoomButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTZoomButtonView.swift; path = MFTClasses/MFTZoomButtonView.swift; sourceTree = "<group>"; };
+		BF4BA79F20616845001F2FE3 /* LocationCorrectionEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationCorrectionEngine.swift; path = MFTClasses/LocationCorrectionEngine.swift; sourceTree = "<group>"; };
+		BF4BA7A120616B45001F2FE3 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utilities.swift; path = MFTClasses/Utilities.swift; sourceTree = "<group>"; };
+		BF4BA7A320616B68001F2FE3 /* MFTLocationProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTLocationProvider.swift; path = MFTClasses/MFTLocationProvider.swift; sourceTree = "<group>"; };
 		BFC5B5522044AFBE00696417 /* DecodeFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DecodeFunctions.swift; path = Extensions/DecodeFunctions.swift; sourceTree = "<group>"; };
 		E47C08BF50D46AC96C60A204 /* Pods-iOS-SDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-SDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iOS-SDK/Pods-iOS-SDK.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -138,11 +144,14 @@
 				BF462C4E2034AEE1001EE738 /* MFTLayer.swift */,
 				BF462C512034AEE2001EE738 /* MFTMapOptions.swift */,
 				BF462C522034AEE2001EE738 /* MFTMapViewGestrues.swift */,
+				BF4BA7A320616B68001F2FE3 /* MFTLocationProvider.swift */,
 				BF462C492034AEE1001EE738 /* MFTMarker.swift */,
 				BF462C542034AEE2001EE738 /* MFTPlaceInfo.swift */,
 				BF462C562034AEE2001EE738 /* MFTPlaceInfoAdapter.swift */,
 				BF462C4C2034AEE1001EE738 /* MFTPlaceInfoView.swift */,
 				BF462C532034AEE2001EE738 /* MFTPolygon.swift */,
+				BF4BA79F20616845001F2FE3 /* LocationCorrectionEngine.swift */,
+				BF4BA7A120616B45001F2FE3 /* Utilities.swift */,
 				BF462C4A2034AEE1001EE738 /* MFTPolyline.swift */,
 				BF121B692034A56A00B55A75 /* iOS_SDK.h */,
 				BF462C0F2034ABEE001EE738 /* houseStyles.bundle */,
@@ -281,13 +290,16 @@
 			files = (
 				BF462C712034AF13001EE738 /* APPLFrameworkExtentions.swift in Sources */,
 				BF462C5A2034AEE2001EE738 /* MFTPlaceInfoView.swift in Sources */,
+				BF4BA7A220616B45001F2FE3 /* Utilities.swift in Sources */,
 				BF462C622034AEE2001EE738 /* MFTPlaceInfo.swift in Sources */,
+				BF4BA7A020616845001F2FE3 /* LocationCorrectionEngine.swift in Sources */,
 				BF462C572034AEE2001EE738 /* MFTMarker.swift in Sources */,
 				BF462C582034AEE2001EE738 /* MFTPolyline.swift in Sources */,
 				BF462C7F2034AF5B001EE738 /* MFTThemes.swift in Sources */,
 				BF462C752034AF13001EE738 /* StyleGuide.swift in Sources */,
 				BF462C742034AF13001EE738 /* TangramExtensions.swift in Sources */,
 				BF462C5B2034AEE2001EE738 /* MFTAnnotations.swift in Sources */,
+				BF4BA7A420616B69001F2FE3 /* MFTLocationProvider.swift in Sources */,
 				BF462C832034AFFF001EE738 /* MFTMapView.swift in Sources */,
 				BFC5B5532044AFBE00696417 /* DecodeFunctions.swift in Sources */,
 				BF462C642034AEE2001EE738 /* MFTPlaceInfoAdapter.swift in Sources */,

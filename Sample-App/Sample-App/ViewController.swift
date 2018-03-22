@@ -10,26 +10,56 @@ import UIKit
 import Mapfit
 import CoreLocation
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, CLLocationManagerDelegate  {
 
+    let mapview = MFTMapView()
+    let locationManager = CLLocationManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        mapview.frame = view.bounds
+        mapview.mapOptions.setTheme(theme: .grayScale)
         
-        let mapview = MFTMapView(frame: view.bounds)
-        mapview.mapOptions.setCustomTheme("https://cdn.mapfit.com/v2/themes/mapfit-grayscale.yaml")
         self.view.addSubview(mapview)
-        mapview.addMarker(address: "119 w 24th street ny ny") { (marker, error) in
+        mapview.setZoom(zoomLevel: 8)
+        
+        mapview.addMarker(address: "244 w 24th street ny ny") { (marker, error) in
+            guard let marker = marker else { return }
+            self.mapview.setCenter(position: marker.getPosition())
             
         }
-        
-        
-        
-      
-        
-        
+
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
 
     }
     
+    func locationManager(_ manager: CLLocationManager,
+                         didChangeAuthorization status: CLAuthorizationStatus) {
+    switch status {
+    case .restricted, .denied:
+        // Disable your app's location features
+        
+        break
+        
+    case .authorizedWhenInUse:
+        // Enable only your app's when-in-use features.
+        mapview.mapOptions.setUserLocationEnabled(true, accuracy: .low)
+        mapview.mapOptions.userLocationDelegate = self
+        
+        break
+        
+    case .authorizedAlways:
+        // Enable any of your app's location services.
+        mapview.mapOptions.setUserLocationEnabled(true, accuracy: .low)
+        mapview.mapOptions.userLocationDelegate = self
+        break
+        
+    case .notDetermined:
+        break
+        }
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -43,4 +73,12 @@ extension ViewController : MapRotateGestureDelegate {
         
     }
 }
+
+extension ViewController : LocationUpdateDelegate {
+    func didRecieveLocationUpdate(_ location: CLLocation) {
+        print("User has location : \(location.coordinate)")
+    }
+    
+}
+
 

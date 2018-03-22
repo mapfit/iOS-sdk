@@ -10,7 +10,11 @@ import Foundation
 import TangramMap
 import CoreLocation
 
-
+public enum MFTAnchorPosition : String {
+    case top = "top"
+    case bottom = "bottom"
+    case center = "center"
+}
 
 @objc(MFTMarkerOptions)
 public class MFTMarkerOptions : NSObject{
@@ -23,13 +27,27 @@ public class MFTMarkerOptions : NSObject{
    // Sets the draw order for the marker. The draw order is relative to other annotations. Note that higher values are drawn above lower ones.
     public var drawOrder: Int
     
+    // Set Anchor
+    public var anchorPosition: MFTAnchorPosition
+    
     /**
      Sets the height for the marker icon.
      
      - parameter height: height of marker icon.
      */
-    public func setHeight(height: Int){
+    public func setHeight(
+        height: Int){
         self.height = height
+        marker.setStyle()
+    }
+    
+    /**
+     Sets anchor position of marker.
+     
+     - parameter position: position of marker icon.
+     */
+    internal func setAnchorPosition(_ position: MFTAnchorPosition){
+        self.anchorPosition = position
         marker.setStyle()
     }
     
@@ -58,13 +76,14 @@ public class MFTMarkerOptions : NSObject{
      
      - parameter color: color of marker icon.
      */
-
+    
    
     //Default Init
     internal init(_ marker: MFTMarker) {
         height = 59
         width = 55
-        drawOrder = 2000
+        drawOrder = 1000
+        anchorPosition = .top
         self.marker = marker
         super.init()
     }
@@ -79,7 +98,7 @@ public class MFTMarkerOptions : NSObject{
 public class MFTMarker : NSObject, MFTAnnotation {
 
     public var uuid: UUID
-    public var mapView = MFTMapView()
+    public var mapView: MFTMapView?
     
     /**
      Title of Marker.
@@ -173,7 +192,11 @@ public class MFTMarker : NSObject, MFTAnnotation {
     }
     
     internal func getScreenPosition()->CGPoint {
-        return self.mapView.mapView.lngLat(toScreenPosition: TGGeoPointMake(self.getPosition().longitude, self.getPosition().latitude))
+        if let mapView = self.mapView {
+        return mapView.mapView.lngLat(toScreenPosition: TGGeoPointMake(self.getPosition().longitude, self.getPosition().latitude))
+        } else {
+            return CGPoint(x: 0, y: 0)
+        }
     }
     
     /**
@@ -255,7 +278,7 @@ public class MFTMarker : NSObject, MFTAnnotation {
     }
     
     private func generateStyle(_ markerOptions: MFTMarkerOptions) -> String{
-        return "{ style: 'sdk-point-overlay', anchor: top, color: 'white', size: [\(markerOptions.width)px, \(markerOptions.height)px], order: \(markerOptions.drawOrder), interactive: true, collide: false }"
+        return "{ style: 'sdk-point-overlay', anchor: \(markerOptions.anchorPosition.rawValue), size: [\(markerOptions.width)px, \(markerOptions.height)px], order: \(markerOptions.drawOrder), interactive: true, collide: false }"
     }
     
     /**
