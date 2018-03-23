@@ -278,7 +278,7 @@ public class MFTMarker : NSObject, MFTAnnotation {
     }
     
     private func generateStyle(_ markerOptions: MFTMarkerOptions) -> String{
-        return "{ style: 'sdk-point-overlay', anchor: \(markerOptions.anchorPosition.rawValue), size: [\(markerOptions.width)px, \(markerOptions.height)px], order: \(markerOptions.drawOrder), interactive: true, collide: false }"
+        return "{ style: 'sdk-point-overlay', anchor: \(markerOptions.anchorPosition.rawValue), size: [\(markerOptions.width)px, \(markerOptions.height)px], order: \(markerOptions.drawOrder), interactive: true, collide: false}"
     }
     
     /**

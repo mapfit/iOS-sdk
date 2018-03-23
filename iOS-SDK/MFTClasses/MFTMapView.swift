@@ -26,7 +26,7 @@ open class MFTMapView: UIView {
     public var defaultAnnotationMFTLayer: MFTLayer = MFTLayer()
     public var directionsOptions = MFTDirectionsOptions()
     public var mapOptions = MFTMapOptions()
-    internal var easeDuration: Float = 0.3
+    internal var easeDuration: Float = 0.4
     internal var placeInfo: MFTPlaceInfo?
     internal var placeInfoTimer = Timer()
     internal var minMaxZoomTimer = Timer()
@@ -156,8 +156,10 @@ open class MFTMapView: UIView {
     lazy var toggleStackView: UIStackView = UIStackView()
     lazy var zoomPlusButton: UIButton = UIButton()
     lazy var zoomMinusButton: UIButton = UIButton()
-    lazy var compassButton: UIButton = UIButton()
+    lazy var userLocationButton: UIButton = UIButton()
     lazy var recenterButton: UIButton = UIButton()
+    lazy var compassButton: UIButton = UIButton()
+    
     
     
 
@@ -219,7 +221,7 @@ open class MFTMapView: UIView {
 
         self.setDelegates()
         self.setupAttribution()
-        self.setUpToggleStack()
+        self.setUpMapControls()
         self.accessibilityIdentifier = "mapView"
     }
     
@@ -250,7 +252,7 @@ open class MFTMapView: UIView {
         self.setUpView(frame: frame, position: position)
         self.setupAttribution()
         self.setDelegates()
-        self.setUpToggleStack()
+        self.setUpMapControls()
         self.accessibilityIdentifier = "mapView"
         
     }
@@ -842,7 +844,6 @@ open class MFTMapView: UIView {
         let attributedString = NSMutableAttributedString(string: "Mapfit Legal", attributes: attributes)
         legalButton.addTarget(self, action: #selector(legalButtonTapped), for: .touchUpInside)
         legalButton.setAttributedTitle(attributedString, for: .normal)
-        
         self.addSubview(legalButton)
         legalButton.translatesAutoresizingMaskIntoConstraints = false
         
@@ -852,24 +853,32 @@ open class MFTMapView: UIView {
 
     }
     
-    private func setUpToggleStack() {
+    private func setUpMapControls() {
         //set images
 
-        compassButton.setImage(UIImage(named: "Compass.png", in: Bundle.houseStylesBundle(), compatibleWith: nil), for: .normal)
+        userLocationButton.setImage(UIImage(named: "currentLocation.png", in: Bundle.houseStylesBundle(), compatibleWith: nil), for: .normal)
         recenterButton.setImage(UIImage(named: "reCenter.png", in: Bundle.houseStylesBundle(), compatibleWith: nil), for: .normal)
+        compassButton.setImage(UIImage(named: "compassNorth.png", in: Bundle.houseStylesBundle(), compatibleWith: nil), for: .normal)
+        
   
         //aspect fill
-        compassButton.imageView?.contentMode = .scaleToFill
+        userLocationButton.imageView?.contentMode = .scaleToFill
         recenterButton.imageView?.contentMode = .scaleToFill
+        compassButton.imageView?.contentMode = .scaleToFill
         
         //add Targets
         recenterButton.addTarget(self, action: #selector(recenterButtonTapped), for: .touchUpInside)
+        userLocationButton.addTarget(self, action: #selector(userLocationButtonTapped), for: .touchUpInside)
         compassButton.addTarget(self, action: #selector(compassButtonTapped), for: .touchUpInside)
+        
 
         recenterButton.translatesAutoresizingMaskIntoConstraints = false
+        userLocationButton.translatesAutoresizingMaskIntoConstraints = false
         compassButton.translatesAutoresizingMaskIntoConstraints = false
-
-
+        
+        if !mapOptions.isUserLocationEnabled && mapOptions.isUserLocationButtonVisible {
+            userLocationButton.isEnabled = false
+        }
     }
     
     
@@ -878,36 +887,61 @@ open class MFTMapView: UIView {
         
         if mapOptions.isRecenterControlVisible{
             zoomButtonsView.removeFromSuperview()
-            compassButton.removeFromSuperview()
+            userLocationButton.removeFromSuperview()
             self.addSubview(recenterButton)
             self.recenterButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -2).isActive = true
             self.recenterButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -7.5).isActive = true
             self.recenterButton.widthAnchor.constraint(equalToConstant: 57).isActive = true
             self.recenterButton.heightAnchor.constraint(equalToConstant: 57).isActive = true
-            toggleCompassButton()
+            toggleUserLocationButton()
         }
     }
     
     
-   internal func toggleCompassButton(){
+   internal func toggleUserLocationButton(){
 
-    if mapOptions.isCompassVisible{
+    if mapOptions.isUserLocationButtonVisible{
             zoomButtonsView.removeFromSuperview()
-            self.addSubview(compassButton)
-            self.compassButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -2).isActive = true
-            self.compassButton.widthAnchor.constraint(equalToConstant: 57).isActive = true
-            self.compassButton.heightAnchor.constraint(equalToConstant: 57).isActive = true
+            self.addSubview(userLocationButton)
+            self.userLocationButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -2).isActive = true
+            self.userLocationButton.widthAnchor.constraint(equalToConstant: 57).isActive = true
+            self.userLocationButton.heightAnchor.constraint(equalToConstant: 57).isActive = true
         
         if mapOptions.isRecenterControlVisible {
-             self.compassButton.bottomAnchor.constraint(equalTo: self.recenterButton.topAnchor, constant: 6.6).isActive = true
+             self.userLocationButton.bottomAnchor.constraint(equalTo: self.recenterButton.topAnchor, constant: 6.6).isActive = true
         }else{
-            self.compassButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -7.5).isActive = true
+            self.userLocationButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -7.5).isActive = true
         }
     
         }else{
-            compassButton.removeFromSuperview()
+            userLocationButton.removeFromSuperview()
         }
         toggleZoomButtons()
+    }
+    
+    
+    internal func toggleCompassButton() {
+        if mapOptions.isCompassVisible {
+        self.addSubview(compassButton)
+        
+        self.compassButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 10).isActive = true
+        self.compassButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -2).isActive = true
+        self.compassButton.widthAnchor.constraint(equalToConstant: 57).isActive = true
+        self.compassButton.heightAnchor.constraint(equalToConstant: 57).isActive = true
+            self.compassButton.imageView?.clipsToBounds = false
+            self.compassButton.imageView?.contentMode = .center
+            self.compassButton.alpha = 0
+        }
+    }
+    
+
+    
+    internal func updateCompass(){
+        
+            UIView.animate(withDuration: 0.5) {
+            let angle = self.rotation // convert from degrees to radians
+            self.compassButton.imageView?.transform = CGAffineTransform(rotationAngle: CGFloat(angle)) // rotate the picture
+        }
     }
     
     
@@ -919,9 +953,9 @@ open class MFTMapView: UIView {
             self.zoomButtonsView.heightAnchor.constraint(equalToConstant: 100).isActive = true
             self.zoomButtonsView.widthAnchor.constraint(equalToConstant: 57).isActive = true
             
-            if mapOptions.isCompassVisible && mapOptions.isRecenterControlVisible || mapOptions.isCompassVisible{
-                self.zoomButtonsView.bottomAnchor.constraint(equalTo: self.compassButton.topAnchor, constant: 6.6).isActive = true
-            }else if mapOptions.isRecenterControlVisible && !mapOptions.isCompassVisible{
+            if mapOptions.isUserLocationButtonVisible && mapOptions.isRecenterControlVisible || mapOptions.isUserLocationButtonVisible{
+                self.zoomButtonsView.bottomAnchor.constraint(equalTo: self.userLocationButton.topAnchor, constant: 6.6).isActive = true
+            }else if mapOptions.isRecenterControlVisible && !mapOptions.isUserLocationButtonVisible{
                 self.zoomButtonsView.bottomAnchor.constraint(equalTo: self.recenterButton.topAnchor, constant: 6.6).isActive = true
             }else {
                 self.zoomButtonsView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -7.5).isActive = true
@@ -947,8 +981,45 @@ open class MFTMapView: UIView {
        
     }
     
+    @objc private func userLocationButtonTapped(){
+        guard let locationMarker = self.mapOptions.currentLocationGem else { return }
+        
+        let queue: OperationQueue = OperationQueue()
+        queue.maxConcurrentOperationCount = (2)
+        queue.addOperation({self.mapView.animate(toPosition: TGGeoPointMake(locationMarker.position.longitude, locationMarker.position.latitude), withDuration: self.easeDuration, with: .cubic)})
+        queue.addOperation({self.mapView.animate(toZoomLevel: 17, withDuration: self.easeDuration, with: .cubic)})
+        
+        mapOptions.adjustAccuracyCircle()
+        
+    }
+    
+    private func toggleCompassVisibility() {
+        
+        if self.compassButton.isHidden {
+            
+            UIView.transition(with: self.compassButton, duration: 0.5, options: .transitionCrossDissolve, animations: {
+                self.compassButton.isHidden = false
+            })
+            
+            
+            
+        }else {
+            
+            UIView.transition(with: self.compassButton, duration: 0.5, options: .transitionCrossDissolve, animations: {
+                self.compassButton.isHidden = true
+            })
+ 
+        }
+    }
+    
     @objc private func compassButtonTapped(){
         mapView.animate(toRotation: 0, withDuration: easeDuration, with: .cubic)
+        
+        UIView.animate(withDuration: 0.2) { // convert from degrees to radians
+            self.compassButton.imageView?.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+            self.compassButton.imageView?.transform = CGAffineTransform(rotationAngle: CGFloat(0).toRadians) // rotate the picture
+            self.compassButton.alpha = 0
+        }
     }
     
 
@@ -1280,7 +1351,13 @@ extension MFTMapView : TGMapViewDelegate, MapPlaceInfoSelectDelegate {
         rotateDelegate?.mapView(self, didRotateMap: location)
         
         updateMFTPlaceInfoPosition()
+        updateCompass()
         
+        if compassButton.alpha != 1 {
+            UIView.animate(withDuration: 0.2) {
+                self.compassButton.alpha = 1
+            }
+        }
         
     }
     
@@ -1406,6 +1483,8 @@ extension MFTMapView: MFTZoomButtonsViewDelegate {
         mapView.animate(toZoomLevel: zoom - 1, withDuration: easeDuration, with: .cubic)
     }
 }
+
+
 
 
 

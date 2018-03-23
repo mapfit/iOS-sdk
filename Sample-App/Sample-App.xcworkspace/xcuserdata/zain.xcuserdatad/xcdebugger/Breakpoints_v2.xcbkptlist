@@ -9,21 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../iOS-SDK/MFTClasses/MFTMapView.swift"
-<<<<<<< HEAD
-            timestampString = "543254465.466132"
+            filePath = "../iOS-SDK/MFTClasses/MFTMapOptions.swift"
+            timestampString = "543534678.819605"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1336"
-            endingLineNumber = "1336"
-            landmarkName = "loadCustomStyleSheetAsync(_:locale:)"
-=======
-            timestampString = "543392197.812929"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "610"
-            endingLineNumber = "610"
-            landmarkName = "addMarker(address:completion:)"
+            startingLineNumber = "258"
+            endingLineNumber = "258"
+            landmarkName = "updatePointer()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -33,70 +25,44 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../iOS-SDK/MFTClasses/MFTMapView.swift"
-            timestampString = "543392197.813002"
+            filePath = "../iOS-SDK/MFTClasses/MFTMapOptions.swift"
+            timestampString = "543534678.819685"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1159"
-            endingLineNumber = "1159"
-            landmarkName = "mapView(_:recognizer:shouldRecognizeSingleTapGesture:)"
->>>>>>> development
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../iOS-SDK/MFTClasses/MFTMapView.swift"
-<<<<<<< HEAD
-            timestampString = "543254465.4662091"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "198"
-            endingLineNumber = "198"
-            landmarkName = "init(frame:)"
-=======
-            timestampString = "543392197.813071"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1160"
-            endingLineNumber = "1160"
-            landmarkName = "mapView(_:recognizer:shouldRecognizeSingleTapGesture:)"
->>>>>>> development
+            startingLineNumber = "256"
+            endingLineNumber = "256"
+            landmarkName = "updatePointer()"
             landmarkType = "7">
             <Locations>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Mapfit.MFTMapView.__allocating_init(frame: __C.CGRect) -&gt; Mapfit.MFTMapView"
+                  symbolName = "closure #1 () -&gt; () in Mapfit.MFTMapOptions.headingDidUpdate(__ObjC.CLHeading) -&gt; ()"
                   moduleName = "Mapfit"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zain/Desktop/iOS-sdk/iOS-SDK/MFTClasses/MFTMapView.swift"
-                  timestampString = "543259501.6722929"
+                  urlString = "file:///Users/zain/Desktop/iOS-sdk/iOS-SDK/MFTClasses/MFTMapOptions.swift"
+                  timestampString = "543532773.390156"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "0"
-                  endingLineNumber = "0"
-                  offsetFromSymbolStart = "12">
+                  startingLineNumber = "256"
+                  endingLineNumber = "256"
+                  offsetFromSymbolStart = "580">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Mapfit.MFTMapView.init(frame: __C.CGRect) -&gt; Mapfit.MFTMapView"
+                  symbolName = "Mapfit.MFTMapOptions.(updatePointer in _5818ECF7F7BDF339ECEFB82C3DCD4723)() -&gt; ()"
                   moduleName = "Mapfit"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zain/Desktop/iOS-sdk/iOS-SDK/MFTClasses/MFTMapView.swift"
-                  timestampString = "543259501.674879"
+                  urlString = "file:///Users/zain/Desktop/iOS-sdk/iOS-SDK/MFTClasses/MFTMapOptions.swift"
+                  timestampString = "543532773.617805"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "24"
-                  endingLineNumber = "24"
-                  offsetFromSymbolStart = "56">
+                  startingLineNumber = "256"
+                  endingLineNumber = "256"
+                  offsetFromSymbolStart = "20">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -107,23 +73,61 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-<<<<<<< HEAD
             filePath = "../iOS-SDK/MFTClasses/MFTMapOptions.swift"
-            timestampString = "543275627.293215"
+            timestampString = "543534678.819749"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "277"
-            endingLineNumber = "277"
-            landmarkName = "adjustAccuracyCircle()"
-=======
-            filePath = "../iOS-SDK/MFTClasses/MFTMapView.swift"
-            timestampString = "543392197.813127"
+            startingLineNumber = "325"
+            endingLineNumber = "325"
+            landmarkName = "locationDidUpdate(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Mapfit.MFTMapOptions.locationDidUpdate(__ObjC.CLLocation) -&gt; ()"
+                  moduleName = "Mapfit"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zain/Desktop/iOS-sdk/iOS-SDK/MFTClasses/MFTMapOptions.swift"
+                  timestampString = "543532773.396143"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "325"
+                  endingLineNumber = "325"
+                  offsetFromSymbolStart = "4200">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Mapfit.MFTMapOptions.locationDidUpdate(__ObjC.CLLocation) -&gt; ()"
+                  moduleName = "Mapfit"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zain/Desktop/iOS-sdk/iOS-SDK/MFTClasses/MFTMapOptions.swift"
+                  timestampString = "543532773.622692"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "325"
+                  endingLineNumber = "325"
+                  offsetFromSymbolStart = "2412">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../iOS-SDK/MFTClasses/MFTMapOptions.swift"
+            timestampString = "543534678.8198071"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1161"
-            endingLineNumber = "1161"
-            landmarkName = "mapView(_:recognizer:shouldRecognizeSingleTapGesture:)"
->>>>>>> development
+            startingLineNumber = "259"
+            endingLineNumber = "259"
+            landmarkName = "updatePointer()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

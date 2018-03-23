@@ -18,12 +18,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate  {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
+        
         MFTManager.sharedManager.apiKey = "591dccc4e499ca0001a4c6a4abab8998a9ec4e0d8efce03e489a00ea"
         let mapview = MFTMapView(frame: view.bounds)
         self.view.addSubview(mapview)
         mapview.setZoom(zoomLevel: 8)
-        
+        mapview.mapOptions.setUserLocationButtonVisibility(true)
+        mapview.mapOptions.setCompassVisibility(true)
+        mapview.mapOptions.setUserLocationEnabled(true, accuracy: .low)
+        //mapview.mapOptions.setRecenterVisibility(true)
         mapview.addMarker(address: "244 w 24th street ny ny") { (marker, error) in
             guard let marker = marker else { return }
             self.mapview.setCenter(position: marker.getPosition())
@@ -67,12 +70,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate  {
         mapview.mapOptions.setUserLocationEnabled(true, accuracy: .low)
         mapview.mapOptions.userLocationDelegate = self
         
+        
         break
         
     case .authorizedAlways:
         // Enable any of your app's location services.
         mapview.mapOptions.setUserLocationEnabled(true, accuracy: .low)
         mapview.mapOptions.userLocationDelegate = self
+        
+        
         break
         
     case .notDetermined:
@@ -118,4 +124,4 @@ extension ViewController : MapPolylineSelectDelegate {
     
     
 }
-
+/Users/zain/Desktop/iOS-sdk/iOS-SDK/houseStyles.bundle/mapfit-night.yaml

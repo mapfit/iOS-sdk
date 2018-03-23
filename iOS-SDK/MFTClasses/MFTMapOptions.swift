@@ -20,6 +20,25 @@ public protocol LocationUpdateDelegate: class {
 
 public class MFTMapOptions  {
 
+    /**
+     Indicates if user location button is enabled. Set by setUserLocationButtonVisibility.
+     */
+    public var isUserLocationButtonVisible: Bool {
+        didSet {
+            mapView?.toggleUserLocationButton()
+        }
+    }
+    
+    /**
+     Indicates whether user location is enabled. Set by setUserLocationEnabled.
+     */
+    internal var isUserLocationEnabled: Bool {
+        didSet {
+            
+        }
+    }
+    
+    
     
     /**
      Indicates if compass is enabled. Set by setCompassEnabled.
@@ -62,15 +81,20 @@ public class MFTMapOptions  {
     private var maxZoomLevel: Float
     private var minZoomLevel: Float
     
+    
     fileprivate let styles: [MFTMapTheme:MFTStyleSheet] = [MFTMapTheme.day : MFTDayStyle(),
                                                            MFTMapTheme.night : MFTNightStyle(), MFTMapTheme.grayScale : MFTGreyScaleStyle()]
     
 
     internal var currentLocationGem: MFTMarker?
     internal var accuracyCircle: MFTMarker?
+
     internal var lastLocation: CLLocation?
     private var firstRun: Int = 0
     internal var accuracyCircleTimer = Timer()
+    internal var pointerTimer = Timer()
+    
+    internal var lastHeading: CLHeading?
     
     
     /// Location
@@ -140,6 +164,18 @@ public class MFTMapOptions  {
      Sets zoom controls visibility.
      - parameter show: True or False value inidicating zoom visibility.
      */
+    
+    
+    public func setUserLocationButtonVisibility(_ show: Bool){
+        isUserLocationButtonVisible = show
+    }
+    
+    
+    
+    /**
+     Sets zoom controls visibility.
+     - parameter show: True or False value inidicating zoom visibility.
+     */
 
     
     public func setZoomControlVisibility(_ show: Bool){
@@ -158,6 +194,7 @@ public class MFTMapOptions  {
     
     public func setCompassVisibility(_ show: Bool){
         isCompassVisible = show
+        self.locationManager.startUpdatingHeading()
     }
     
 
@@ -165,6 +202,7 @@ public class MFTMapOptions  {
         self.isCompassVisible = false
         self.isZoomControlVisible = false
         self.isRecenterControlVisible = false
+        self.isUserLocationButtonVisible = false
         self.mapTheme = .day
         self.cameraType = TGCameraType.flat
         self.isPanEnabled = true
@@ -172,6 +210,7 @@ public class MFTMapOptions  {
         self.isRotateEnabled = true
         self.isTiltEnabled = true
         self.is3DbuildingsEnabled = true
+        self.isUserLocationEnabled = false
         self.minZoomLevel = 0
         self.maxZoomLevel = 20
         self.locationManager = MFTLocationProvider()
@@ -183,6 +222,7 @@ public class MFTMapOptions  {
         self.isCompassVisible = false
         self.isZoomControlVisible = false
         self.isRecenterControlVisible = false
+        self.isUserLocationButtonVisible = false
         self.mapTheme = .day
         self.cameraType = TGCameraType.flat
         self.isPanEnabled = true
@@ -190,6 +230,7 @@ public class MFTMapOptions  {
         self.isRotateEnabled = true
         self.isTiltEnabled = true
         self.is3DbuildingsEnabled = true
+        self.isUserLocationEnabled = false
         self.minZoomLevel = 0
         self.maxZoomLevel = 20
         self.locationManager = MFTLocationProvider()
@@ -203,7 +244,25 @@ public enum MFTLocationAccuracy {
 
 extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDelegate {
     
+    public func headingDidUpdate(_ heading: CLHeading) {
+        
+        if isCompassVisible {
+            mapView?.updateCompass()
+        }
+        lastHeading = heading
+    }
     
+    @objc private func updatePointer(){
+        let image = UIImage(named: "location", in: Bundle.houseStylesBundle(), compatibleWith: nil)
+        
+        if let heading = lastHeading?.trueHeading.degreesToRadians {
+            let newImage = image?.rotate(radians: Float(heading))
+            self.currentLocationGem?.setIcon(newImage!)
+        }
+        
+        
+    }
+
     
     /**
      Sets compass control visibility.
@@ -213,7 +272,8 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
         if show {
             locEngine.delegate = self
             locationManager.delegate = self
-            
+            isUserLocationEnabled = true
+            isUserLocationButtonVisible = true
             if accuracy == .high {
                 locationManager.coreLocationManager?.desiredAccuracy = kCLLocationAccuracyBest
             }else {
@@ -234,6 +294,7 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
 
         self.currentLocationGem?.setPosition(alphaLocation.coordinate)
         self.accuracyCircle?.setPosition(alphaLocation.coordinate)
+
         
         
     }
@@ -241,30 +302,37 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
     public func locationDidUpdate(_ location: CLLocation) {
         print("Location Did update in Map Options: \(location.coordinate)")
         if firstRun == 0 {
+            self.firstRun = 1
             guard let mapView = self.mapView else { return }
             self.accuracyCircle = mapView.addMarker(position: location.coordinate)
             if let circleImage = UIImage(named: "Radius", in: Bundle.houseStylesBundle(), compatibleWith: nil) {
                 
                 self.accuracyCircle?.setIcon(circleImage)
                 self.accuracyCircle?.markerOptions?.setAnchorPosition(.center)
-               
+            
                 self.lastLocation = location
                 adjustAccuracyCircle()
                 
             }
             self.currentLocationGem = mapView.addMarker(position: location.coordinate)
-            self.firstRun = 1
+            
             if let image = UIImage(named: "location", in: Bundle.houseStylesBundle(), compatibleWith: nil) {
                 self.currentLocationGem?.setIcon(image)
-                
                 self.currentLocationGem?.markerOptions?.setAnchorPosition(.center)
                 self.currentLocationGem?.markerOptions?.setDrawOrder(drawOrder: 1000)
             }
+            
+            self.pointerTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(updatePointer), userInfo: nil, repeats: true)
+           
+            
+            
+           
         }
         
         locEngine.addToSignalArray(location: location)
         //self.lastLocation = location
     }
+
     
     @objc internal func adjustAccuracyCircle(){
         
@@ -311,6 +379,36 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
         mapView?.removeMarker(marker)
         return
     }
+
 }
+
+extension UIImage {
+    func rotate(radians: Float) -> UIImage? {
+        
+        
+        var newSize = CGRect(origin: CGPoint.zero, size: self.size).applying(CGAffineTransform(rotationAngle: CGFloat(radians))).size
+        // Trim off the extremely small float value to prevent core graphics from rounding it up
+        newSize.width = floor(newSize.width)
+        newSize.height = floor(newSize.height)
+        
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0)
+        let context = UIGraphicsGetCurrentContext()!
+        
+        // Move origin to middle
+        context.translateBy(x: newSize.width/2, y: newSize.height/2)
+        // Rotate around middle
+        context.rotate(by: CGFloat(radians))
+        
+        self.draw(in: CGRect(x: -self.size.width/2, y: -self.size.height/2, width: self.size.width, height: self.size.height))
+        
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage
+    }
+}
+
+
+
 
 

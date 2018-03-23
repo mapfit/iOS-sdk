@@ -81,6 +81,16 @@
 		BF61FEC5205C4354008101EB /* location@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF61FEC2205C4353008101EB /* location@3x.png */; };
 		BF61FEC6205C4354008101EB /* location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF61FEC3205C4354008101EB /* location@2x.png */; };
 		BF61FEC7205C4354008101EB /* location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF61FEC3205C4354008101EB /* location@2x.png */; };
+		BFB62D1F2064107300D9AA80 /* currentLocation.png in Resources */ = {isa = PBXBuildFile; fileRef = BFB62D1C2064107200D9AA80 /* currentLocation.png */; };
+		BFB62D202064107300D9AA80 /* currentLocation.png in Resources */ = {isa = PBXBuildFile; fileRef = BFB62D1C2064107200D9AA80 /* currentLocation.png */; };
+		BFB62D212064107300D9AA80 /* currentLocation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFB62D1D2064107200D9AA80 /* currentLocation@2x.png */; };
+		BFB62D222064107300D9AA80 /* currentLocation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFB62D1D2064107200D9AA80 /* currentLocation@2x.png */; };
+		BFB62D232064107300D9AA80 /* currentLocation@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFB62D1E2064107300D9AA80 /* currentLocation@3x.png */; };
+		BFB62D242064107300D9AA80 /* currentLocation@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFB62D1E2064107300D9AA80 /* currentLocation@3x.png */; };
+		BFB62D2B2064220400D9AA80 /* compassNorth@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFB62D252064220000D9AA80 /* compassNorth@3x.png */; };
+		BFB62D2C2064220400D9AA80 /* compassNorth@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFB62D252064220000D9AA80 /* compassNorth@3x.png */; };
+		BFB62D312064220400D9AA80 /* compassNorth@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFB62D282064220200D9AA80 /* compassNorth@2x.png */; };
+		BFB62D322064220400D9AA80 /* compassNorth@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFB62D282064220200D9AA80 /* compassNorth@2x.png */; };
 		C3198D567377541B14FBFBBC7283C771 /* MFTAnnotations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FDEA188A0E3D1A41E4D59A6B0C177BC /* MFTAnnotations.swift */; };
 		C498B11975CCDE3A54609E83CF5B4E8C /* DecodeFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149DC6CC6DEDF83DCDE9EFC7D5ED1283 /* DecodeFunctions.swift */; };
 		C92784C7E91419F67842928650B2DE40 /* Mapfit-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E40805FB0C5EA79ED5AF6930F1BCAE87 /* Mapfit-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -198,6 +208,11 @@
 		BF4BA7AA20616EF4001F2FE3 /* Radius@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Radius@3x.png"; path = "iOS-SDK/houseStyles.bundle/Radius@3x.png"; sourceTree = "<group>"; };
 		BF61FEC2205C4353008101EB /* location@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "location@3x.png"; path = "iOS-SDK/houseStyles.bundle/location@3x.png"; sourceTree = "<group>"; };
 		BF61FEC3205C4354008101EB /* location@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "location@2x.png"; path = "iOS-SDK/houseStyles.bundle/location@2x.png"; sourceTree = "<group>"; };
+		BFB62D1C2064107200D9AA80 /* currentLocation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = currentLocation.png; path = "iOS-SDK/houseStyles.bundle/currentLocation.png"; sourceTree = "<group>"; };
+		BFB62D1D2064107200D9AA80 /* currentLocation@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "currentLocation@2x.png"; path = "iOS-SDK/houseStyles.bundle/currentLocation@2x.png"; sourceTree = "<group>"; };
+		BFB62D1E2064107300D9AA80 /* currentLocation@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "currentLocation@3x.png"; path = "iOS-SDK/houseStyles.bundle/currentLocation@3x.png"; sourceTree = "<group>"; };
+		BFB62D252064220000D9AA80 /* compassNorth@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "compassNorth@3x.png"; path = "iOS-SDK/houseStyles.bundle/compassNorth@3x.png"; sourceTree = "<group>"; };
+		BFB62D282064220200D9AA80 /* compassNorth@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "compassNorth@2x.png"; path = "iOS-SDK/houseStyles.bundle/compassNorth@2x.png"; sourceTree = "<group>"; };
 		C089C442D50195E72317D50A4DF452A9 /* Pods-Sample-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Sample-App.release.xcconfig"; sourceTree = "<group>"; };
 		C24F1045DEC3811118DC51A93F97E3B3 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		C3D2B73F071466F6B43968B852115074 /* DictionaryExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DictionaryExtensions.swift; sourceTree = "<group>"; };
@@ -517,10 +532,15 @@
 				BF4BA7A820616EF4001F2FE3 /* Radius@2x.png */,
 				BF4BA7AA20616EF4001F2FE3 /* Radius@3x.png */,
 				A896E2B931FF72B50FD9E85015C2B603 /* PlusButton.png */,
+				BFB62D282064220200D9AA80 /* compassNorth@2x.png */,
+				BFB62D252064220000D9AA80 /* compassNorth@3x.png */,
 				9927EFE7B2A06EE62E021629CD60D53E /* reCenter.png */,
 				6C2AEF2E88899296273A66FBD2D3229C /* ReCenter_OFF.png */,
 				254430F6C1C53B54ED2B9FD861183740 /* SettingsToggle.png */,
 				7F564AF6C1B83215377236A0814430F6 /* Watermark_Day_Lg.png */,
+				BFB62D1C2064107200D9AA80 /* currentLocation.png */,
+				BFB62D1D2064107200D9AA80 /* currentLocation@2x.png */,
+				BFB62D1E2064107300D9AA80 /* currentLocation@3x.png */,
 				EE61A1ADC43D90161E6A273C94027407 /* Watermark_Day_Sm.png */,
 				EAAE900C87D4CA892D8BAAC765684EED /* Watermark_Night_Lg.png */,
 				673567A2DF94EE48E8DA34337DCCE260 /* Watermark_Night_Sm.png */,
@@ -696,9 +716,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF61FEC4205C4354008101EB /* location@3x.png in Resources */,
+				BFB62D1F2064107300D9AA80 /* currentLocation.png in Resources */,
+				BFB62D2B2064220400D9AA80 /* compassNorth@3x.png in Resources */,
 				BF61FEC6205C4354008101EB /* location@2x.png in Resources */,
+				BFB62D232064107300D9AA80 /* currentLocation@3x.png in Resources */,
+				BFB62D212064107300D9AA80 /* currentLocation@2x.png in Resources */,
 				BF126C7B205C37E90043DB66 /* location.png in Resources */,
 				7FA3A1CAC1772F02E19CE6D1207289FA /* houseStyles.bundle in Resources */,
+				BFB62D312064220400D9AA80 /* compassNorth@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -716,10 +741,12 @@
 				EF18D3C42AED2CF62A84A19FE8B5A7DF /* geofimap.ttf in Resources */,
 				A521F2FA6A1F9A77931EF14D7D58B162 /* mapfit-day.yaml in Resources */,
 				CB3898165775A047A846B5219799A618 /* mapfit-grayscale.yaml in Resources */,
+				BFB62D202064107300D9AA80 /* currentLocation.png in Resources */,
 				815B57A24F7E906AA205517D9D1EC2A8 /* mapfit-night.yaml in Resources */,
 				EF40F90EDB4B486647FE8D1B684FA975 /* menu.png in Resources */,
 				BB23A1610C4159F75D96BA5D5BC04197 /* MinusButton.png in Resources */,
 				AEB77F75870933DA95CA90FC921B2DEF /* Montserrat-Regular.woff in Resources */,
+				BFB62D222064107300D9AA80 /* currentLocation@2x.png in Resources */,
 				1D1916BB162A5EABF218202FE16D58DA /* OpenSans-Bold.woff in Resources */,
 				6AE2A793FC6007A53D68CF8EE82DB588 /* OpenSans-Italic.woff in Resources */,
 				9FA3AE1C7C553C5EEB5FEE0D3A418697 /* OpenSans-Light.woff in Resources */,
@@ -728,6 +755,7 @@
 				BF4BA7AD20616EF4001F2FE3 /* Radius@3x.png in Resources */,
 				BF4BA7AC20616EF4001F2FE3 /* Radius.png in Resources */,
 				79E25123F28B389BEAFA5C7FD17D57A2 /* OpenSans-Semibold.woff in Resources */,
+				BFB62D322064220400D9AA80 /* compassNorth@2x.png in Resources */,
 				ABC5937E31086FF5C478B601672D6C30 /* OpenSans-SemiboldItalic.woff in Resources */,
 				691B07E235A4DAC818E8D90FF5024544 /* PlusButton.png in Resources */,
 				7DBFA9104D77FB405D4E35054660B01F /* reCenter.png in Resources */,
@@ -742,6 +770,7 @@
 				A50FDB96FE114945A2D85AEAC8B21D97 /* Watermark_Night_Sm.png in Resources */,
 				DB132FD79EFD68DB71F6B02D05A02655 /* Zoom In.png in Resources */,
 				585F9D3307D68BECC9199173FB54D8B9 /* Zoom Out.png in Resources */,
+				BFB62D2C2064220400D9AA80 /* compassNorth@3x.png in Resources */,
 				BF61FEC7205C4354008101EB /* location@2x.png in Resources */,
 				0B57ED27951B8E7786235AEB525B2A48 /* Zoom.png in Resources */,
 				22FC76DEB24EFA0676C68B1617C5F9DB /* ZoomBacking_iOS.png in Resources */,
@@ -749,6 +778,7 @@
 				BF61FEC5205C4354008101EB /* location@3x.png in Resources */,
 				4CF1CF352D2B0B989BD8E3A5DE933CC4 /* zoomIn@2x.png in Resources */,
 				BC63CD04381BD127BC9818DA3A7CC7FC /* zoomIn@3x.png in Resources */,
+				BFB62D242064107300D9AA80 /* currentLocation@3x.png in Resources */,
 				347AE03D7B36854D123AD1FCBD54C144 /* zoomOut.png in Resources */,
 				B4EDFA646FB7769F7934DA0D47E4F82A /* zoomOut@2x.png in Resources */,
 				3EAC787D861F14DA153849860E64DC8C /* zoomOut@3x.png in Resources */,
