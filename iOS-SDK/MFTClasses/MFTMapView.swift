@@ -123,8 +123,8 @@ open class MFTMapView: UIView {
     
     public typealias OnStyleLoaded = (MFTMapTheme) -> ()
     fileprivate var onStyleLoadedClosure : OnStyleLoaded? = nil
-    fileprivate let styles: [MFTMapTheme:MFTStyleSheet] = [MFTMapTheme.day : MFTDayStyle(),
-                                                           MFTMapTheme.night : MFTNightStyle(), MFTMapTheme.grayScale : MFTGreyScaleStyle()] 
+    //fileprivate let styles: [MFTMapTheme:MFTStyleSheet] = [MFTMapTheme.day : MFTDayStyle(),
+                                                          // MFTMapTheme.night : MFTNightStyle(), MFTMapTheme.grayScale : MFTGreyScaleStyle()]
      let application : ApplicationProtocol
     //Location Properties
     var shouldShowCurrentLocation = false
@@ -260,8 +260,6 @@ open class MFTMapView: UIView {
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
     
     
 
@@ -799,14 +797,9 @@ open class MFTMapView: UIView {
 
         //check if API Key is empty 
         guard let _ = mapfitManger.apiKey else { return }
+    
         
-        guard let theme = styles[mapOptions.mapTheme] else  { print("Could no find theme to set")
-            return }
-        
-        try? loadMFTStyleSheetAsync(theme) { (style) in
-        
-
-        }
+        try? loadMapfitStyleAsync(mapOptions.mapTheme, locale: self.locale)
         
     }
     
@@ -1076,7 +1069,8 @@ extension MFTMapView : TGMapViewDelegate, MapPlaceInfoSelectDelegate {
         
         //We only want to call back on the latest scene load - so we gate here to make sure we only call back on the latest.
         //TODO: For 2.0 we should pass the Error along in the callback block.
-         restoreUserMarkers()
+        //reDrawAnnotations()
+        restoreUserMarkers()
         if sceneID != latestSceneId {
             return
         }
@@ -1319,7 +1313,17 @@ extension MFTMapView : TGMapViewDelegate, MapPlaceInfoSelectDelegate {
     
     open func mapView(_ view: TGMapViewController, recognizer: UIGestureRecognizer, didRecognizePinchGesture location: CGPoint) {
         let pinch = recognizer as! UIPinchGestureRecognizer
-        self.mapOptions.adjustAccuracyCircle()
+        
+        if pinch.state == .recognized {
+            // self.mapOptions.accuracyCircleTimer.fire()
+        }
+        
+        if pinch.state == .ended {
+           // self.mapOptions.accuracyCircleTimer.invalidate()
+        }
+        
+        
+        
         if self.zoom > mapOptions.getMaxZoomLevel() && self.zoom * Float(pinch.scale) > mapOptions.getMaxZoomLevel() {
             setZoom(zoomLevel: mapOptions.getMaxZoomLevel(), duration: 0.123)
         }
@@ -1374,7 +1378,8 @@ extension MFTMapView : TGMapViewDelegate, MapPlaceInfoSelectDelegate {
 
 }
 
-//Mark: - Load Styles
+
+
 extension MFTMapView {
     /**
      Loads the map style asynchronously. Recommended for production apps. Uses the system's current locale.
@@ -1382,10 +1387,9 @@ extension MFTMapView {
      - parameter onStyleLoaded: Closure called on scene loaded.
      - throws: A MFError `apiKeyNotSet` error if an API Key has not been sent on the MFTManager class.
      */
-    internal func loadMFTStyleSheetAsync(_ styleSheet: MFTStyleSheet, onStyleLoaded: OnStyleLoaded?) throws {
-        try loadMFTStyleSheetAsync(styleSheet, locale: Locale.current, onStyleLoaded: onStyleLoaded)
+    internal func loadMapfitThemeAsync(_ theme: MFTMapTheme) throws {
+        try loadMapfitStyleAsync(theme, locale: Locale.current)
     }
-    
     
     /**
      Loads the map style asynchronously. Recommended for production apps. Uses the system's current locale.
@@ -1393,7 +1397,7 @@ extension MFTMapView {
      - parameter onStyleLoaded: Closure called on scene loaded.
      - throws: A MFError `apiKeyNotSet` error if an API Key has not been sent on the MFTManager class.
      */
-    internal func loadCustomStyleSheetAsync(_ customPath: String) throws {
+    internal func loadCustomThemeAsync(_ customPath: String) throws {
         try loadCustomStyleSheetAsync(customPath, locale: Locale.current)
     }
     
@@ -1404,42 +1408,44 @@ extension MFTMapView {
      - parameter onStyleLoaded: Closure called on scene loaded.
      - throws: A MFError `apiKeyNotSet` error if an API Key has not been sent on the MFTManager class.
      */
-    internal func loadMFTStyleSheetAsync(_ styleSheet: MFTStyleSheet, locale: Locale, onStyleLoaded: OnStyleLoaded?) throws {
-        self.locale = locale
-        
-        mapOptions.mapTheme = styleSheet.mapStyle
+    
+    
+    internal func loadMapfitStyleAsync(_ theme: MFTMapTheme, locale: Locale) throws {
+        mapOptions.mapTheme = theme
         
         if mapOptions.mapTheme == .day {
             attributionBtn.setImage(UIImage(named: "Watermark_Day_Sm.png", in: Bundle.houseStylesBundle(), compatibleWith: nil), for: .normal)
         }else{
-           attributionBtn.setImage(UIImage(named: "Watermark_Night_Sm.png", in: Bundle.houseStylesBundle(), compatibleWith: nil), for: .normal)
-        }
-
-        let bundle = Bundle.houseStylesBundle()?.url(forResource: styleSheet.relativePath, withExtension: "yaml")
-        
-        
-       
-        if let sceneURL = bundle {
-            latestSceneId = mapView.loadScene(from: sceneURL)
-            reDrawAnnotations()
-            
+            attributionBtn.setImage(UIImage(named: "Watermark_Night_Sm.png", in: Bundle.houseStylesBundle(), compatibleWith: nil), for: .normal)
         }
         
-       
+        self.locale = locale
+        
+        if let urlPath = URL(string: theme.rawValue) {
+            mapView.loadScene(from: urlPath)
+            self.reDrawAnnotations()
+        }
     }
+    
     
     
     internal func loadCustomStyleSheetAsync(_ path: String, locale: Locale) throws {
         self.locale = locale
         self.mapOptions.mapTheme = .custom
-
+        
         if let urlPath = URL(string: path) {
-                mapView.loadSceneAsync(from: urlPath)
+            mapView.loadSceneAsync(from: urlPath)
+            self.reDrawAnnotations()
+        }
+        
     }
-       
-    }
-  
+    
 }
+
+
+
+
+
 
 extension MFTMapView {
     

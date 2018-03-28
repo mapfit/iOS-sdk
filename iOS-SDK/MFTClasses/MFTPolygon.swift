@@ -1,4 +1,4 @@
-//
+ //
 //  MFTPolygon.swift
 //  iOS.SDK
 //

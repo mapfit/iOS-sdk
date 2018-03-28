@@ -26,6 +26,7 @@ public class MFTMapOptions  {
     public var isUserLocationButtonVisible: Bool {
         didSet {
             mapView?.toggleUserLocationButton()
+            mapView?.userLocationButton.isEnabled = false
         }
     }
     
@@ -72,7 +73,6 @@ public class MFTMapOptions  {
     public var mapView: MFTMapView?
     internal var mapTheme: MFTMapTheme
     public var cameraType: TGCameraType?
-    public var showUserLocation: Bool?
     public var isPanEnabled: Bool
     public var isPinchEnabled: Bool
     public var isRotateEnabled: Bool
@@ -80,28 +80,25 @@ public class MFTMapOptions  {
     public var is3DbuildingsEnabled: Bool?
     private var maxZoomLevel: Float
     private var minZoomLevel: Float
-    
-    
-    fileprivate let styles: [MFTMapTheme:MFTStyleSheet] = [MFTMapTheme.day : MFTDayStyle(),
-                                                           MFTMapTheme.night : MFTNightStyle(), MFTMapTheme.grayScale : MFTGreyScaleStyle()]
-    
-
     internal var currentLocationGem: MFTMarker?
     internal var accuracyCircle: MFTMarker?
-
     internal var lastLocation: CLLocation?
     private var firstRun: Int = 0
     internal var accuracyCircleTimer = Timer()
     internal var pointerTimer = Timer()
-    
     internal var lastHeading: CLHeading?
-    
+    internal var accuracy: MFTLocationAccuracy?
     
     /// Location
     internal let locationManager: LocationManagerProtocol
     internal var locEngine = LocationCorrectionEngine()
     /// Receiver for location updates
     public weak var userLocationDelegate: LocationUpdateDelegate?
+    let coreLocationManager = CLLocationManager()
+    private var accuracyCircleDrawOrder = 1000
+    private var userLocationDrawOrder = 1200
+    
+    
     /**
      Sets mapView to be controlled by the class.
      - parameter mapView: The map view that will be controlled by the options.
@@ -136,20 +133,14 @@ public class MFTMapOptions  {
     
     
     public func setTheme(theme: MFTMapTheme) {
-        guard let style = styles[theme] else { print("Could not load theme")
-            return
-        }
-        
         self.mapTheme = theme
-        try? mapView?.loadMFTStyleSheetAsync(style) { (style) in
-           
-        }
+        try? mapView?.loadMapfitThemeAsync(theme)
     }
     
     public func setCustomTheme(_ customTheme: String){
         
        self.mapTheme = .custom
-       try? mapView?.loadCustomStyleSheetAsync(customTheme)
+       try? mapView?.loadCustomThemeAsync(customTheme)
     
         
     }
@@ -167,7 +158,7 @@ public class MFTMapOptions  {
     
     
     public func setUserLocationButtonVisibility(_ show: Bool){
-        isUserLocationButtonVisible = show
+        isUserLocationButtonVisible = show 
     }
     
     
@@ -216,6 +207,7 @@ public class MFTMapOptions  {
         self.locationManager = MFTLocationProvider()
         self.mapView = mapView
         self.firstRun = 0
+        
     }
     
     internal init(){
@@ -235,6 +227,7 @@ public class MFTMapOptions  {
         self.maxZoomLevel = 20
         self.locationManager = MFTLocationProvider()
         self.firstRun = 0
+        
     }
 }
 
@@ -269,11 +262,16 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
      - parameter show: True or False value inidicating compass visibility.
      */
     public func setUserLocationEnabled(_ show: Bool, accuracy: MFTLocationAccuracy){
+        locEngine.delegate = self
+        locationManager.delegate = self
+        
+        if locationManager.isInUseAuthorized() {
+        
         if show {
-            locEngine.delegate = self
-            locationManager.delegate = self
+     
             isUserLocationEnabled = true
             isUserLocationButtonVisible = true
+            mapView?.userLocationButton.isEnabled = true
             if accuracy == .high {
                 locationManager.coreLocationManager?.desiredAccuracy = kCLLocationAccuracyBest
             }else {
@@ -283,7 +281,14 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
         } else {
             locEngine.delegate = nil
             locationManager.delegate = nil
+            mapView?.userLocationButton.isEnabled = false
+            isUserLocationEnabled = false
+            }
+        
+        } else {
+            locationManager.requestWhenInUseAuthorization()
         }
+        
     }
 
     
@@ -294,10 +299,9 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
 
         self.currentLocationGem?.setPosition(alphaLocation.coordinate)
         self.accuracyCircle?.setPosition(alphaLocation.coordinate)
-
-        
-        
     }
+    
+    
     
     public func locationDidUpdate(_ location: CLLocation) {
         print("Location Did update in Map Options: \(location.coordinate)")
@@ -305,28 +309,33 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
             self.firstRun = 1
             guard let mapView = self.mapView else { return }
             self.accuracyCircle = mapView.addMarker(position: location.coordinate)
+            
+            
             if let circleImage = UIImage(named: "Radius", in: Bundle.houseStylesBundle(), compatibleWith: nil) {
-                
+
                 self.accuracyCircle?.setIcon(circleImage)
                 self.accuracyCircle?.markerOptions?.setAnchorPosition(.center)
-            
+                self.accuracyCircle?.markerOptions?.setDrawOrder(drawOrder: accuracyCircleDrawOrder)
                 self.lastLocation = location
                 adjustAccuracyCircle()
                 
             }
+            
             self.currentLocationGem = mapView.addMarker(position: location.coordinate)
             
             if let image = UIImage(named: "location", in: Bundle.houseStylesBundle(), compatibleWith: nil) {
                 self.currentLocationGem?.setIcon(image)
                 self.currentLocationGem?.markerOptions?.setAnchorPosition(.center)
-                self.currentLocationGem?.markerOptions?.setDrawOrder(drawOrder: 1000)
+                self.currentLocationGem?.markerOptions?.setDrawOrder(drawOrder: userLocationDrawOrder)
+                self.currentLocationGem?.markerOptions?.setWidth(width: 36)
+                self.currentLocationGem?.markerOptions?.setHeight(height: 36)
+                
             }
             
-            self.pointerTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(updatePointer), userInfo: nil, repeats: true)
-           
+            self.pointerTimer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(updatePointer), userInfo: nil, repeats: true)
+            self.accuracyCircleTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(adjustAccuracyCircle), userInfo: nil, repeats: true)
             
-            
-           
+ 
         }
         
         locEngine.addToSignalArray(location: location)
@@ -339,12 +348,14 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
         guard let lastLocation = self.lastLocation else {return}
         guard let zoom = mapView?.getZoom() else { return }
         let pixelMeterValue = self.getPixelPerMeter(lat: lastLocation.coordinate.latitude, zoom: zoom)
-        
- 
-         let sideLength = Int(65.0 / 2) * Int(pixelMeterValue)
 
-         self.accuracyCircle?.markerOptions?.setWidth(width: sideLength)
-         self.accuracyCircle?.markerOptions?.setHeight(height: sideLength)
+        let sideLength = Int(65.0 / 2) * Int(pixelMeterValue)
+        self.accuracyCircle?.markerOptions?.setWidth(width: sideLength)
+        self.accuracyCircle?.markerOptions?.setHeight(height: sideLength)
+        UIView.animate(withDuration: 0.1) {
+            
+        }
+      
         
     }
     
@@ -360,6 +371,9 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
 
 
     open func authorizationDidSucceed() {
+        self.setUserLocationEnabled(true, accuracy: accuracy ?? .low)
+        mapView?.userLocationButton.isEnabled = true
+        firstRun = 0
         locationManager.startUpdatingLocation()
         locationManager.requestLocationUpdates()
     }
@@ -375,38 +389,56 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
 
     func failedLocationAuthorization() {
         guard let marker = currentLocationGem else { return }
+        
         //TODO: handle error?
         mapView?.removeMarker(marker)
+        
+        guard let accuracyMarker = accuracyCircle else { return }
+        mapView?.removeMarker(accuracyMarker)
+        
+        mapView?.userLocationButton.isEnabled = false
+        
         return
     }
 
 }
+extension UIImage {
+func tranlucent(withAlpha alpha: CGFloat) -> UIImage? {
+    UIGraphicsBeginImageContextWithOptions(size, false, scale)
+    draw(at: CGPoint.zero, blendMode: .normal, alpha: alpha)
+    let image: UIImage? = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+    return image
+}
+}
 
 extension UIImage {
-    func rotate(radians: Float) -> UIImage? {
+    
+    func maskWithColor(color: UIColor) -> UIImage? {
+        let maskImage = cgImage!
         
+        let width = size.width
+        let height = size.height
+        let bounds = CGRect(x: 0, y: 0, width: width, height: height)
         
-        var newSize = CGRect(origin: CGPoint.zero, size: self.size).applying(CGAffineTransform(rotationAngle: CGFloat(radians))).size
-        // Trim off the extremely small float value to prevent core graphics from rounding it up
-        newSize.width = floor(newSize.width)
-        newSize.height = floor(newSize.height)
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue)
+        let context = CGContext(data: nil, width: Int(width), height: Int(height), bitsPerComponent: 8, bytesPerRow: 0, space: colorSpace, bitmapInfo: bitmapInfo.rawValue)!
         
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 0)
-        let context = UIGraphicsGetCurrentContext()!
+        context.clip(to: bounds, mask: maskImage)
+        context.setFillColor(color.cgColor)
+        context.fill(bounds)
         
-        // Move origin to middle
-        context.translateBy(x: newSize.width/2, y: newSize.height/2)
-        // Rotate around middle
-        context.rotate(by: CGFloat(radians))
-        
-        self.draw(in: CGRect(x: -self.size.width/2, y: -self.size.height/2, width: self.size.width, height: self.size.height))
-        
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return newImage
+        if let cgImage = context.makeImage() {
+            let coloredImage = UIImage(cgImage: cgImage)
+            return coloredImage
+        } else {
+            return nil
+        }
     }
+    
 }
+
 
 
 

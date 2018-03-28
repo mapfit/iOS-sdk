@@ -505,8 +505,8 @@ global:
 
 textures:
     pois:
-            #url: https://cdn.mapfit.com/v1/themes/images/refill@2x.png
-        url: refill@2x.png
+        url: https://cdn.mapfit.com/v1/themes/images/refill@2x.png
+       #url: refill@2x.png
 
         filtering: mipmap
         sprites:
@@ -631,7 +631,7 @@ styles:
         blend_order: 3
     sdk-point-overlay:
         base: points
-        texture: pois
+        texture: null
         blend: overlay
         blend_order: 3
     sdk-shield-overlay:

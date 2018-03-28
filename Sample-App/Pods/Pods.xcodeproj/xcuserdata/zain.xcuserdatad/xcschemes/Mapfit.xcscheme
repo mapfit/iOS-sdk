@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D7615584A23C1BD6F2A436C03EF8233D"
+               BlueprintIdentifier = "D855995BDA36F5498427168586B38446"
                BlueprintName = "Mapfit"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "Mapfit.framework">

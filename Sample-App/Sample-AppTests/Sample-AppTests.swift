@@ -405,6 +405,13 @@ class Sample_AppTests: XCTestCase {
 
     }
     
+    func testUserLocationStates() {
+        mapView.mapOptions.setUserLocationButtonVisibility(true)
+        XCTAssertEqual(CLLocationManager.locationServicesEnabled(), true, file: "Location services in enabled")
+
+    }
+    
+    
     
     func testPerformanceExample() {
         // This is an example of a performance test case.

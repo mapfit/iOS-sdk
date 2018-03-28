@@ -26,6 +26,8 @@ public class MFTMarkerOptions : NSObject{
     internal var marker: MFTMarker
    // Sets the draw order for the marker. The draw order is relative to other annotations. Note that higher values are drawn above lower ones.
     public var drawOrder: Int
+    internal var color: String
+    
     
     // Set Anchor
     public var anchorPosition: MFTAnchorPosition
@@ -68,24 +70,32 @@ public class MFTMarkerOptions : NSObject{
      */
     
     public func setDrawOrder(drawOrder: Int){
+        self.drawOrder = drawOrder
         marker.tgMarker?.drawOrder = drawOrder
-        marker.setStyle()
     }
     /**
      Sets the color for the marker icon.
      
      - parameter color: color of marker icon.
      */
+    internal func setColor(color: String) {
+        self.color = color
+        marker.setStyle()
+    }
+    
     
    
     //Default Init
     internal init(_ marker: MFTMarker) {
         height = 59
         width = 55
-        drawOrder = 1000
+        self.drawOrder = 2000
         anchorPosition = .top
+        self.color = "white"
         self.marker = marker
+        
         super.init()
+        
     }
 }
 
@@ -124,7 +134,7 @@ public class MFTMarker : NSObject, MFTAnnotation {
         didSet {
             tgMarker?.visible = isVisible
             tgMarker?.point = TGGeoPoint(coordinate: position)
-            
+            tgMarker?.drawOrder = 2000
             setStyle()
         }
         
@@ -278,7 +288,7 @@ public class MFTMarker : NSObject, MFTAnnotation {
     }
     
     private func generateStyle(_ markerOptions: MFTMarkerOptions) -> String{
-        return "{ style: 'sdk-point-overlay', anchor: \(markerOptions.anchorPosition.rawValue), size: [\(markerOptions.width)px, \(markerOptions.height)px], order: \(markerOptions.drawOrder), interactive: true, collide: false}"
+        return "{ style: 'sdk-point-overlay', color: \(markerOptions.color), anchor: \(markerOptions.anchorPosition.rawValue), size: [\(markerOptions.width)px, \(markerOptions.height)px], interactive: true, collide: false}"
     }
     
     /**
