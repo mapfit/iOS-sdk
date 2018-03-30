@@ -182,6 +182,7 @@ open class MFTMapView: UIView {
     
     var attributionButtonBottomConstraint = NSLayoutConstraint()
     var legalButtonBottomConstraint = NSLayoutConstraint()
+    let httpHandler = TGHttpHandler()
     
     //Legal Notices button
     lazy var legalButton: UIButton = UIButton()
@@ -210,9 +211,14 @@ open class MFTMapView: UIView {
         self.mapfitManger = MFTManager.sharedManager
         self.position = CLLocationCoordinate2D(latitude: 40.6892, longitude: -74.0445)
         
-        let httpHandler = TGHttpHandler()
+        
+        let configuration = URLSessionConfiguration.default
+
+        configuration.requestCachePolicy = .returnCacheDataElseLoad
+        let httpHandler = TGHttpHandler.init(sessionConfiguration: configuration)
         httpHandler.httpAdditionalHeaders = NSMutableDictionary(dictionary: MFTManager.sharedManager.httpHeaders())
         mapView.httpHandler = httpHandler
+        
         
         super.init(frame: frame)
         self.directionsOptions.setMapView(self)
@@ -239,9 +245,15 @@ open class MFTMapView: UIView {
         self.mapfitManger = MFTManager.sharedManager
         self.position = position
         
-        let httpHandler = TGHttpHandler()
+        
+        let configuration = URLSessionConfiguration.default
+        configuration.requestCachePolicy = .returnCacheDataElseLoad
+        let httpHandler = TGHttpHandler.init(sessionConfiguration: configuration)
+        
         httpHandler.httpAdditionalHeaders = NSMutableDictionary(dictionary: MFTManager.sharedManager.httpHeaders())
         mapView.httpHandler = httpHandler
+        
+
         
         super.init(frame: frame)
         self.setCenter(position: position)
@@ -1423,33 +1435,27 @@ extension MFTMapView {
         }
         
         self.locale = locale
-        
-        let loadPath: String
-        
-        if isInternetAvailable() {
-            
-        }
 
-        
-
-        
-        
         if let urlPath = URL(string: theme.rawValue) {
-            
-            if isInternetAvailable() {
                 mapView.loadScene(from: urlPath)
-            } else {
-                print("sorry no internet: pulling from cache")
-                mapView.loadScene(from: )
-                
+                self.reDrawAnnotations()
+            
+            DispatchQueue.global().async {
+                self.mapView.httpHandler.downloadRequestAsync(theme.rawValue, completionHandler: { (data, response, error) in
+                    if error == nil {
+                        let cachedResponse = CachedURLResponse(response: response!, data: data!)
+                        URLSessionConfiguration.default.urlCache?.storeCachedResponse(cachedResponse, for: URLRequest(url: urlPath, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 10))
+                    }
+                    
+                    
+                })
             }
-
-            self.reDrawAnnotations()
         }
+        
+        
     }
     
-    
-    
+
     internal func loadCustomStyleSheetAsync(_ path: String, locale: Locale) throws {
         self.locale = locale
         self.mapOptions.mapTheme = .custom

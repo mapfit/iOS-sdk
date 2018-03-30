@@ -74,11 +74,10 @@
 		B76E10D9AC1AC3532AFFE716C7CD3750 /* CardBacking.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BDA18BAB623F5EFAA9FD144E0733EF8 /* CardBacking.png */; };
 		BADA092807B1291ABA18BDF3D3D1E57E /* StyleGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B7C584331CCD1E65FDC29EA874EFCC /* StyleGuide.swift */; };
 		BF2A24737BA9CD3FF482A9730BC8FEFF /* Zoom.png in Resources */ = {isa = PBXBuildFile; fileRef = B5EBB481393C59F34EC50D782B100594 /* Zoom.png */; };
-		BFE5AA83206D6B68007C01BF /* MFTSceneHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE5AA82206D6B68007C01BF /* MFTSceneHandler.swift */; };
-		BFE5AA8E206E6849007C01BF /* directionPointer.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE5AA8D206E6849007C01BF /* directionPointer.png */; };
-		BFE5AA8F206E6849007C01BF /* directionPointer.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE5AA8D206E6849007C01BF /* directionPointer.png */; };
 		BFE5AA91206E698C007C01BF /* directionPointer.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE5AA90206E698C007C01BF /* directionPointer.png */; };
 		BFE5AA92206E698C007C01BF /* directionPointer.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE5AA90206E698C007C01BF /* directionPointer.png */; };
+		BFE5AAA8206E896B007C01BF /* directionPointer.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE5AAA7206E896B007C01BF /* directionPointer.png */; };
+		BFE5AAA9206E896B007C01BF /* directionPointer.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE5AAA7206E896B007C01BF /* directionPointer.png */; };
 		BFE9985C68E398BA0B9551AF49FC7728 /* DecodeFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCD28A4C1EFC4C698D9019F9C821871 /* DecodeFunctions.swift */; };
 		C032958D59B8390B17A1E6BBA0A0CA44 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = B43192AA0E5BE770E07D96F249F17DEC /* menu.png */; };
 		C31AC89F97881E1B3C04756AD73B1FA9 /* geofimap.eot in Resources */ = {isa = PBXBuildFile; fileRef = DEC02F47DCDC7B233AFEDAA398D2A36C /* geofimap.eot */; };
@@ -214,9 +213,8 @@
 		B9D9D703354A9E4495E200BCE39B9CA8 /* ResourceBundle-houseStyles-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-houseStyles-Info.plist"; sourceTree = "<group>"; };
 		BBA14685E129164457C0B9385B27847F /* Watermark_Day_Lg.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = Watermark_Day_Lg.png; path = "iOS-SDK/houseStyles.bundle/Watermark_Day_Lg.png"; sourceTree = "<group>"; };
 		BDD45747343869163E4D4249DF1E02A4 /* Radius@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Radius@3x.png"; path = "iOS-SDK/houseStyles.bundle/Radius@3x.png"; sourceTree = "<group>"; };
-		BFE5AA82206D6B68007C01BF /* MFTSceneHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFTSceneHandler.swift; sourceTree = "<group>"; };
-		BFE5AA8D206E6849007C01BF /* directionPointer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = directionPointer.png; sourceTree = "<group>"; };
 		BFE5AA90206E698C007C01BF /* directionPointer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = directionPointer.png; path = ../directionPointer.png; sourceTree = "<group>"; };
+		BFE5AAA7206E896B007C01BF /* directionPointer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = directionPointer.png; sourceTree = "<group>"; };
 		C089C442D50195E72317D50A4DF452A9 /* Pods-Sample-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Sample-App.release.xcconfig"; sourceTree = "<group>"; };
 		C4110C7BCD9C8D9DCAFBDBF70C5DA5FA /* MFTMapView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MFTMapView.swift; sourceTree = "<group>"; };
 		C9C57D42B9E5E8B7D7173BC0751C8C0B /* Pods-Sample-App-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Sample-App-resources.sh"; sourceTree = "<group>"; };
@@ -432,8 +430,8 @@
 				EF8C41718CD19477CE6DFBC857EB1AB1 /* location.png */,
 				78F2F5E6A86F9AE9C08335C564806B19 /* location@2x.png */,
 				342321A0AAC2CBE54BDE80CAF6D3C62C /* location@3x.png */,
-				BFE5AA8D206E6849007C01BF /* directionPointer.png */,
 				B43192AA0E5BE770E07D96F249F17DEC /* menu.png */,
+				BFE5AAA7206E896B007C01BF /* directionPointer.png */,
 				915F3802E196BAF34D417379833CAA36 /* MinusButton.png */,
 				E6BF8871CEACE8136AEF055D02F05E5F /* PlusButton.png */,
 				57FD74961D144D8D003475B5CC5BA6D2 /* Radius.png */,
@@ -552,7 +550,6 @@
 				CC2C417A93C83E52EFCDC58360C3078E /* MFTAPIObjects.swift */,
 				8F0ECC9AC66E77647D65654BAD5441A5 /* MFTDirections.swift */,
 				515DC60FE444C5CDC030DFEF9FA10009 /* MFTGeocoder.swift */,
-				BFE5AA82206D6B68007C01BF /* MFTSceneHandler.swift */,
 			);
 			name = API;
 			path = "iOS-SDK/API";
@@ -737,7 +734,6 @@
 				7A3AAC57957650D8F177CC3464EFA7F6 /* OpenSans-SemiboldItalic.woff in Resources */,
 				E7F4BE76E7BECE0673867913524775C0 /* PlusButton.png in Resources */,
 				8FF1D8E4477CE9A71A7A6003B316E0E2 /* Radius.png in Resources */,
-				BFE5AA8F206E6849007C01BF /* directionPointer.png in Resources */,
 				21D4D7000F462AE10066259A31AACB55 /* Radius@3x.png in Resources */,
 				F0988020BF827015A9F8852401DC54E9 /* reCenter.png in Resources */,
 				ABE748D110EEB35C31AB91ACD6C7CDE9 /* ReCenter_OFF.png in Resources */,
@@ -756,6 +752,7 @@
 				4F6140CB3DFDE3D054DBD18DDFAE7280 /* zoomIn@2x.png in Resources */,
 				8C95BCF2C82D45D804B60F84BBEE3917 /* zoomIn@3x.png in Resources */,
 				99B4EF12D8B1E3B2231F7532BE4E9CEB /* zoomOut.png in Resources */,
+				BFE5AAA9206E896B007C01BF /* directionPointer.png in Resources */,
 				B31DD77098963F219EB88350484862A2 /* zoomOut@2x.png in Resources */,
 				9B56CC84CFEA3931FDE26690864B4BC9 /* zoomOut@3x.png in Resources */,
 				BFE5AA92206E698C007C01BF /* directionPointer.png in Resources */,
@@ -768,7 +765,7 @@
 			files = (
 				0A95D6A31497639976702D38596EEB2F /* houseStyles.bundle in Resources */,
 				BFE5AA91206E698C007C01BF /* directionPointer.png in Resources */,
-				BFE5AA8E206E6849007C01BF /* directionPointer.png in Resources */,
+				BFE5AAA8206E896B007C01BF /* directionPointer.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -782,7 +779,6 @@
 				E0CA7C3573E6D355A1F4B58598960490 /* APPLFrameworkExtentions.swift in Sources */,
 				EFE11DEFCCCCCEE251DB50A5FE4E0E92 /* BundleExtension.swift in Sources */,
 				BFE9985C68E398BA0B9551AF49FC7728 /* DecodeFunctions.swift in Sources */,
-				BFE5AA83206D6B68007C01BF /* MFTSceneHandler.swift in Sources */,
 				88844A4D2AAECB3F52885E488594D011 /* DictionaryExtensions.swift in Sources */,
 				ADBC3A9ED14CD1715AB51CBA01A00EBA /* LocationCorrectionEngine.swift in Sources */,
 				723A002E03EBCDE3B0DFDE9732F2BB28 /* Mapfit-dummy.m in Sources */,

@@ -57,55 +57,6 @@ internal extension UIView {
     }
 }
 
-extension UIImage {
-    func rotate(radians: Float) -> UIImage? {
-        
-        
-        var newSize = CGRect(origin: CGPoint.zero, size: self.size).applying(CGAffineTransform(rotationAngle: CGFloat(radians))).size
-        // Trim off the extremely small float value to prevent core graphics from rounding it up
-        newSize.width = floor(newSize.width)
-        newSize.height = floor(newSize.height)
-        
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 0)
-        let context = UIGraphicsGetCurrentContext()!
-        
-        // Move origin to middle
-        context.translateBy(x: newSize.width/2, y: newSize.height/2)
-        // Rotate around middle
-        context.rotate(by: CGFloat(radians))
-        context.interpolationQuality = .high
-        self.draw(in: CGRect(x: -self.size.width/2, y: -self.size.height/2, width: self.size.width, height: self.size.height))
-        
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return newImage
-    }
-}
-
-extension UIImage {
-    public func rotated(byDegrees degrees: CGFloat) -> UIImage? {
-        let degreesToRadians: (CGFloat) -> CGFloat = {
-            return $0 / 180.0 * CGFloat(Double.pi)
-        }
-        
-        let rotatedViewContainer = UIView(frame: CGRect(origin: .zero, size: size))
-        rotatedViewContainer.transform = CGAffineTransform(rotationAngle: degreesToRadians(degrees))
-        let rotatedSize = rotatedViewContainer.frame.size
-        
-        UIGraphicsBeginImageContext(rotatedSize)
-        if let bitmap = UIGraphicsGetCurrentContext() {
-            bitmap.translateBy(x: rotatedSize.width / 2.0, y: rotatedSize.height / 2.0)
-            bitmap.rotate(by: degreesToRadians(degrees))
-            bitmap.scaleBy(x: 1.0, y: -1.0)
-            bitmap.draw(self.cgImage!, in: CGRect(x: -size.width / 2, y: -size.height / 2, width: size.width, height: size.height))
-        }
-        let rotatedImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return rotatedImage
-    }
-}
 
 extension UIImage {
     func image(withRotation radians: CGFloat) -> UIImage {

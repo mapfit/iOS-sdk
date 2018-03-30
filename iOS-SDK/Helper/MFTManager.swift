@@ -33,6 +33,9 @@ open class MFTManager: NSObject, MFTManagerProtocol {
     func httpHeaders() -> [String:String] {
         var headers = [String:String]()
         headers["User-Agent"] = buildUserAgent()
+        headers["Cache-Control"] = "608400"
+        
+        
         return headers
     }
     
