@@ -324,6 +324,7 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
                 self.accuracyCircle?.markerOptions?.setAnchorPosition(.center)
                 self.accuracyCircle?.markerOptions?.setFlat(true)
                 self.accuracyCircle?.markerOptions?.setDrawOrder(drawOrder: accuracyCircleDrawOrder)
+                self.accuracyCircle?.markerOptions?.setInteractivity(false)
                 self.lastLocation = location
                 adjustAccuracyCircle()
                 
@@ -335,6 +336,7 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
                 self.currentLocationGem?.setIcon(image)
                 self.currentLocationGem?.markerOptions?.setAnchorPosition(.center)
                 self.currentLocationGem?.markerOptions?.setDrawOrder(drawOrder: userLocationDrawOrder)
+                self.currentLocationGem?.markerOptions?.setInteractivity(false)
                 self.currentLocationGem?.markerOptions?.setFlat(true)
                 
             }
@@ -345,6 +347,7 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
                 self.directionPointer?.setIcon(image)
                 self.directionPointer?.markerOptions?.setAnchorPosition(.center)
                 self.directionPointer?.markerOptions?.setDrawOrder(drawOrder: userLocationDrawOrder)
+                self.directionPointer?.markerOptions?.setInteractivity(false)
                 self.directionPointer?.markerOptions?.setFlat(true)
                 
             }

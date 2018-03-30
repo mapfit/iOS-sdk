@@ -28,6 +28,7 @@ public class MFTMarkerOptions : NSObject{
     public var drawOrder: Int
     internal var color: String
     public var flat: Bool
+    internal var interactive: Bool
     
     
     // Set Anchor
@@ -97,6 +98,10 @@ public class MFTMarkerOptions : NSObject{
         marker.setStyle()
     }
     
+    internal func setInteractivity(_ interactive: Bool){
+        self.interactive = interactive
+        marker.setStyle()
+    }
    
     //Default Init
     internal init(_ marker: MFTMarker) {
@@ -106,6 +111,7 @@ public class MFTMarkerOptions : NSObject{
         anchorPosition = .top
         color = "white"
         flat = false
+        interactive = true
         self.marker = marker
         
         super.init()
@@ -302,7 +308,7 @@ public class MFTMarker : NSObject, MFTAnnotation {
     }
     
     private func generateStyle(_ markerOptions: MFTMarkerOptions) -> String{
-        return "{ style: 'sdk-point-overlay', color: \(markerOptions.color), anchor: \(markerOptions.anchorPosition.rawValue), size: [\(markerOptions.width)px, \(markerOptions.height)px], interactive: true, collide: false, flat: \(markerOptions.flat)}"
+        return "{ style: 'sdk-point-overlay', color: \(markerOptions.color), anchor: \(markerOptions.anchorPosition.rawValue), size: [\(markerOptions.width)px, \(markerOptions.height)px], interactive: \(markerOptions.interactive), collide: false, flat: \(markerOptions.flat)}"
     }
     
     /**
