@@ -10,6 +10,7 @@ import Foundation
 import TangramMap
 import CoreLocation
 
+
 /**
  `MFTMapOptions` This is the class that controls options for MFTMapView.
  */
@@ -82,7 +83,9 @@ public class MFTMapOptions  {
     private var minZoomLevel: Float
     internal var currentLocationGem: MFTMarker?
     internal var accuracyCircle: MFTMarker?
+    internal var directionPointer: MFTMarker?
     internal var lastLocation: CLLocation?
+    internal var lastAccuracy: CLLocationAccuracy?
     private var firstRun: Int = 0
     internal var accuracyCircleTimer = Timer()
     internal var pointerTimer = Timer()
@@ -95,8 +98,8 @@ public class MFTMapOptions  {
     /// Receiver for location updates
     public weak var userLocationDelegate: LocationUpdateDelegate?
     let coreLocationManager = CLLocationManager()
-    private var accuracyCircleDrawOrder = 1000
-    private var userLocationDrawOrder = 1200
+    private var accuracyCircleDrawOrder = 2100
+    private var userLocationDrawOrder = 2110
     
     
     /**
@@ -246,11 +249,13 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
     }
     
     @objc private func updatePointer(){
-        let image = UIImage(named: "location", in: Bundle.houseStylesBundle(), compatibleWith: nil)
+        guard let image = UIImage(named: "directionPointer", in: Bundle.houseStylesBundle(), compatibleWith: nil) else { return }
         
         if let heading = lastHeading?.trueHeading.degreesToRadians {
-            let newImage = image?.rotate(radians: Float(heading))
-            self.currentLocationGem?.setIcon(newImage!)
+            let newImage = image.image(withRotation: CGFloat(heading))
+            
+            self.directionPointer?.setIcon(newImage)
+  
         }
         
         
@@ -297,8 +302,10 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
         userLocationDelegate?.didRecieveLocationUpdate(alphaLocation)
         self.lastLocation = alphaLocation
 
-        self.currentLocationGem?.setPosition(alphaLocation.coordinate)
-        self.accuracyCircle?.setPosition(alphaLocation.coordinate)
+        self.currentLocationGem?.setPositionWithEase(alphaLocation.coordinate)
+        self.accuracyCircle?.setPositionWithEase(alphaLocation.coordinate)
+        self.directionPointer?.setPositionWithEase(alphaLocation.coordinate)
+        
     }
     
     
@@ -315,6 +322,7 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
 
                 self.accuracyCircle?.setIcon(circleImage)
                 self.accuracyCircle?.markerOptions?.setAnchorPosition(.center)
+                self.accuracyCircle?.markerOptions?.setFlat(true)
                 self.accuracyCircle?.markerOptions?.setDrawOrder(drawOrder: accuracyCircleDrawOrder)
                 self.lastLocation = location
                 adjustAccuracyCircle()
@@ -327,36 +335,55 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
                 self.currentLocationGem?.setIcon(image)
                 self.currentLocationGem?.markerOptions?.setAnchorPosition(.center)
                 self.currentLocationGem?.markerOptions?.setDrawOrder(drawOrder: userLocationDrawOrder)
-                self.currentLocationGem?.markerOptions?.setWidth(width: 36)
-                self.currentLocationGem?.markerOptions?.setHeight(height: 36)
+                self.currentLocationGem?.markerOptions?.setFlat(true)
                 
             }
             
+            self.directionPointer = mapView.addMarker(position: location.coordinate)
+            
+            if let image = UIImage(named: "directionPointer", in: Bundle.houseStylesBundle(), compatibleWith: nil) {
+                self.directionPointer?.setIcon(image)
+                self.directionPointer?.markerOptions?.setAnchorPosition(.center)
+                self.directionPointer?.markerOptions?.setDrawOrder(drawOrder: userLocationDrawOrder)
+                self.directionPointer?.markerOptions?.setFlat(true)
+                
+            }
+
             self.pointerTimer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(updatePointer), userInfo: nil, repeats: true)
-            self.accuracyCircleTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(adjustAccuracyCircle), userInfo: nil, repeats: true)
+            self.accuracyCircleTimer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(adjustAccuracyCircle), userInfo: nil, repeats: true)
             
  
         }
         
         locEngine.addToSignalArray(location: location)
-        //self.lastLocation = location
+        self.lastLocation = location
+        
     }
 
     
     @objc internal func adjustAccuracyCircle(){
-        
-        guard let lastLocation = self.lastLocation else {return}
-        guard let zoom = mapView?.getZoom() else { return }
-        let pixelMeterValue = self.getPixelPerMeter(lat: lastLocation.coordinate.latitude, zoom: zoom)
 
-        let sideLength = Int(65.0 / 2) * Int(pixelMeterValue)
-        self.accuracyCircle?.markerOptions?.setWidth(width: sideLength)
-        self.accuracyCircle?.markerOptions?.setHeight(height: sideLength)
-        UIView.animate(withDuration: 0.1) {
+
+    
+       // DispatchQueue.global(qos: .background).sync {
+            guard let lastLocation = self.lastLocation else {return}
+            guard let zoom = self.mapView?.getZoom() else { return }
             
-        }
-      
-        
+            
+            let pixelMeterValue = self.getPixelPerMeter(lat: lastLocation.coordinate.latitude, zoom: zoom)
+            
+            
+            if lastLocation.horizontalAccuracy == 0 {
+                guard let accuracy = lastAccuracy else { return }
+                let sideLength = Int(accuracy / 2 * pixelMeterValue)
+                self.accuracyCircle?.markerOptions?.updateSize(height: sideLength, width: sideLength)
+            }else {
+                lastAccuracy = lastLocation.horizontalAccuracy
+                let sideLength = Int(lastLocation.horizontalAccuracy / 2 * pixelMeterValue)
+                self.accuracyCircle?.markerOptions?.updateSize(height: sideLength, width: sideLength)
+            }
+
+
     }
     
     internal func getPixelPerMeter(lat: Double, zoom: Float)->Double{
@@ -395,7 +422,7 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
         
         guard let accuracyMarker = accuracyCircle else { return }
         mapView?.removeMarker(accuracyMarker)
-        
+
         mapView?.userLocationButton.isEnabled = false
         
         return
@@ -437,9 +464,8 @@ extension UIImage {
         }
     }
     
+    
 }
-
-
 
 
 

@@ -9,6 +9,7 @@
 import UIKit
 import TangramMap
 import CoreLocation
+import SystemConfiguration
 
 /**
  `MFTMapView` This is the main class of the Mapfit SDK for iOS and is the entry point for methods related to the map.
@@ -1070,7 +1071,9 @@ extension MFTMapView : TGMapViewDelegate, MapPlaceInfoSelectDelegate {
         //We only want to call back on the latest scene load - so we gate here to make sure we only call back on the latest.
         //TODO: For 2.0 we should pass the Error along in the callback block.
         //reDrawAnnotations()
+        
         restoreUserMarkers()
+        
         if sceneID != latestSceneId {
             return
         }
@@ -1421,8 +1424,26 @@ extension MFTMapView {
         
         self.locale = locale
         
+        let loadPath: String
+        
+        if isInternetAvailable() {
+            
+        }
+
+        
+
+        
+        
         if let urlPath = URL(string: theme.rawValue) {
-            mapView.loadScene(from: urlPath)
+            
+            if isInternetAvailable() {
+                mapView.loadScene(from: urlPath)
+            } else {
+                print("sorry no internet: pulling from cache")
+                mapView.loadScene(from: )
+                
+            }
+
             self.reDrawAnnotations()
         }
     }
@@ -1438,6 +1459,28 @@ extension MFTMapView {
             self.reDrawAnnotations()
         }
         
+    }
+    
+    
+   private func isInternetAvailable() -> Bool
+    {
+        var zeroAddress = sockaddr_in()
+        zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
+        zeroAddress.sin_family = sa_family_t(AF_INET)
+        
+        let defaultRouteReachability = withUnsafePointer(to: &zeroAddress) {
+            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {zeroSockAddress in
+                SCNetworkReachabilityCreateWithAddress(nil, zeroSockAddress)
+            }
+        }
+        
+        var flags = SCNetworkReachabilityFlags()
+        if !SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) {
+            return false
+        }
+        let isReachable = flags.contains(.reachable)
+        let needsConnection = flags.contains(.connectionRequired)
+        return (isReachable && !needsConnection)
     }
     
 }

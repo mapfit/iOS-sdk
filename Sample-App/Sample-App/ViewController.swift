@@ -19,7 +19,7 @@ class ViewController: UIViewController {
         
         MFTManager.sharedManager.apiKey = "591dccc4e499ca0001a4c6a4abab8998a9ec4e0d8efce03e489a00ea"
         let mapview = MFTMapView(frame: view.bounds)
-        mapview.mapOptions.setTheme(theme: .grayScale)
+        mapview.mapOptions.setTheme(theme: .day)
         
         self.view.addSubview(mapview)
         mapview.setZoom(zoomLevel: 8)

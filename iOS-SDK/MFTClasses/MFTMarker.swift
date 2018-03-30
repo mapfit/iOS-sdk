@@ -27,6 +27,7 @@ public class MFTMarkerOptions : NSObject{
    // Sets the draw order for the marker. The draw order is relative to other annotations. Note that higher values are drawn above lower ones.
     public var drawOrder: Int
     internal var color: String
+    public var flat: Bool
     
     
     // Set Anchor
@@ -83,15 +84,28 @@ public class MFTMarkerOptions : NSObject{
         marker.setStyle()
     }
     
+    internal func setFlat(_ flat: Bool) {
+        self.flat = flat
+        marker.setStyle()
+    }
+    
+    
+    
+    internal func updateSize(height: Int, width: Int){
+        self.height = height
+        self.width = width
+        marker.setStyle()
+    }
     
    
     //Default Init
     internal init(_ marker: MFTMarker) {
         height = 59
         width = 55
-        self.drawOrder = 2000
+        drawOrder = 2000
         anchorPosition = .top
-        self.color = "white"
+        color = "white"
+        flat = false
         self.marker = marker
         
         super.init()
@@ -288,7 +302,7 @@ public class MFTMarker : NSObject, MFTAnnotation {
     }
     
     private func generateStyle(_ markerOptions: MFTMarkerOptions) -> String{
-        return "{ style: 'sdk-point-overlay', color: \(markerOptions.color), anchor: \(markerOptions.anchorPosition.rawValue), size: [\(markerOptions.width)px, \(markerOptions.height)px], interactive: true, collide: false}"
+        return "{ style: 'sdk-point-overlay', color: \(markerOptions.color), anchor: \(markerOptions.anchorPosition.rawValue), size: [\(markerOptions.width)px, \(markerOptions.height)px], interactive: true, collide: false, flat: \(markerOptions.flat)}"
     }
     
     /**
@@ -365,6 +379,13 @@ public class MFTMarker : NSObject, MFTAnnotation {
         }
 
     }
+
+
+    internal func setPositionWithEase(_ position: CLLocationCoordinate2D) {
+        tgMarker?.pointEased(TGGeoPointMake(position.longitude, position.latitude), seconds: 0.01, easeType: .cubic)
+        
+    }
+
 }
     
     
@@ -379,9 +400,8 @@ public class MFTMarker : NSObject, MFTAnnotation {
 //        tgMarker?.pointEased(coordinates, seconds: seconds, easeType: ease)
 //        //TODO: Add error management back in here once we're doing it everywhere correctly.
 //        return true
-//
-//    }
-    
+
+
 
 /**
  Default icons provided by Mapfit.
