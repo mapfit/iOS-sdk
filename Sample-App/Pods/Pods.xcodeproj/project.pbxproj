@@ -74,8 +74,9 @@
 		B76E10D9AC1AC3532AFFE716C7CD3750 /* CardBacking.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BDA18BAB623F5EFAA9FD144E0733EF8 /* CardBacking.png */; };
 		BADA092807B1291ABA18BDF3D3D1E57E /* StyleGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B7C584331CCD1E65FDC29EA874EFCC /* StyleGuide.swift */; };
 		BF2A24737BA9CD3FF482A9730BC8FEFF /* Zoom.png in Resources */ = {isa = PBXBuildFile; fileRef = B5EBB481393C59F34EC50D782B100594 /* Zoom.png */; };
-		BFE5AA91206E698C007C01BF /* directionPointer.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE5AA90206E698C007C01BF /* directionPointer.png */; };
-		BFE5AA92206E698C007C01BF /* directionPointer.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE5AA90206E698C007C01BF /* directionPointer.png */; };
+		BFDAE947207C1C3D0052A75D /* MFTPolylineOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDAE946207C1C3C0052A75D /* MFTPolylineOptions.swift */; };
+		BFDAE949207C1C6F0052A75D /* MFTPolygonOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDAE948207C1C6F0052A75D /* MFTPolygonOptions.swift */; };
+		BFDAE94C207C1E6C0052A75D /* directionPointer.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDAE94A207C1E5A0052A75D /* directionPointer.png */; };
 		BFE9985C68E398BA0B9551AF49FC7728 /* DecodeFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCD28A4C1EFC4C698D9019F9C821871 /* DecodeFunctions.swift */; };
 		C032958D59B8390B17A1E6BBA0A0CA44 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = B43192AA0E5BE770E07D96F249F17DEC /* menu.png */; };
 		C31AC89F97881E1B3C04756AD73B1FA9 /* geofimap.eot in Resources */ = {isa = PBXBuildFile; fileRef = DEC02F47DCDC7B233AFEDAA398D2A36C /* geofimap.eot */; };
@@ -211,7 +212,9 @@
 		B9D9D703354A9E4495E200BCE39B9CA8 /* ResourceBundle-houseStyles-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-houseStyles-Info.plist"; sourceTree = "<group>"; };
 		BBA14685E129164457C0B9385B27847F /* Watermark_Day_Lg.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = Watermark_Day_Lg.png; path = "iOS-SDK/houseStyles.bundle/Watermark_Day_Lg.png"; sourceTree = "<group>"; };
 		BDD45747343869163E4D4249DF1E02A4 /* Radius@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Radius@3x.png"; path = "iOS-SDK/houseStyles.bundle/Radius@3x.png"; sourceTree = "<group>"; };
-		BFE5AA90206E698C007C01BF /* directionPointer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = directionPointer.png; path = ../directionPointer.png; sourceTree = "<group>"; };
+		BFDAE946207C1C3C0052A75D /* MFTPolylineOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MFTPolylineOptions.swift; sourceTree = "<group>"; };
+		BFDAE948207C1C6F0052A75D /* MFTPolygonOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MFTPolygonOptions.swift; sourceTree = "<group>"; };
+		BFDAE94A207C1E5A0052A75D /* directionPointer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = directionPointer.png; path = "iOS-SDK/houseStyles.bundle/directionPointer.png"; sourceTree = "<group>"; };
 		C089C442D50195E72317D50A4DF452A9 /* Pods-Sample-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Sample-App.release.xcconfig"; sourceTree = "<group>"; };
 		C4110C7BCD9C8D9DCAFBDBF70C5DA5FA /* MFTMapView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MFTMapView.swift; sourceTree = "<group>"; };
 		C9C57D42B9E5E8B7D7173BC0751C8C0B /* Pods-Sample-App-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Sample-App-resources.sh"; sourceTree = "<group>"; };
@@ -418,9 +421,9 @@
 				5A6AF5A4BCE774F8079695F9B0CEBABF /* Compass.png */,
 				9872DBBF54E3B0B84CA4F66AD486726A /* compassNorth.png */,
 				ECD2C6A0E50C336C37F8D7A151D410B1 /* compassNorth@2x.png */,
-				BFE5AA90206E698C007C01BF /* directionPointer.png */,
 				5E15E7724AE8D118B5BDB0A8E6CB6D03 /* compassNorth@3x.png */,
 				36FEDFE7A1047AD2EBE823894BD6F02F /* Controls.png */,
+				BFDAE94A207C1E5A0052A75D /* directionPointer.png */,
 				B4C182EA59342006286C0E4AFCBC2B33 /* currentLocation.png */,
 				8DDCB790AE930C3F0DD72F5E147A962A /* currentLocation@2x.png */,
 				36BAE857F0BAEA4591E7A718A54332F9 /* currentLocation@3x.png */,
@@ -525,8 +528,10 @@
 				03FB26696C3BE7309F5FC4964E11D4C1 /* MFTLayer.swift */,
 				29F42486F334DAE73F33ABEBCC32D6F1 /* MFTLocationProvider.swift */,
 				CBF2609FCEB2D5BB27A609744FC21F98 /* MFTMapOptions.swift */,
+				BFDAE946207C1C3C0052A75D /* MFTPolylineOptions.swift */,
 				C4110C7BCD9C8D9DCAFBDBF70C5DA5FA /* MFTMapView.swift */,
 				9305BA052F474D9AE98B19E5EF30F3C3 /* MFTMapViewGestrues.swift */,
+				BFDAE948207C1C6F0052A75D /* MFTPolygonOptions.swift */,
 				69EE16AC2DC2799C3294E5DFACD827F9 /* MFTMarker.swift */,
 				F31E9F4A033CD45BBFE8A6F64C98A6C2 /* MFTPlaceInfo.swift */,
 				35B0EF41E77916EA37F905FC2D970D67 /* MFTPlaceInfoAdapter.swift */,
@@ -730,6 +735,7 @@
 				7A3AAC57957650D8F177CC3464EFA7F6 /* OpenSans-SemiboldItalic.woff in Resources */,
 				E7F4BE76E7BECE0673867913524775C0 /* PlusButton.png in Resources */,
 				8FF1D8E4477CE9A71A7A6003B316E0E2 /* Radius.png in Resources */,
+				BFDAE94C207C1E6C0052A75D /* directionPointer.png in Resources */,
 				21D4D7000F462AE10066259A31AACB55 /* Radius@3x.png in Resources */,
 				F0988020BF827015A9F8852401DC54E9 /* reCenter.png in Resources */,
 				ABE748D110EEB35C31AB91ACD6C7CDE9 /* ReCenter_OFF.png in Resources */,
@@ -750,7 +756,6 @@
 				99B4EF12D8B1E3B2231F7532BE4E9CEB /* zoomOut.png in Resources */,
 				B31DD77098963F219EB88350484862A2 /* zoomOut@2x.png in Resources */,
 				9B56CC84CFEA3931FDE26690864B4BC9 /* zoomOut@3x.png in Resources */,
-				BFE5AA92206E698C007C01BF /* directionPointer.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -759,7 +764,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A95D6A31497639976702D38596EEB2F /* houseStyles.bundle in Resources */,
-				BFE5AA91206E698C007C01BF /* directionPointer.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -778,10 +782,12 @@
 				723A002E03EBCDE3B0DFDE9732F2BB28 /* Mapfit-dummy.m in Sources */,
 				9089FCF16FBE106A456858E12B3D21A5 /* MFTAnnotations.swift in Sources */,
 				55008E99A3157B5FEA6D96313DF2A9F9 /* MFTAPIObjects.swift in Sources */,
+				BFDAE947207C1C3D0052A75D /* MFTPolylineOptions.swift in Sources */,
 				7324B7156A0EC94BEDBA29C7F589957D /* MFTDirections.swift in Sources */,
 				65635CDD203E61D3F48D5FBAE87917C2 /* MFTDirectionsOptions.swift in Sources */,
 				5755B995EC47DD1D317AAA66CB264AD8 /* MFTGeocoder.swift in Sources */,
 				299D7BAEC4D9CCC699A6ADB6A4F746C6 /* MFTLatLngBounds.swift in Sources */,
+				BFDAE949207C1C6F0052A75D /* MFTPolygonOptions.swift in Sources */,
 				CF7D6A709FA8FC58AD77D76902EF9157 /* MFTLayer.swift in Sources */,
 				CA3064291038CBC6C1A8AF806A3C5469 /* MFTLocationProvider.swift in Sources */,
 				8198D4EE72FE939A8440BD446113D472 /* MFTManager.swift in Sources */,

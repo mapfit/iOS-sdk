@@ -24,7 +24,7 @@ public class MFTMarkerOptions : NSObject{
     public var height: Int
     //Marker for map options
     internal var marker: MFTMarker
-   // Sets the draw order for the marker. The draw order is relative to other annotations. Note that higher values are drawn above lower ones.
+    // Sets the draw order for the marker. The draw order is relative to other annotations. Note that higher values are drawn above lower ones.
     public var drawOrder: Int
     internal var color: String
     public var flat: Bool
@@ -102,7 +102,7 @@ public class MFTMarkerOptions : NSObject{
         self.interactive = interactive
         marker.setStyle()
     }
-   
+    
     //Default Init
     internal init(_ marker: MFTMarker) {
         height = 59
@@ -126,7 +126,7 @@ public class MFTMarkerOptions : NSObject{
  */
 @objc(MFTMarker)
 public class MFTMarker : NSObject, MFTAnnotation {
-
+    
     public var uuid: UUID
     public var mapView: MFTMapView?
     
@@ -148,7 +148,9 @@ public class MFTMarker : NSObject, MFTAnnotation {
     
     lazy public var subtitle2: String = ""
     
-    internal var subAnnotation: MFTAnnotation?
+    internal var subAnnotations: [String : MFTAnnotation]?
+    
+    public var buildingPolygon: MFTPolygon?
     
     internal var tgMarker: TGMarker?  {
         didSet {
@@ -187,11 +189,11 @@ public class MFTMarker : NSObject, MFTAnnotation {
     
     public var isVisible: Bool
     
-
+    
     /**
      Position of marker. Can only be changed by calling 'setPosition(position: CLLocationCoordinate2D)'.
      */
-
+    
     public var position: CLLocationCoordinate2D
     
     
@@ -199,12 +201,12 @@ public class MFTMarker : NSObject, MFTAnnotation {
      Icon of marker. Can only be changed by calling one of the 'setIcon' methods.
      */
     public var icon: UIImage?
-
+    
     /**
      Changes the coordinate of the marker.
      - parameter position: The coordinate of the marker.
      */
-
+    
     private var workItem: DispatchWorkItem?
     
     public func setPosition(_ position: CLLocationCoordinate2D){
@@ -223,7 +225,7 @@ public class MFTMarker : NSObject, MFTAnnotation {
     
     internal func getScreenPosition()->CGPoint {
         if let mapView = self.mapView {
-        return mapView.mapView.lngLat(toScreenPosition: TGGeoPointMake(self.getPosition().longitude, self.getPosition().latitude))
+            return mapView.mapView.lngLat(toScreenPosition: TGGeoPointMake(self.getPosition().longitude, self.getPosition().latitude))
         } else {
             return CGPoint(x: 0, y: 0)
         }
@@ -248,7 +250,7 @@ public class MFTMarker : NSObject, MFTAnnotation {
     
     internal func restoreIcon(){
         DispatchQueue.main.async {
-           
+            
             guard let icon = self.icon else { return }
             self.tgMarker?.icon = icon
         }
@@ -272,10 +274,10 @@ public class MFTMarker : NSObject, MFTAnnotation {
         workItem?.cancel()
         workItem = DispatchWorkItem { self.loadImage(mapfitMarker.rawValue) }
         DispatchQueue.main.asyncAfter(deadline: .now(), execute: workItem!)
-     
+        
     }
-
-
+    
+    
     //private function for loading image from URLString
     private func loadImage(_ imageString: String) {
         guard let url = URL(string: imageString) else { print("No link provided for image")
@@ -297,14 +299,14 @@ public class MFTMarker : NSObject, MFTAnnotation {
     /**
      Sets the style for the marker based on the markerOptions.
      */
-   @objc public func setStyle() {
-    guard let marker = tgMarker else { return }
-    if let options = markerOptions {
-        marker.stylingString = generateStyle(options)
-    } else {
-        marker.stylingString =  style.rawValue
-    }
-    
+    @objc public func setStyle() {
+        guard let marker = tgMarker else { return }
+        if let options = markerOptions {
+            marker.stylingString = generateStyle(options)
+        } else {
+            marker.stylingString =  style.rawValue
+        }
+        
     }
     
     private func generateStyle(_ markerOptions: MFTMarkerOptions) -> String{
@@ -316,16 +318,16 @@ public class MFTMarker : NSObject, MFTAnnotation {
      parameter show: True or False value setting markers visibility.
      */
     
-     @objc public func setVisibility(show: Bool) {
+    @objc public func setVisibility(show: Bool) {
         tgMarker?.visible = show
     }
     
     @objc public func getVisibility()->Bool {
-       return tgMarker?.visible ?? false
+        return tgMarker?.visible ?? false
     }
     
-   
-
+    
+    
     internal init(position: CLLocationCoordinate2D, mapView: MFTMapView) {
         self.position = position
         self.isVisible = true
@@ -335,7 +337,7 @@ public class MFTMarker : NSObject, MFTAnnotation {
         super.init()
         self.setIcon(.defaultPin)
         self.markerOptions = MFTMarkerOptions(self)
-
+        
         
     }
     
@@ -349,9 +351,9 @@ public class MFTMarker : NSObject, MFTAnnotation {
         self.setIcon(.defaultPin)
         self.getPositionFromAddress(Address: address)
         self.markerOptions = MFTMarkerOptions(self)
-
+        
     }
-
+    
     internal init(position: CLLocationCoordinate2D, icon: MFTMarkerImage, mapView: MFTMapView) {
         self.position = position
         self.isVisible = true
@@ -361,47 +363,51 @@ public class MFTMarker : NSObject, MFTAnnotation {
         super.init()
         self.markerOptions = MFTMarkerOptions(self)
         self.setIcon(icon)
-
+        
     }
     
     private func getPositionFromAddress(Address: String){
         MFTGeocoder.sharedInstance.geocode(address: Address, includeBuilding: true) { (addressesObject, error) in
             if error == nil {
                 guard let addressObject = addressesObject else { return }
-
+                
                 if let entrances = addressObject[0].entrances {
                     guard let lat = entrances[0].lat else { return }
                     guard let lon = entrances[0].lng else { return }
                     self.setPosition(CLLocationCoordinate2DMake(lat, lon))
                 }
-
+                
                 if let location = addressObject[0].location {
                     guard let lat = location.lat else { return }
                     guard let lon = location.lng else { return }
                     self.setPosition(CLLocationCoordinate2DMake(lat, lon))
                 }
-            
+                
             }
         }
-
+        
     }
-
-
+    
+    
+    public func getBuildingPolygon()->MFTPolygon? {
+        return subAnnotations?["building"] as? MFTPolygon
+    }
+    
     internal func setPositionWithEase(_ position: CLLocationCoordinate2D) {
         tgMarker?.pointEased(TGGeoPointMake(position.longitude, position.latitude), seconds: 0.01, easeType: .cubic)
         
     }
-
+    
 }
-    
-    
-    /**
-     Animates the marker from its current coordinates to the ones given.
-     
-     - parameter coordinates: Coordinates to animate the marker to
-     - parameter seconds: Duration in seconds of the animation.
-     - parameter ease: Easing to use for animation.
-     */
+
+
+/**
+ Animates the marker from its current coordinates to the ones given.
+ 
+ - parameter coordinates: Coordinates to animate the marker to
+ - parameter seconds: Duration in seconds of the animation.
+ - parameter ease: Easing to use for animation.
+ */
 //    public func setPointEased(_ coordinates: TGGeoPoint, seconds: Float, easeType ease: TGEaseType) -> Bool {
 //        tgMarker?.pointEased(coordinates, seconds: seconds, easeType: ease)
 //        //TODO: Add error management back in here once we're doing it everywhere correctly.
@@ -412,10 +418,10 @@ public class MFTMarker : NSObject, MFTAnnotation {
 /**
  Default icons provided by Mapfit.
  */
-    
+
 
 public enum MFTMarkerImage : String {
-
+    
     case defaultPin = "https://cdn.mapfit.com/m1/assets/images/markers/pngs/lighttheme/default.png"
     case active = "https://cdn.mapfit.com/m1/assets/images/markers/pngs/lighttheme/active.png"
     case airport = "https://cdn.mapfit.com/m1/assets/images/markers/pngs/lighttheme/airport.png"

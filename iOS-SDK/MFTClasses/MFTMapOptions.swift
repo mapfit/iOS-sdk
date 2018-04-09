@@ -246,6 +246,7 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
             mapView?.updateCompass()
         }
         lastHeading = heading
+        updatePointer()
     }
     
     @objc private func updatePointer(){
