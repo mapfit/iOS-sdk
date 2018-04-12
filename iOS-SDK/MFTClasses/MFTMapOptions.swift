@@ -20,7 +20,14 @@ public protocol LocationUpdateDelegate: class {
 }
 
 public class MFTMapOptions  {
-
+    
+    public var is3DBuildingsEnabled: Bool {
+        didSet {
+            mapView?.toggle3DBuildings()
+        }
+    }
+    
+    
     /**
      Indicates if user location button is enabled. Set by setUserLocationButtonVisibility.
      */
@@ -50,11 +57,11 @@ public class MFTMapOptions  {
             mapView?.toggleCompassButton()
         }
     }
-
+    
     /**
      Indicates if zoom controls are visible. Set by setZoomControlVisibility.
      */
-
+    
     public var isZoomControlVisible: Bool {
         didSet {
             mapView?.toggleZoomButtons()
@@ -66,7 +73,7 @@ public class MFTMapOptions  {
             mapView?.toggleRecenterButton()
         }
     }
-
+    
     /**
      The mapview that is controlled by the options.
      */
@@ -106,28 +113,28 @@ public class MFTMapOptions  {
      Sets mapView to be controlled by the class.
      - parameter mapView: The map view that will be controlled by the options.
      */
-
+    
     public func setMapView(mapView: MFTMapView) {
         self.mapView = mapView
     }
-
+    
     public func setMaxZoomLevel(zoomLevel: Float){
         self.maxZoomLevel = zoomLevel
     }
-
+    
     public func getMaxZoomLevel()-> Float {
         return maxZoomLevel
     }
-
+    
     public func setMinZoomLevel(zoomLevel: Float){
         self.minZoomLevel = zoomLevel
     }
-
+    
     public func getMinZoomLevel()-> Float {
-     return minZoomLevel
-
+        return minZoomLevel
+        
     }
-
+    
     
     /**
      Sets theme for the map view controlled by the map options.
@@ -142,9 +149,9 @@ public class MFTMapOptions  {
     
     public func setCustomTheme(_ customTheme: String){
         
-       self.mapTheme = .custom
-       try? mapView?.loadCustomThemeAsync(customTheme)
-    
+        self.mapTheme = .custom
+        try? mapView?.loadCustomThemeAsync(customTheme)
+        
         
     }
     
@@ -152,7 +159,7 @@ public class MFTMapOptions  {
     public func getTheme()->MFTMapTheme {
         return self.mapTheme
     }
-
+    
     
     /**
      Sets zoom controls visibility.
@@ -161,7 +168,7 @@ public class MFTMapOptions  {
     
     
     public func setUserLocationButtonVisibility(_ show: Bool){
-        isUserLocationButtonVisible = show 
+        isUserLocationButtonVisible = show
     }
     
     
@@ -170,10 +177,10 @@ public class MFTMapOptions  {
      Sets zoom controls visibility.
      - parameter show: True or False value inidicating zoom visibility.
      */
-
+    
     
     public func setZoomControlVisibility(_ show: Bool){
-       isZoomControlVisible = show
+        isZoomControlVisible = show
     }
     
     public func setRecenterVisibility(_ show: Bool){
@@ -191,7 +198,7 @@ public class MFTMapOptions  {
         self.locationManager.startUpdatingHeading()
     }
     
-
+    
     internal init(mapView: MFTMapView){
         self.isCompassVisible = false
         self.isZoomControlVisible = false
@@ -210,6 +217,7 @@ public class MFTMapOptions  {
         self.locationManager = MFTLocationProvider()
         self.mapView = mapView
         self.firstRun = 0
+        self.is3DBuildingsEnabled = false
         
     }
     
@@ -230,6 +238,7 @@ public class MFTMapOptions  {
         self.maxZoomLevel = 20
         self.locationManager = MFTLocationProvider()
         self.firstRun = 0
+        self.is3DBuildingsEnabled = false
         
     }
 }
@@ -246,7 +255,6 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
             mapView?.updateCompass()
         }
         lastHeading = heading
-        updatePointer()
     }
     
     @objc private func updatePointer(){
@@ -256,12 +264,12 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
             let newImage = image.image(withRotation: CGFloat(heading))
             
             self.directionPointer?.setIcon(newImage)
-  
+            
         }
         
         
     }
-
+    
     
     /**
      Sets compass control visibility.
@@ -272,37 +280,37 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
         locationManager.delegate = self
         
         if locationManager.isInUseAuthorized() {
-        
-        if show {
-     
-            isUserLocationEnabled = true
-            isUserLocationButtonVisible = true
-            mapView?.userLocationButton.isEnabled = true
-            if accuracy == .high {
-                locationManager.coreLocationManager?.desiredAccuracy = kCLLocationAccuracyBest
-            }else {
-                locationManager.coreLocationManager?.desiredAccuracy = kCLLocationAccuracyKilometer
+            
+            if show {
+                
+                isUserLocationEnabled = true
+                isUserLocationButtonVisible = true
+                mapView?.userLocationButton.isEnabled = true
+                if accuracy == .high {
+                    locationManager.coreLocationManager?.desiredAccuracy = kCLLocationAccuracyBest
+                }else {
+                    locationManager.coreLocationManager?.desiredAccuracy = kCLLocationAccuracyKilometer
+                }
+                
+            } else {
+                locEngine.delegate = nil
+                locationManager.delegate = nil
+                mapView?.userLocationButton.isEnabled = false
+                isUserLocationEnabled = false
             }
-        
-        } else {
-            locEngine.delegate = nil
-            locationManager.delegate = nil
-            mapView?.userLocationButton.isEnabled = false
-            isUserLocationEnabled = false
-            }
-        
+            
         } else {
             locationManager.requestWhenInUseAuthorization()
         }
         
     }
-
+    
     
     public func alphaLocationManager(alphaLocation: CLLocation) {
         print("ALPHA LOCATION = \(alphaLocation.coordinate)")
         userLocationDelegate?.didRecieveLocationUpdate(alphaLocation)
         self.lastLocation = alphaLocation
-
+        
         self.currentLocationGem?.setPositionWithEase(alphaLocation.coordinate)
         self.accuracyCircle?.setPositionWithEase(alphaLocation.coordinate)
         self.directionPointer?.setPositionWithEase(alphaLocation.coordinate)
@@ -320,7 +328,7 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
             
             
             if let circleImage = UIImage(named: "Radius", in: Bundle.houseStylesBundle(), compatibleWith: nil) {
-
+                
                 self.accuracyCircle?.setIcon(circleImage)
                 self.accuracyCircle?.markerOptions?.setAnchorPosition(.center)
                 self.accuracyCircle?.markerOptions?.setFlat(true)
@@ -352,42 +360,42 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
                 self.directionPointer?.markerOptions?.setFlat(true)
                 
             }
-
+            
             self.pointerTimer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(updatePointer), userInfo: nil, repeats: true)
             self.accuracyCircleTimer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(adjustAccuracyCircle), userInfo: nil, repeats: true)
             
- 
+            
         }
         
         locEngine.addToSignalArray(location: location)
         self.lastLocation = location
         
     }
-
+    
     
     @objc internal func adjustAccuracyCircle(){
-
-
-    
-       // DispatchQueue.global(qos: .background).sync {
-            guard let lastLocation = self.lastLocation else {return}
-            guard let zoom = self.mapView?.getZoom() else { return }
-            
-            
-            let pixelMeterValue = self.getPixelPerMeter(lat: lastLocation.coordinate.latitude, zoom: zoom)
-            
-            
-            if lastLocation.horizontalAccuracy == 0 {
-                guard let accuracy = lastAccuracy else { return }
-                let sideLength = Int(accuracy / 2 * pixelMeterValue)
-                self.accuracyCircle?.markerOptions?.updateSize(height: sideLength, width: sideLength)
-            }else {
-                lastAccuracy = lastLocation.horizontalAccuracy
-                let sideLength = Int(lastLocation.horizontalAccuracy / 2 * pixelMeterValue)
-                self.accuracyCircle?.markerOptions?.updateSize(height: sideLength, width: sideLength)
-            }
-
-
+        
+        
+        
+        // DispatchQueue.global(qos: .background).sync {
+        guard let lastLocation = self.lastLocation else {return}
+        guard let zoom = self.mapView?.getZoom() else { return }
+        
+        
+        let pixelMeterValue = self.getPixelPerMeter(lat: lastLocation.coordinate.latitude, zoom: zoom)
+        
+        
+        if lastLocation.horizontalAccuracy == 0 {
+            guard let accuracy = lastAccuracy else { return }
+            let sideLength = Int(accuracy / 2 * pixelMeterValue)
+            self.accuracyCircle?.markerOptions?.updateSize(height: sideLength, width: sideLength)
+        }else {
+            lastAccuracy = lastLocation.horizontalAccuracy
+            let sideLength = Int(lastLocation.horizontalAccuracy / 2 * pixelMeterValue)
+            self.accuracyCircle?.markerOptions?.updateSize(height: sideLength, width: sideLength)
+        }
+        
+        
     }
     
     internal func getPixelPerMeter(lat: Double, zoom: Float)->Double{
@@ -399,8 +407,8 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
         let metersPerTile = cos(Double(lat).degreesToRadians) * earthRadius / Double(numTiles)
         return  Double(pixelsPerTile) / metersPerTile
     }
-
-
+    
+    
     open func authorizationDidSucceed() {
         self.setUserLocationEnabled(true, accuracy: accuracy ?? .low)
         mapView?.userLocationButton.isEnabled = true
@@ -408,16 +416,16 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
         locationManager.startUpdatingLocation()
         locationManager.requestLocationUpdates()
     }
-
+    
     open func authorizationDenied() {
         failedLocationAuthorization()
     }
-
+    
     open func authorizationRestricted() {
         //For our uses, this is effectively the same handling as denied location authorization
         failedLocationAuthorization()
     }
-
+    
     func failedLocationAuthorization() {
         guard let marker = currentLocationGem else { return }
         
@@ -426,12 +434,12 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
         
         guard let accuracyMarker = accuracyCircle else { return }
         mapView?.removeMarker(accuracyMarker)
-
+        
         mapView?.userLocationButton.isEnabled = false
         
         return
     }
-
+    
 }
 
 

@@ -8,158 +8,83 @@
 
 import Foundation
 
+public enum MFTLineCapType : String {
+    case bound = "0"
+    case square = "2"
+    case round = "6"
+}
+
+public enum MFTLineJoinType : String {
+    case miter = "0"
+    case bevel = "1"
+    case round = "5"
+}
+
+@objc(MFTPolyPointOptions)
+public protocol MFTPolyPointOptions {
+    var strokeWidth: Int { get set }
+    var strokeOutlineWidth: Int { get set }
+    var strokeColor: String { get set }
+    var strokeOutlineColor: String { get set }
+    var drawOrder: Int { get set }
+}
+
+
+
 @objc(MFTPolygonOptions)
-public class MFTPolygonOptions : NSObject{
+public class MFTPolygonOptions : NSObject, MFTPolyPointOptions{
     //The stroke width of the marker -- pixels
-    internal var strokeWidth: Int
+    public var strokeWidth: Int {
+        didSet {
+            self.polygon.updateProperties()
+        }
+    }
     //The stroke outline width of the marker -- pixels
-    internal var strokeOutlineWidth: Int
+    public var strokeOutlineWidth: Int {
+        didSet {
+            self.polygon.updateProperties()
+        }
+    }
     //The stroke color of the polygon -- pixels
-    internal var strokeColor: String
+    public var strokeColor: String {
+        didSet {
+            self.polygon.updateProperties()
+        }
+    }
     //The fill color for the polygon
-    internal var fillColor: String
+    public var fillColor: String {
+        didSet {
+            self.polygon.updateProperties()
+        }
+    }
     
     //The fill color for the polygon
-    internal var strokeOutlineColor: String
+    public var strokeOutlineColor: String {
+        didSet {
+            self.polygon.updateProperties()
+        }
+    }
     
     // Sets the draw order for the polygon. The draw order is relative to other annotations. Note that higher values are drawn above lower ones.
-    public var drawOrder: Int
+    public var drawOrder: Int {
+        didSet {
+            self.polygon.updateProperties()
+        }
+    }
+    
+    public var lineCapType: MFTLineCapType {
+        didSet {
+            self.polygon.updateProperties()
+        }
+    }
+    
+    public var lineJoinType: MFTLineJoinType {
+        didSet {
+            self.polygon.updateProperties()
+        }
+    }
     //The polygon object to apply options
-    internal var polygon: MFTPolygon
-    
-    
-    /**
-     Sets stroke width of polygon.
-     
-     - parameter width: width of polygon.
-     */
-    public func setStrokeWidth(_ width: Int){
-        self.strokeWidth = width
-        self.polygon.updateProperties()
-        
-    }
-    
-    /**
-     gets stroke width of polygon.
-     
-     - return: width of polygon.
-     */
-    
-    public func getStrokeWidth() -> Int{
-        return strokeWidth
-        
-    }
-    
-    /**
-     Sets stroke outline width of polygon.
-     
-     - parameter width: stroke outline width of polygon.
-     */
-    public func setStrokeOutlineWidth(_ width: Int){
-        self.strokeOutlineWidth = width
-        self.polygon.updateProperties()
-        
-    }
-    
-    /**
-     gets stroke outline width of polygon.
-     
-     - return: stroke outline width of polygon.
-     */
-    
-    public func getStrokeOutlineWidth() -> Int{
-        return strokeOutlineWidth
-        
-        
-    }
-    
-    /**
-     Sets stroke color of polygon.
-     
-     - parameter color: stroke color of polygon.
-     */
-    public func setStrokeColor(_ color: String){
-        self.strokeColor = color
-        self.polygon.updateProperties()
-        
-    }
-    
-    /**
-     gets stroke color of polygon.
-     
-     - return: stroke color of polygon.
-     */
-    
-    public func getStrokeColor() -> String{
-        return self.strokeColor
-        
-    }
-    
-    /**
-     Sets fill color of polygon.
-     
-     - parameter color: fill color of polygon.
-     */
-    public func setFillColor(_ color: String){
-        self.fillColor = color
-        self.polygon.updateProperties()
-        
-    }
-    
-    
-    /**
-     gets stroke width of polygon.
-     
-     - return: fill color of polygon.
-     */
-    
-    public func getFillColor() -> String{
-        return self.fillColor
-        
-    }
-    
-    /**
-     Sets stroke outline color of polygon.
-     
-     - parameter color: sets stroke outline color of polygon.
-     */
-    public func setStrokeOutlineColor(_ color: String){
-        self.strokeOutlineColor = color
-        self.polygon.updateProperties()
-    }
-    
-    /**
-     gets stroke outline color of polygon.
-     
-     - return: stroke outline color of polygon.
-     */
-    
-    public func getStrokeOutlineColor() -> String{
-        return self.strokeOutlineColor
-        
-    }
-    
-    
-    /**
-     Sets the color for the marker icon.
-     
-     - parameter color: color of marker icon.
-     */
-    
-    public func setDrawOrder(drawOrder: Int){
-        self.drawOrder = drawOrder
-        
-    }
-    
-    /**
-     Sets the color for the marker icon.
-     
-     - parameter color: color of marker icon.
-     */
-    public func getDrawOrder() -> Int {
-        return drawOrder
-        
-    }
+    public var polygon: MFTPolygon
     
     //Default Init
     internal init(_ polygon: MFTPolygon) {
@@ -169,8 +94,11 @@ public class MFTPolygonOptions : NSObject{
         fillColor = "default"
         strokeOutlineColor = "default"
         strokeOutlineWidth = -1
-        drawOrder = 2000
+        drawOrder = Int.min
+        lineCapType = .bound
+        lineJoinType = .miter
         super.init()
         
     }
 }
+

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		7BA011B502A814876D32ECF5 /* Pods_iOS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AFC15665857F92577016B8D /* Pods_iOS_SDK.framework */; };
 		BF121B6B2034A56A00B55A75 /* iOS_SDK.h in Headers */ = {isa = PBXBuildFile; fileRef = BF121B692034A56A00B55A75 /* iOS_SDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BF1F3C0A207D56F700E544BD /* MFTPolylineOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1F3C09207D56F700E544BD /* MFTPolylineOptions.swift */; };
+		BF1F3C0C207D571700E544BD /* MFTPolygonOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1F3C0B207D571700E544BD /* MFTPolygonOptions.swift */; };
 		BF462C142034ABEE001EE738 /* mapfit.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BF462C0D2034ABEE001EE738 /* mapfit.bundle */; };
 		BF462C162034ABEE001EE738 /* houseStyles.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BF462C0F2034ABEE001EE738 /* houseStyles.bundle */; };
 		BF462C572034AEE2001EE738 /* MFTMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C492034AEE1001EE738 /* MFTMarker.swift */; };
@@ -48,6 +50,8 @@
 		BF121B662034A56A00B55A75 /* iOS_SDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = iOS_SDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF121B692034A56A00B55A75 /* iOS_SDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iOS_SDK.h; sourceTree = "<group>"; };
 		BF121B6A2034A56A00B55A75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BF1F3C09207D56F700E544BD /* MFTPolylineOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MFTPolylineOptions.swift; sourceTree = "<group>"; };
+		BF1F3C0B207D571700E544BD /* MFTPolygonOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MFTPolygonOptions.swift; sourceTree = "<group>"; };
 		BF462C0D2034ABEE001EE738 /* mapfit.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = mapfit.bundle; sourceTree = "<group>"; };
 		BF462C0F2034ABEE001EE738 /* houseStyles.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = houseStyles.bundle; sourceTree = "<group>"; };
 		BF462C492034AEE1001EE738 /* MFTMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTMarker.swift; path = MFTClasses/MFTMarker.swift; sourceTree = "<group>"; };
@@ -134,7 +138,9 @@
 				BF462C6F2034AF13001EE738 /* StyleGuide.swift */,
 				BF462C6E2034AF13001EE738 /* TangramExtensions.swift */,
 				BF462C702034AF13001EE738 /* UIKitExtensions.swift */,
+				BF1F3C0B207D571700E544BD /* MFTPolygonOptions.swift */,
 				BF462C652034AF06001EE738 /* MFTAPIObjects.swift */,
+				BF1F3C09207D56F700E544BD /* MFTPolylineOptions.swift */,
 				BF462C672034AF06001EE738 /* MFTDirections.swift */,
 				BF462C662034AF06001EE738 /* MFTGeocoder.swift */,
 				BFC5B5522044AFBE00696417 /* DecodeFunctions.swift */,
@@ -306,11 +312,13 @@
 				BF462C762034AF13001EE738 /* UIKitExtensions.swift in Sources */,
 				BF462C692034AF06001EE738 /* MFTGeocoder.swift in Sources */,
 				BF462C722034AF13001EE738 /* DictionaryExtensions.swift in Sources */,
+				BF1F3C0A207D56F700E544BD /* MFTPolylineOptions.swift in Sources */,
 				BF462C5D2034AEE2001EE738 /* MFTDirectionsOptions.swift in Sources */,
 				BF462C6A2034AF06001EE738 /* MFTDirections.swift in Sources */,
 				BF462C602034AEE2001EE738 /* MFTMapViewGestrues.swift in Sources */,
 				BF462C842034AFFF001EE738 /* MFTZoomButtonView.swift in Sources */,
 				BF462C612034AEE2001EE738 /* MFTPolygon.swift in Sources */,
+				BF1F3C0C207D571700E544BD /* MFTPolygonOptions.swift in Sources */,
 				BF462C802034AF5B001EE738 /* MFTManager.swift in Sources */,
 				BF462C732034AF13001EE738 /* BundleExtension.swift in Sources */,
 				BF462C632034AEE2001EE738 /* MFTLatLngBounds.swift in Sources */,

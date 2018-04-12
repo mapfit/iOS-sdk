@@ -642,7 +642,7 @@ open class MFTMapView: UIView {
                             if var annotations = marker?.subAnnotations {
                                 annotations["building"] = markerPolygon
                             }else{
-                                marker?.subAnnotations = ["building" : markerPolygon as! MFTAnnotation]
+                                marker?.subAnnotations = ["building" : markerPolygon as! MFTAnnotation] 
                             }
                             
                         }
@@ -722,8 +722,7 @@ open class MFTMapView: UIView {
     }
     
     public func addPolyline(_ polyline: [[CLLocationCoordinate2D]]) -> MFTPolyline?{
-        let rPolyline = MFTPolyline()
-        rPolyline.mapView = self
+        let rPolyline = MFTPolyline(mapView: self)
         let tgPolyline = TGGeoPolyline()
         rPolyline.tgPolyline = tgPolyline
         rPolyline.addPoints(polyline)
@@ -734,7 +733,7 @@ open class MFTMapView: UIView {
             rPolyline.dataLayer = dataLayer
             
             self.dataLayers[rPolyline.uuid] = dataLayer
-            dataLayer.add(tgPolyline, withProperties: ["type" : "polyline", "uuid" : "\(rPolyline.uuid)"])
+            dataLayer.add(tgPolyline, withProperties: ["type" : "polyline", "uuid" : "\(rPolyline.uuid)", "color" : "#D2655F"])
             currentPolylines[rPolyline.tgPolyline!] = rPolyline
             currentAnnotations[rPolyline.uuid] = rPolyline
             mapView.update()
@@ -745,7 +744,7 @@ open class MFTMapView: UIView {
     }
     
     public func addPolygon(_ polygon: [[CLLocationCoordinate2D]])-> MFTPolygon?{
-        let rPolygon = MFTPolygon()
+        let rPolygon = MFTPolygon(mapView: self)
         let tgPolygon = TGGeoPolygon()
         rPolygon.tgPolygon = tgPolygon
         rPolygon.addPoints(polygon)
@@ -769,13 +768,10 @@ open class MFTMapView: UIView {
     
     internal func updatePolylineStyle(_ polyline: MFTPolyline){
         
-        let layerToRemove = self.dataLayers[polyline.uuid]
-        
+        let dataLayer = self.dataLayers[polyline.uuid]
+        dataLayer?.clear()
         guard let tgPolyline = polyline.tgPolyline else { return }
-        
-        //add new layer
-        let newLayer = mapView.addDataLayer("mz_default_line")
-        if let layer = newLayer {
+        if let layer = dataLayer {
             
             guard let options = polyline.polylineOptions else { return }
             var properties = [String : String]()
@@ -798,21 +794,30 @@ open class MFTMapView: UIView {
                 properties["line_stroke_color"] = String(describing: options.strokeOutlineColor)
             }
             
+            if options.lineJoinType != .miter {
+                properties["line_cap"] = String(describing: options.lineJoinType.rawValue)
+            }
+            
+            if options.lineCapType != .bound {
+                properties["line_join"] = String(describing: options.lineCapType.rawValue)
+            }
+            
+            if options.drawOrder != Int.min {
+                properties["line_order"] = String(describing: options.drawOrder)
+            }
+            
+            self.dataLayers[polyline.uuid] = layer
             layer.add(tgPolyline, withProperties: properties)
         }
         
-        layerToRemove?.remove()
     }
     
     internal func updatePolygonStyle(_ polygon: MFTPolygon){
         
-        let layerToRemove = self.dataLayers[polygon.uuid]
-        
+        let dataLayer = self.dataLayers[polygon.uuid]
+        dataLayer?.clear()
         guard let tgPolygon = polygon.tgPolygon else { return }
-        
-        //add new layer
-        let newLayer = mapView.addDataLayer("mz_default_polygon")
-        if let layer = newLayer {
+        if let layer = dataLayer {
             
             guard let options = polygon.polygonOptions else { return }
             var properties = [String : String]()
@@ -823,8 +828,17 @@ open class MFTMapView: UIView {
                 properties["polygon_color"] = String(describing: options.fillColor)
             }
             
+            if options.drawOrder != Int.min {
+                properties["polygon_order"] = String(describing: options.drawOrder)
+                properties["line_order"] = String(describing: options.drawOrder - 1)
+            }
+
             if options.strokeColor != "default" {
                 properties["line_color"] = String(describing: options.strokeColor)
+            }
+            
+            if options.strokeOutlineColor != "default" {
+                properties["line_stroke_color"] = String(describing: options.strokeOutlineColor)
             }
             
             if options.strokeWidth != -1 {
@@ -835,15 +849,22 @@ open class MFTMapView: UIView {
                 properties["line_stroke_width"] = String(describing: options.strokeOutlineWidth)
             }
             
-            if options.strokeOutlineColor != "default" {
-                properties["line_stroke_color"] = String(describing: options.strokeOutlineColor)
+            if options.lineJoinType != .miter {
+                properties["line_cap"] = String(describing: options.lineJoinType.rawValue)
             }
             
+            if options.lineCapType != .bound {
+                properties["line_join"] = String(describing: options.lineCapType.rawValue)
+            }
+            
+            self.dataLayers[polygon.uuid] = layer
             layer.add(tgPolygon, withProperties: properties)
+            
         }
         
-        layerToRemove?.remove()
     }
+    
+    
     
     
     
@@ -921,7 +942,7 @@ open class MFTMapView: UIView {
         //Set Position and initial position for recenter button
         self.position = position
         
-        //check if API Key is empty
+        //check if API Key is empty 
         guard let _ = mapfitManger.apiKey else { return }
         
         
@@ -1628,6 +1649,13 @@ extension MFTMapView {
     
 }
 
+extension MFTMapView {
+    internal func toggle3DBuildings(){
+        let update = TGSceneUpdate(path: "global.show_3d_buildings", value: "\(mapOptions.is3DBuildingsEnabled)")
+        mapView.updateSceneAsync([update])
+    }
+    
+}
 
 
 extension MFTMapView: TGRecognizerDelegate {
