@@ -16,11 +16,6 @@ import SystemConfiguration
  */
 
 open class MFTMapView: UIView {
-    /*
-     Decalared all out of scope funtionalities as internal
-    */
-     
-    
     //CHANGE TO PUBLIC AS NEEDED
     internal var uuid: UUID = UUID()
     public var layers: [MFTLayer] = [MFTLayer]()
@@ -38,40 +33,14 @@ open class MFTMapView: UIView {
     private var placeMarkMarker: MFTMarker?
     private var placeInfoTapGesture = UITapGestureRecognizer()
     
-
+    /// The current center of the map.
     internal var position: CLLocationCoordinate2D
-    
-    
-    
-    
-    internal var tilt: Float {
-        set {
-            mapView.tilt = newValue
-        }
-        get {
-            return mapView.tilt
-        }
-    }
-
+    /// The current tile level.
+    internal var tilt: Float
     /// The current zoom level.
-    internal var zoom: Float {
-        set {
-            mapView.zoom = newValue
-        }
-        get {
-            return mapView.zoom
-        }
-    }
-    
+    internal var zoom: Float
     /// The current roation, in radians from north.
-    internal var rotation: Float {
-        set {
-            mapView.rotation = newValue
-        }
-        get {
-            return mapView.rotation
-        }
-    }
+    internal var rotation: Float
     
     // Receiever for single tap callbacks
     weak public var singleTapGestureDelegate: MapSingleTapGestureDelegate?
@@ -111,12 +80,8 @@ open class MFTMapView: UIView {
     
     /// Receiver for tile load completion callbacks
     weak internal var tileLoadDelegate: MapTileLoadDelegate?
-    
-    
-    
-
     private var isUserLocationEnabled: Bool = false
-
+    
     internal var mapView: TGMapViewController = TGMapViewController()
     
     private static let MapfitGeneralErrorDomain = "MapfitGeneralErrorDomain"
@@ -124,15 +89,15 @@ open class MFTMapView: UIView {
     
     public typealias OnStyleLoaded = (MFTMapTheme) -> ()
     fileprivate var onStyleLoadedClosure : OnStyleLoaded? = nil
-    //fileprivate let styles: [MFTMapTheme:MFTStyleSheet] = [MFTMapTheme.day : MFTDayStyle(),
-                                                          // MFTMapTheme.night : MFTNightStyle(), MFTMapTheme.grayScale : MFTGreyScaleStyle()]
-     let application : ApplicationProtocol
+
+    let application : ApplicationProtocol
+    
     //Location Properties
     var shouldShowCurrentLocation = false
     private var locale = Locale.current
     var lastSetPoint: TGGeoPoint?
     var currentLocation = CLLocation()
-
+    
     //transit
     var transitOverlayIsShowing = false
     var bikeOverlayIsShowing = false
@@ -144,8 +109,10 @@ open class MFTMapView: UIView {
     
     //Style Properties
     //var currentStyle: MFTMapTheme = .day
- 
-    fileprivate(set) var latestSceneId: Int32 = 0
+    
+    //amount of times a scene has been loaded 
+    public var latestSceneId: Int32 = 0
+    
     var firstRun: Bool = true
     private var attributionBtn: UIButton = UIButton()
     private var zoomPlusBtn: UIButton = UIButton()
@@ -161,9 +128,6 @@ open class MFTMapView: UIView {
     lazy var recenterButton: UIButton = UIButton()
     lazy var compassButton: UIButton = UIButton()
     
-    
-    
-
     //Markers
     public var currentMarkers: [TGMarker : MFTMarker] = Dictionary()
     public var currentPolylines: [TGGeoPolyline : MFTPolyline] = Dictionary()
@@ -172,7 +136,7 @@ open class MFTMapView: UIView {
     private var dataLayers: [UUID : TGMapData] = Dictionary()
     //Marker Info View
     let zoomButtonsView = MFTZoomButtonsView()
-   
+    
     
     //attribution button bottom constraint
     var initialAttributionBottomConstraintConstant: CGFloat = -16.5
@@ -186,25 +150,16 @@ open class MFTMapView: UIView {
     
     //Legal Notices button
     lazy var legalButton: UIButton = UIButton()
-    
-    /// The camera type we want to use. Defaults to whatever is set in the style sheet.
-    private var cameraType: TGCameraType {
-        set {
-            mapView.cameraType = newValue
-        }
-        get {
-            return mapView.cameraType
-        }
-    }
-    
-    
-//MARK: - Creating Instances
 
+    
+    
+    //MARK: - Creating Instances
+    
     /**
      Initializes and returns a newly allocated map view with the specified frame and the default style.
      - parameter frame: The frame for the view, measured in points.
      - returns: An initialized map view.
-    */
+     */
     public override init(frame: CGRect) {
         
         self.application = UIApplication.shared
@@ -213,19 +168,21 @@ open class MFTMapView: UIView {
         
         
         let configuration = URLSessionConfiguration.default
-
         configuration.requestCachePolicy = .returnCacheDataElseLoad
         let httpHandler = TGHttpHandler.init(sessionConfiguration: configuration)
         httpHandler.httpAdditionalHeaders = NSMutableDictionary(dictionary: MFTManager.sharedManager.httpHeaders())
         mapView.httpHandler = httpHandler
         
+        self.zoom = 1
+        self.rotation = 0
+        self.tilt = 0
         
         super.init(frame: frame)
         self.directionsOptions.setMapView(self)
         self.mapOptions.setMapView(mapView: self)
         self.mapOptions.setTheme(theme: .day)
         self.setUpView(frame: frame, position: self.position ) // Default statue of liberty
-
+        
         self.setDelegates()
         self.setupAttribution()
         self.setUpMapControls()
@@ -239,35 +196,13 @@ open class MFTMapView: UIView {
      - parameter style: The appearance style of the map.
      */
     
-    public init(frame: CGRect, position: CLLocationCoordinate2D, mapStyle: MFTMapTheme) {
-
-        self.application = UIApplication.shared
-        self.mapfitManger = MFTManager.sharedManager
+    public convenience init(frame: CGRect, position: CLLocationCoordinate2D, mapStyle: MFTMapTheme) {
+        self.init(frame: frame)
         self.position = position
-        
-        
-        let configuration = URLSessionConfiguration.default
-        configuration.requestCachePolicy = .returnCacheDataElseLoad
-        let httpHandler = TGHttpHandler.init(sessionConfiguration: configuration)
-        
-        httpHandler.httpAdditionalHeaders = NSMutableDictionary(dictionary: MFTManager.sharedManager.httpHeaders())
-        mapView.httpHandler = httpHandler
-        
-
-        
-        super.init(frame: frame)
         self.setCenter(position: position)
         self.directionsOptions.setMapView(self)
-        self.mapOptions = MFTMapOptions(mapView: self
-        )
+        self.mapOptions = MFTMapOptions(mapView: self)
         self.mapOptions.setTheme(theme: mapStyle)
-
-        self.setUpView(frame: frame, position: position)
-        self.setupAttribution()
-        self.setDelegates()
-        self.setUpMapControls()
-        self.accessibilityIdentifier = "mapView"
-        
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -275,14 +210,14 @@ open class MFTMapView: UIView {
     }
     
     
-
-//MARK: - Manipulating Viewpoint
-
+    
+    //MARK: - Manipulating Viewpoint
+    
     /**
      Changes the center coordinate of the map.
      - parameter position: The center coordinate of the map.
      */
-
+    
     public func setCenter(position: CLLocationCoordinate2D){
         mapView.position = TGGeoPointMake(position.longitude, position.latitude)
         self.position = position
@@ -296,8 +231,9 @@ open class MFTMapView: UIView {
      */
     
     public func setCenter(position: CLLocationCoordinate2D, duration: Float){
-         mapView.position = TGGeoPointMake(position.longitude, position.latitude)
-         self.position = position
+        self.position = position
+        mapView.animate(toPosition: TGGeoPointMake(position.longitude, position.latitude), withDuration: duration, with: .cubic)
+        
     }
     
     private func animateTocenter(position: CLLocationCoordinate2D, duration: Float){
@@ -305,13 +241,13 @@ open class MFTMapView: UIView {
     }
     
     /**
-    Map will be re-centered to the last position it is centered.
-    */
+     Map will be re-centered to the last position it is centered.
+     */
     
     public func reCenter(){
-         mapView.animate(toPosition: TGGeoPointMake(position.longitude, position.latitude), withDuration: easeDuration, with: .cubic)
+        mapView.animate(toPosition: TGGeoPointMake(position.longitude, position.latitude), withDuration: easeDuration, with: .cubic)
     }
-
+    
     
     /**
      Returns the center coordinate of the map.
@@ -336,13 +272,15 @@ open class MFTMapView: UIView {
         if zoomLevel < mapOptions.getMinZoomLevel() {
             zoomL = mapOptions.getMinZoomLevel()
         }
+        
+        self.mapView.zoom = zoomL
         self.zoom = zoomL
     }
     
     /**
      Changes the zoom level of the map.
-      - parameter zoomLevel: The new zoom level of the map.
-      - parameter duration: The duration of the zooming animation.
+     - parameter zoomLevel: The new zoom level of the map.
+     - parameter duration: The duration of the zooming animation.
      */
     
     public func setZoom(zoomLevel: Float, duration: Float){
@@ -356,10 +294,10 @@ open class MFTMapView: UIView {
         }
         
         self.zoom = zoomL
-        mapView.animate(toZoomLevel: zoomL, withDuration: duration)
-        self.zoom = zoomL
+        mapView.animate(toZoomLevel: zoomL, withDuration: duration, with: .cubic)
+        
     }
-
+    
     /**
      Returns the zoom level of the map.
      - returns: The zoom level of the map.
@@ -394,9 +332,9 @@ open class MFTMapView: UIView {
      Returns the tilt level of the map.
      - returns: The tilt level of the map.
      */
-
+    
     public func getTilt()->Float{
-       return mapView.tilt
+        return mapView.tilt
     }
     
     /**
@@ -417,24 +355,24 @@ open class MFTMapView: UIView {
     
     public func setRotation(rotationValue: Float, duration: Float){
         self.rotation = rotationValue
-        mapView.animate(toRotation: rotationValue, withDuration: duration)
+        mapView.animate(toRotation: rotationValue, withDuration: duration, with: .cubic)
     }
     
     /**
      Returns the rotation value of the map.
      - returns: The current rotation value of the map.
      */
-
-    public func getRotation()->Float{
-       return mapView.rotation
-    }
-
     
-   /**
-    Changes the map view to fit the given coordinate bounds.
-    - parameter bounds: The bounds coordinates for the new view.
-    - parameter padding: The minimum padding that will be visible around the given coordinate bounds.
-    */
+    public func getRotation()->Float{
+        return mapView.rotation
+    }
+    
+    
+    /**
+     Changes the map view to fit the given coordinate bounds.
+     - parameter bounds: The bounds coordinates for the new view.
+     - parameter padding: The minimum padding that will be visible around the given coordinate bounds.
+     */
     
     public func setLatLngBounds(bounds: MFTLatLngBounds, padding: Float){
         let pair = bounds.getVisibleBounds(viewWidth: Float(mapView.view.bounds.width * UIScreen.main.scale), viewHeight: Float(mapView.view.bounds.height * UIScreen.main.scale), padding: padding)
@@ -453,11 +391,11 @@ open class MFTMapView: UIView {
         let ne = mapView.screenPosition(toLngLat: CGPoint(x: mapView.view.bounds.width, y: 0))
         return MFTLatLngBounds(northEast: CLLocationCoordinate2DMake(ne.latitude, ne.longitude), southWest: CLLocationCoordinate2DMake(sw.latitude, sw.longitude))
     }
-
     
     
     
-//MARK: - Annotating the Map
+    
+    //MARK: - Annotating the Map
     
     /**
      Returns the current layers on the map.
@@ -591,7 +529,7 @@ open class MFTMapView: UIView {
         mapView.requestRender()
     }
     
-
+    
     /**
      Adds a marker to the map. Returns marker for styling and place info customization.
      - parameter position: The position of the marker to be added to the map.
@@ -622,13 +560,13 @@ open class MFTMapView: UIView {
                 
                 guard let position = response.0 else { return }
                 
-               
+                
                 DispatchQueue.main.async {
                     let address = addressObject[0]
-                        //add Marker
-                        marker = MFTMarker(position: CLLocationCoordinate2DMake(position.latitude, position.longitude), mapView: self)
-                        self.addAnnotation(marker!)
-
+                    //add Marker
+                    marker = MFTMarker(position: CLLocationCoordinate2DMake(position.latitude, position.longitude), mapView: self)
+                    self.addAnnotation(marker!)
+                    
                     //add building polygon
                     if let building = address.building{
                         var polygon = [CLLocationCoordinate2D]()
@@ -637,7 +575,14 @@ open class MFTMapView: UIView {
                             for point in polygonCoordinates[0]{
                                 polygon.append(CLLocationCoordinate2DMake(point[1], point[0]))
                             }
-                            _ = self.addPolygon([polygon])
+                            let markerPolygon = self.addPolygon([polygon])
+                            markerPolygon?.mapView = self
+                            if var annotations = marker?.subAnnotations {
+                                annotations["building"] = markerPolygon
+                            }else{
+                                marker?.subAnnotations = ["building" : markerPolygon as! MFTAnnotation] 
+                            }
+                            
                         }
                     }
                     completion(marker, nil)
@@ -662,16 +607,14 @@ open class MFTMapView: UIView {
     }
     
     
-//MARK: - Annotating the Map (Private Functions)
+    //MARK: - Annotating the Map (Private Functions)
     
     public func removeMarker(_ marker: MFTMarker) {
         guard let tgMarker = marker.tgMarker else { return }
         currentMarkers.removeValue(forKey: tgMarker)
         currentAnnotations.removeValue(forKey: marker.uuid)
         mapView.markerRemove(tgMarker)
-        if let sub = marker.subAnnotation {
-            self.removeAnnotation(sub)
-        }
+        marker.subAnnotations?.removeAll()
     }
     
     public func removePolyline(_ polyline: MFTPolyline) {
@@ -688,7 +631,7 @@ open class MFTMapView: UIView {
     public func removePolygon(_ polygon: MFTPolygon) {
         guard let tgPolygon = polygon.tgPolygon else { return }
         currentPolygons.removeValue(forKey: tgPolygon)
-         currentAnnotations.removeValue(forKey: polygon.uuid)
+        currentAnnotations.removeValue(forKey: polygon.uuid)
         let dataLayer = dataLayers[polygon.uuid]
         dataLayers.removeValue(forKey: polygon.uuid)
         dataLayer?.remove()
@@ -717,33 +660,38 @@ open class MFTMapView: UIView {
     }
     
     public func addPolyline(_ polyline: [[CLLocationCoordinate2D]]) -> MFTPolyline?{
-        let rPolyline = MFTPolyline()
+        let rPolyline = MFTPolyline(mapView: self)
         let tgPolyline = TGGeoPolyline()
         rPolyline.tgPolyline = tgPolyline
         rPolyline.addPoints(polyline)
         drawPolyline(polyline: rPolyline)
-            let layer = mapView.addDataLayer("mz_default_line")
+        let layer = mapView.addDataLayer("mz_default_line")
         if let dataLayer = layer {
+            
+            rPolyline.dataLayer = dataLayer
+            
             self.dataLayers[rPolyline.uuid] = dataLayer
-            dataLayer.add(tgPolyline, withProperties: ["type" : "polyline", "uuid" : "\(rPolyline.uuid)"])
+            dataLayer.add(tgPolyline, withProperties: ["type" : "polyline", "uuid" : "\(rPolyline.uuid)", "color" : "#D2655F"])
             currentPolylines[rPolyline.tgPolyline!] = rPolyline
             currentAnnotations[rPolyline.uuid] = rPolyline
             mapView.update()
         }
         
         return rPolyline
-       
+        
     }
     
     public func addPolygon(_ polygon: [[CLLocationCoordinate2D]])-> MFTPolygon?{
-        let rPolygon = MFTPolygon()
+        let rPolygon = MFTPolygon(mapView: self)
         let tgPolygon = TGGeoPolygon()
         rPolygon.tgPolygon = tgPolygon
         rPolygon.addPoints(polygon)
         drawPolygon(polygon: rPolygon)
- 
+        
+        
         let layer = mapView.addDataLayer("mz_default_polygon")
         if let dataLayer = layer {
+            
             self.dataLayers[rPolygon.uuid] = dataLayer
             dataLayer.add(tgPolygon, withProperties: ["type":"polygon", "uuid" : "\(rPolygon.uuid)"])
             currentPolygons[rPolygon.tgPolygon!] = rPolygon
@@ -753,18 +701,139 @@ open class MFTMapView: UIView {
             mapView.update()
             
         }
-        
-        
         return rPolygon
     }
+    
+    internal func updatePolylineStyle(_ polyline: MFTPolyline){
+        
+        let dataLayer = self.dataLayers[polyline.uuid]
+        dataLayer?.clear()
+        guard let tgPolyline = polyline.tgPolyline else { return }
+        if let layer = dataLayer {
+            
+            guard let options = polyline.polylineOptions else { return }
+            var properties = [String : String]()
+            properties["type"] = "polyline"
+            properties["uuid"] = "\(polyline.uuid)"
+            
+            if polyline.polylineOptions?.strokeColor != "default" {
+                properties["line_color"] = String(describing: options.strokeColor)
+            }
+            
+            if polyline.polylineOptions?.strokeWidth != -1 {
+                properties["line_width"] = String(describing: options.strokeWidth)
+            }
+            
+            if polyline.polylineOptions?.strokeOutlineWidth != -1 {
+                properties["line_stroke_width"] = String(describing: options.strokeOutlineWidth)
+            }
+            
+            if polyline.polylineOptions?.strokeOutlineColor != "default" {
+                properties["line_stroke_color"] = String(describing: options.strokeOutlineColor)
+            }
+            
+            if options.lineJoinType != .miter {
+                properties["line_cap"] = String(describing: options.lineJoinType.rawValue)
+            }
+            
+            if options.lineCapType != .bound {
+                properties["line_join"] = String(describing: options.lineCapType.rawValue)
+            }
+            
+            if options.drawOrder != Int.min {
+                properties["line_order"] = String(describing: options.drawOrder)
+            }
+            
+            self.dataLayers[polyline.uuid] = layer
+            layer.add(tgPolyline, withProperties: properties)
+        }
+        
+    }
+    
+    internal func updatePolygonStyle(_ polygon: MFTPolygon){
+        
+        let dataLayer = self.dataLayers[polygon.uuid]
+        dataLayer?.clear()
+        guard let tgPolygon = polygon.tgPolygon else { return }
+        if let layer = dataLayer {
+            
+            guard let options = polygon.polygonOptions else { return }
+            var properties = [String : String]()
+            properties["type"] = "polygon"
+            properties["uuid"] = "\(polygon.uuid)"
+            
+            if options.fillColor != "default" {
+                properties["polygon_color"] = String(describing: options.fillColor)
+            }
+            
+            if options.drawOrder != Int.min {
+                properties["polygon_order"] = String(describing: options.drawOrder)
+                properties["line_order"] = String(describing: options.drawOrder - 1)
+            }
+
+            if options.strokeColor != "default" {
+                properties["line_color"] = String(describing: options.strokeColor)
+            }
+            
+            if options.strokeOutlineColor != "default" {
+                properties["line_stroke_color"] = String(describing: options.strokeOutlineColor)
+            }
+            
+            if options.strokeWidth != -1 {
+                properties["line_width"] = String(describing: options.strokeWidth)
+            }
+            
+            if options.strokeOutlineWidth != -1 {
+                properties["line_stroke_width"] = String(describing: options.strokeOutlineWidth)
+            }
+            
+            if options.lineJoinType != .miter {
+                properties["line_cap"] = String(describing: options.lineJoinType.rawValue)
+            }
+            
+            if options.lineCapType != .bound {
+                properties["line_join"] = String(describing: options.lineCapType.rawValue)
+            }
+            
+            self.dataLayers[polygon.uuid] = layer
+            layer.add(tgPolygon, withProperties: properties)
+            
+        }
+        
+    }
+    
+
+    public func addPolygon(_ polygon: [[CLLocationCoordinate2D]], color: String)-> MFTPolygon?{
+        let rPolygon = MFTPolygon()
+        let tgPolygon = TGGeoPolygon()
+        rPolygon.tgPolygon = tgPolygon
+        rPolygon.addPoints(polygon)
+        drawPolygon(polygon: rPolygon)
+        
+        let layer = mapView.addDataLayer("mz_default_polygon")
+        if let dataLayer = layer {
+            
+            self.dataLayers[rPolygon.uuid] = dataLayer
+            dataLayer.add(tgPolygon, withProperties: ["type":"polygon", "uuid" : "\(rPolygon.uuid)"])
+            currentPolygons[rPolygon.tgPolygon!] = rPolygon
+            currentAnnotations[rPolygon.uuid] = rPolygon
+            
+            mapView.requestRender()
+            mapView.update()
+            
+        }
+        return rPolygon
+    }
+    
+    
     
     private func drawPolygon(polygon: MFTPolygon){
         let coordinates = polygon.points[0]
         for (index, point) in coordinates.enumerated() {
             if index == 0 {
-                    polygon.tgPolygon?.startPath(TGGeoPointMake(point.longitude, point.latitude))
-                }else{
-                    polygon.tgPolygon?.add(TGGeoPointMake(point.longitude, point.latitude))
+                polygon.tgPolygon?.startPath(TGGeoPointMake(point.longitude, point.latitude))
+            }else{
+                polygon.tgPolygon?.add(TGGeoPointMake(point.longitude, point.latitude))
             }
         }
     }
@@ -775,14 +844,8 @@ open class MFTMapView: UIView {
             polyline.tgPolyline?.add(TGGeoPointMake(point.longitude, point.latitude))
         }
     }
-            
-
     
     
-//MARK: - Directions
-    
-
-
     private func setDelegates(){
         mapView.mapViewDelegate = self
         mapView.gestureDelegate = self
@@ -790,12 +853,12 @@ open class MFTMapView: UIView {
     }
     
     private func setUpView(frame: CGRect, position: CLLocationCoordinate2D){
- 
+        
         self.addSubview(mapView.view)
         self.sendSubview(toBack: mapView.view)
         self.layer.masksToBounds = true
         
-
+        
         mapView.view.translatesAutoresizingMaskIntoConstraints = false
         
         let leftConstraint = mapView.view.leftAnchor.constraint(equalTo: self.leftAnchor)
@@ -807,17 +870,17 @@ open class MFTMapView: UIView {
         
         //Set Position and initial position for recenter button
         self.position = position
-
+        
         //check if API Key is empty 
         guard let _ = mapfitManger.apiKey else { return }
-    
+        
         
         try? loadMapfitStyleAsync(mapOptions.mapTheme, locale: self.locale)
         
     }
     
-
-
+    
+    
     private func setupAttribution(){
         attributionBtn = UIButton()
         //attributionBtn.setTitle("Powered by Mapfit", for: .normal)
@@ -831,7 +894,7 @@ open class MFTMapView: UIView {
         attributionBtn.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(attributionBtn)
         
-         //tabbaroffset
+        //tabbaroffset
         self.attributionBtn.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 12).isActive = true
         self.attributionBtn.heightAnchor.constraint(equalToConstant: 41.3).isActive = true
         self.attributionBtn.widthAnchor.constraint(equalToConstant: 38.6).isActive = true
@@ -856,17 +919,17 @@ open class MFTMapView: UIView {
         self.legalButtonBottomConstraint = self.legalButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: initialLegalButtonBottomConstraintConstant)
         self.legalButtonBottomConstraint.isActive = true
         self.legalButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10).isActive = true
-
+        
     }
     
     private func setUpMapControls() {
         //set images
-
+        
         userLocationButton.setImage(UIImage(named: "currentLocation.png", in: Bundle.houseStylesBundle(), compatibleWith: nil), for: .normal)
         recenterButton.setImage(UIImage(named: "reCenter.png", in: Bundle.houseStylesBundle(), compatibleWith: nil), for: .normal)
         compassButton.setImage(UIImage(named: "compassNorth.png", in: Bundle.houseStylesBundle(), compatibleWith: nil), for: .normal)
         
-  
+        
         //aspect fill
         userLocationButton.imageView?.contentMode = .scaleToFill
         recenterButton.imageView?.contentMode = .scaleToFill
@@ -877,7 +940,7 @@ open class MFTMapView: UIView {
         userLocationButton.addTarget(self, action: #selector(userLocationButtonTapped), for: .touchUpInside)
         compassButton.addTarget(self, action: #selector(compassButtonTapped), for: .touchUpInside)
         
-
+        
         recenterButton.translatesAutoresizingMaskIntoConstraints = false
         userLocationButton.translatesAutoresizingMaskIntoConstraints = false
         compassButton.translatesAutoresizingMaskIntoConstraints = false
@@ -889,7 +952,7 @@ open class MFTMapView: UIView {
     
     
     internal func toggleRecenterButton(){
-
+        
         
         if mapOptions.isRecenterControlVisible{
             zoomButtonsView.removeFromSuperview()
@@ -904,21 +967,21 @@ open class MFTMapView: UIView {
     }
     
     
-   internal func toggleUserLocationButton(){
-
-    if mapOptions.isUserLocationButtonVisible{
+    internal func toggleUserLocationButton(){
+        
+        if mapOptions.isUserLocationButtonVisible{
             zoomButtonsView.removeFromSuperview()
             self.addSubview(userLocationButton)
             self.userLocationButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -2).isActive = true
             self.userLocationButton.widthAnchor.constraint(equalToConstant: 57).isActive = true
             self.userLocationButton.heightAnchor.constraint(equalToConstant: 57).isActive = true
-        
-        if mapOptions.isRecenterControlVisible {
-             self.userLocationButton.bottomAnchor.constraint(equalTo: self.recenterButton.topAnchor, constant: 6.6).isActive = true
-        }else{
-            self.userLocationButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -7.5).isActive = true
-        }
-    
+            
+            if mapOptions.isRecenterControlVisible {
+                self.userLocationButton.bottomAnchor.constraint(equalTo: self.recenterButton.topAnchor, constant: 6.6).isActive = true
+            }else{
+                self.userLocationButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -7.5).isActive = true
+            }
+            
         }else{
             userLocationButton.removeFromSuperview()
         }
@@ -928,30 +991,30 @@ open class MFTMapView: UIView {
     
     internal func toggleCompassButton() {
         if mapOptions.isCompassVisible {
-        self.addSubview(compassButton)
-        
-        self.compassButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 10).isActive = true
-        self.compassButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -2).isActive = true
-        self.compassButton.widthAnchor.constraint(equalToConstant: 57).isActive = true
-        self.compassButton.heightAnchor.constraint(equalToConstant: 57).isActive = true
+            self.addSubview(compassButton)
+            
+            self.compassButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 10).isActive = true
+            self.compassButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -2).isActive = true
+            self.compassButton.widthAnchor.constraint(equalToConstant: 57).isActive = true
+            self.compassButton.heightAnchor.constraint(equalToConstant: 57).isActive = true
             self.compassButton.imageView?.clipsToBounds = false
             self.compassButton.imageView?.contentMode = .center
             self.compassButton.alpha = 0
         }
     }
     
-
+    
     
     internal func updateCompass(){
         
-            UIView.animate(withDuration: 0.5) {
+        UIView.animate(withDuration: 0.5) {
             let angle = self.rotation // convert from degrees to radians
             self.compassButton.imageView?.transform = CGAffineTransform(rotationAngle: CGFloat(angle)) // rotate the picture
         }
     }
     
     
-   internal func toggleZoomButtons() {
+    internal func toggleZoomButtons() {
         if mapOptions.isZoomControlVisible {
             zoomButtonsView.translatesAutoresizingMaskIntoConstraints = false
             self.addSubview(zoomButtonsView)
@@ -982,9 +1045,9 @@ open class MFTMapView: UIView {
     }
     
     @objc private func recenterButtonTapped(){
-       mapView.animate(toPosition: TGGeoPointMake(self.position.longitude, self.position.latitude), withDuration: easeDuration)
-       recenterButton.setImage(UIImage(named: "reCenter.png", in: Bundle.houseStylesBundle(), compatibleWith: nil), for: .normal)
-       
+        mapView.animate(toPosition: TGGeoPointMake(self.position.longitude, self.position.latitude), withDuration: easeDuration)
+        recenterButton.setImage(UIImage(named: "reCenter.png", in: Bundle.houseStylesBundle(), compatibleWith: nil), for: .normal)
+        
     }
     
     @objc private func userLocationButtonTapped(){
@@ -1014,7 +1077,7 @@ open class MFTMapView: UIView {
             UIView.transition(with: self.compassButton, duration: 0.5, options: .transitionCrossDissolve, animations: {
                 self.compassButton.isHidden = true
             })
- 
+            
         }
     }
     
@@ -1028,19 +1091,19 @@ open class MFTMapView: UIView {
         }
     }
     
-
+    
     @objc private func attributionButtonTapped() {
         self.switchConstraintForAttribution()
         UIView.animate(withDuration: 0.5) {
             self.layoutIfNeeded()
         }
         
-
+        
     }
     
     @objc private func legalButtonTapped(){
-                guard let url = URL(string: MFTMapView.mapfitRights) else { return }
-                let _ = application.openURL(url)
+        guard let url = URL(string: MFTMapView.mapfitRights) else { return }
+        let _ = application.openURL(url)
     }
     
     func switchConstraintForAttribution() {
@@ -1052,8 +1115,8 @@ open class MFTMapView: UIView {
             legalButtonBottomConstraint.constant = initialLegalButtonBottomConstraintConstant
         }
     }
-
-
+    
+    
     
     
     fileprivate func setBackingVariableForGlobalStyleVar(variable: GlobalStyleVars, to value: Bool) {
@@ -1067,7 +1130,7 @@ open class MFTMapView: UIView {
         default: break
         }
     }
-  
+    
 }
 
 //MARK: - TGMapViewDelegate
@@ -1077,40 +1140,8 @@ extension MFTMapView : TGMapViewDelegate, MapPlaceInfoSelectDelegate {
         
         
     }
-
-    public func mapView(_ mapView: TGMapViewController, didLoadScene sceneID: Int32, withError sceneError: Error?) {
-        
-        //We only want to call back on the latest scene load - so we gate here to make sure we only call back on the latest.
-        //TODO: For 2.0 we should pass the Error along in the callback block.
-        //reDrawAnnotations()
-        
-        restoreUserMarkers()
-        
-        if sceneID != latestSceneId {
-            return
-        }
-        if let update = globalSceneUpdates.first {
-            //update backing variable if one exists for it
-            if let updateValue = Bool(update.value), let updatePath = GlobalStyleVars(rawValue: update.path) {
-                setBackingVariableForGlobalStyleVar(variable: updatePath, to: updateValue)
-            }
-            globalSceneUpdates.remove(at: 0)
-            if !globalSceneUpdates.isEmpty {
-                let nextUpdate = globalSceneUpdates[0]
-                latestSceneId = mapView.updateSceneAsync([nextUpdate])
-                // In the event we have more to process, stop processing here.
-                return
-            }
-        }
-      
-        guard let styleClosure = sceneLoadCallback else { return }
-        styleClosure(mapOptions.mapTheme)
-        sceneLoadCallback = nil
-    }
     
-    open func mapViewDidCompleteLoading(_ mapView: TGMapViewController) {
-        tileLoadDelegate?.mapViewDidCompleteLoading(self)
-    }
+
     
     open func mapView(_ mapView: TGMapViewController, didSelectFeature feature: [String : String]?, atScreenPosition position: CGPoint) {
         guard let feature = feature else { return }
@@ -1127,7 +1158,7 @@ extension MFTMapView : TGMapViewDelegate, MapPlaceInfoSelectDelegate {
                 
                 
                 if feature["type"] == "polyline" {
-                     polylineSelectDelegate?.mapView(self, didSelectPolyline: annotation.value as! MFTPolyline, atScreenPosition: position)
+                    polylineSelectDelegate?.mapView(self, didSelectPolyline: annotation.value as! MFTPolyline, atScreenPosition: position)
                 }
             }
         }
@@ -1144,22 +1175,22 @@ extension MFTMapView : TGMapViewDelegate, MapPlaceInfoSelectDelegate {
         
         let tgMarker = markerPickResult.marker
         
-            if let marker = currentMarkers[tgMarker] {
-                markerSelectDelegate?.mapView(self, didSelectMarker: marker, atScreenPosition: position)
-                
-                self.placeInfo?.infoView.removeFromSuperview()
-                self.placeInfo = nil
-                
-                if marker.getScreenPosition().x.isNaN || marker.getScreenPosition().y.isNaN {
-                    return
-                }
-
-                self.animateTocenter(position: marker.getPosition(), duration: 0.5)
-                if !(marker.title == "") || !(marker.subtitle1 == "") || !(marker.subtitle2 == "") {
-                createMFTPlaceInfoView(marker: marker)
-                }
+        if let marker = currentMarkers[tgMarker] {
+            markerSelectDelegate?.mapView(self, didSelectMarker: marker, atScreenPosition: position)
+            
+            self.placeInfo?.infoView.removeFromSuperview()
+            self.placeInfo = nil
+            
+            if marker.getScreenPosition().x.isNaN || marker.getScreenPosition().y.isNaN {
+                return
             }
-            return
+            
+            self.animateTocenter(position: marker.getPosition(), duration: 0.5)
+            if !(marker.title == "") || !(marker.subtitle1 == "") || !(marker.subtitle2 == "") {
+                createMFTPlaceInfoView(marker: marker)
+            }
+        }
+        return
         
     }
     
@@ -1187,7 +1218,7 @@ extension MFTMapView : TGMapViewDelegate, MapPlaceInfoSelectDelegate {
         
         if let placeInfo = placeInfo {
             self.mapView.view.addSubview(placeInfo.infoView)
-
+            
             placeInfo.infoView.addGestureRecognizer(placeInfoTapGesture)
             placeInfoTapGesture.addTarget(self, action: #selector(placeInfoPress))
             
@@ -1198,7 +1229,7 @@ extension MFTMapView : TGMapViewDelegate, MapPlaceInfoSelectDelegate {
             placeInfoTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(updateMFTPlaceInfoPosition), userInfo: nil, repeats: !placeInfo.infoView.isHidden)
             
         }
-
+        
     }
     
     
@@ -1240,13 +1271,13 @@ extension MFTMapView : TGMapViewDelegate, MapPlaceInfoSelectDelegate {
     }
     
     
-//MARK: - Gestures
+    //MARK: - Gestures
     
     open func mapView(_ view: TGMapViewController, recognizer: UIGestureRecognizer, shouldRecognizeSingleTapGesture location: CGPoint) -> Bool {
         mapView.pickLabel(at: location)
         mapView.pickMarker(at: location)
         mapView.pickFeature(at: location)
-
+        
         guard let recognize = singleTapGestureDelegate?.mapView(self, recognizer: recognizer, shouldRecognizeSingleTapGesture: location) else { return true }
         
         return recognize
@@ -1309,7 +1340,7 @@ extension MFTMapView : TGMapViewDelegate, MapPlaceInfoSelectDelegate {
     open func mapView(_ view: TGMapViewController, recognizer: UIGestureRecognizer, shouldRecognizePinchGesture location: CGPoint) -> Bool {
         
         let pinch = recognizer as! UIPinchGestureRecognizer
-         minMaxZoomTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(checkZoomLevels), userInfo: nil, repeats: true)
+        minMaxZoomTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(checkZoomLevels), userInfo: nil, repeats: true)
         
         if self.zoom > mapOptions.getMaxZoomLevel() && self.zoom * Float(pinch.scale) > mapOptions.getMaxZoomLevel() {
             return false
@@ -1334,10 +1365,8 @@ extension MFTMapView : TGMapViewDelegate, MapPlaceInfoSelectDelegate {
         }
         
         if pinch.state == .ended {
-           // self.mapOptions.accuracyCircleTimer.invalidate()
+            // self.mapOptions.accuracyCircleTimer.invalidate()
         }
-        
-        
         
         if self.zoom > mapOptions.getMaxZoomLevel() && self.zoom * Float(pinch.scale) > mapOptions.getMaxZoomLevel() {
             setZoom(zoomLevel: mapOptions.getMaxZoomLevel(), duration: 0.123)
@@ -1361,7 +1390,7 @@ extension MFTMapView : TGMapViewDelegate, MapPlaceInfoSelectDelegate {
             setZoom(zoomLevel: mapOptions.getMinZoomLevel(), duration: 0.123)
         }
     }
-
+    
     open func mapView(_ view: TGMapViewController, recognizer: UIGestureRecognizer, shouldRecognizeRotationGesture location: CGPoint) -> Bool {
         return mapOptions.isRotateEnabled
     }
@@ -1388,14 +1417,50 @@ extension MFTMapView : TGMapViewDelegate, MapPlaceInfoSelectDelegate {
         shoveDelegate?.mapView(self, didShoveMap: displacement)
         
         updateMFTPlaceInfoPosition()
-
+        
     }
-
+    
 }
 
 
 
 extension MFTMapView {
+    //called when Mapview is finished loading
+    public func mapView(_ mapView: TGMapViewController, didLoadScene sceneID: Int32, withError sceneError: Error?) {
+        
+        //We only want to call back on the latest scene load - so we gate here to make sure we only call back on the latest.
+        //TODO: For 2.0 we should pass the Error along in the callback block.
+        //reDrawAnnotations()
+        
+        restoreUserMarkers()
+        
+        if sceneID != latestSceneId {
+            return
+        }
+        if let update = globalSceneUpdates.first {
+            //update backing variable if one exists for it
+            if let updateValue = Bool(update.value), let updatePath = GlobalStyleVars(rawValue: update.path) {
+                setBackingVariableForGlobalStyleVar(variable: updatePath, to: updateValue)
+            }
+            globalSceneUpdates.remove(at: 0)
+            if !globalSceneUpdates.isEmpty {
+                let nextUpdate = globalSceneUpdates[0]
+                latestSceneId = mapView.updateSceneAsync([nextUpdate])
+                // In the event we have more to process, stop processing here.
+                return
+            }
+        }
+        
+        guard let styleClosure = sceneLoadCallback else { return }
+        styleClosure(mapOptions.mapTheme)
+        sceneLoadCallback = nil
+    }
+    
+    open func mapViewDidCompleteLoading(_ mapView: TGMapViewController) {
+        tileLoadDelegate?.mapViewDidCompleteLoading(self)
+    }
+    
+    
     /**
      Loads the map style asynchronously. Recommended for production apps. Uses the system's current locale.
      - parameter styleSheet: The map style / theme combination to load.
@@ -1435,10 +1500,10 @@ extension MFTMapView {
         }
         
         self.locale = locale
-
+        
         if let urlPath = URL(string: theme.rawValue) {
-                mapView.loadScene(from: urlPath)
-                self.reDrawAnnotations()
+            mapView.loadScene(from: urlPath)
+            self.reDrawAnnotations()
             
             DispatchQueue.global().async {
                 self.mapView.httpHandler.downloadRequestAsync(theme.rawValue, completionHandler: { (data, response, error) in
@@ -1455,20 +1520,20 @@ extension MFTMapView {
         
     }
     
-
+    
     internal func loadCustomStyleSheetAsync(_ path: String, locale: Locale) throws {
         self.locale = locale
         self.mapOptions.mapTheme = .custom
         
         if let urlPath = URL(string: path) {
-            mapView.loadSceneAsync(from: urlPath)
+            mapView.loadScene(from: urlPath)
             self.reDrawAnnotations()
         }
         
     }
     
     
-   private func isInternetAvailable() -> Bool
+    private func isInternetAvailable() -> Bool
     {
         var zeroAddress = sockaddr_in()
         zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
@@ -1512,9 +1577,17 @@ extension MFTMapView {
         
         return  CGSize(width: self.toggleStackView.frame.width * 0.5, height: self.toggleStackView.frame.height * 0.15)
     }
- 
+    
 }
 
+extension MFTMapView {
+    internal func toggle3DBuildings(){
+        let update = TGSceneUpdate(path: "global.show_3d_buildings", value: "\(mapOptions.is3DBuildingsEnabled)")
+        
+        mapView.updateSceneAsync([update])
+    }
+    
+}
 
 
 extension MFTMapView: TGRecognizerDelegate {

@@ -1,43 +1,73 @@
 //
 //  ViewController.swift
-//  Sample-App
+//  iOS-GL-Test
 //
-//  Created by Zain N. on 2/21/18.
+//  Created by Zain N. on 4/3/18.
 //  Copyright © 2018 Mapfit. All rights reserved.
 //
 
 import UIKit
-import Mapfit
 import CoreLocation
+import Mapfit
 
 class ViewController: UIViewController {
-
+    
+    let button: UIButton = UIButton()
     let mapview = MFTMapView()
+    
+    func setupNav(){
+        let leftButton = UIBarButtonItem(title: "Test", style: .plain, target: self, action: #selector(leftButtonTapped))
+        let rightButton = UIBarButtonItem(title: "Test", style: .plain, target: self, action: #selector(rightButtonTapped))
+        self.navigationItem.leftBarButtonItem = leftButton
+        self.navigationItem.rightBarButtonItem = rightButton
+        self.navigationItem.title = "Sample App"
+        
+        
+    }
+    
+    @objc func leftButtonTapped(){
+        
+    }
+    
+    @objc func rightButtonTapped(){
+       
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
         
         MFTManager.sharedManager.apiKey = ""
-
-        let mapview = MFTMapView(frame: view.bounds)
-        mapview.mapOptions.setTheme(theme: .day)
+        mapview.frame = self.view.bounds
+        view.addSubview(mapview)
         
-        mapview.mapOptions.setUserLocationEnabled(true, accuracy: .high)
-        
-        mapview.addMarker(address: "119 w 24th street, NY") { (marker, error) in
-            marker?.title = "Mapfit HQ"
+        mapview.addMarker(address: "119 w 24th street new york, ny") { (marker, error) in
+            
+            
+            //access the markers options through marker.markerOptions
+            
+            
         }
         
         
-        self.view.addSubview(mapview)
-
+        
+        
+        
+        
+        
+        
     }
-
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 }
+
+
+
+    
+
+
+
 

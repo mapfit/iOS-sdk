@@ -17,6 +17,10 @@ import CoreLocation
 @objc(MFTPolyline)
 public class MFTPolyline : NSObject, MFTAnnotation {
     
+    internal var dataLayer: TGMapData?
+    
+    internal var mapView: MFTMapView?
+    
     /**
      Initial style of the annotation(polyine, polygon, or marker).
      */
@@ -28,6 +32,9 @@ public class MFTPolyline : NSObject, MFTAnnotation {
     
     public var uuid: UUID
     
+    public var polylineOptions: MFTPolylineOptions?
+    
+    
     internal var tgMarker: TGMarker? {
         didSet {
             if let line = tgPolyline { tgMarker?.polyline = line }
@@ -37,7 +44,7 @@ public class MFTPolyline : NSObject, MFTAnnotation {
         }
     }
     
-     /// The polyline that should be displayed on the map.
+    /// The polyline that should be displayed on the map.
     internal var tgPolyline: TGGeoPolyline?  {
         didSet {
             guard let l  = tgPolyline else { return }
@@ -53,16 +60,16 @@ public class MFTPolyline : NSObject, MFTAnnotation {
      */
     
     public var isVisible: Bool
-
+    
     /**
      Adds new point to the polyline.
      - parameter point: The new point to be drawn in the polyline.
      */
     
     
- 
+    
     /**
-       Returns an array of the points defining the polyline outline.
+     Returns an array of the points defining the polyline outline.
      */
     public var points: [[CLLocationCoordinate2D]] = [[]]
     
@@ -77,7 +84,7 @@ public class MFTPolyline : NSObject, MFTAnnotation {
     
     @objc public func setStyle() {
         guard let marker = tgMarker else { return }
-            marker.stylingString =  style.rawValue
+        marker.stylingString =  style.rawValue
     }
     
     
@@ -104,14 +111,33 @@ public class MFTPolyline : NSObject, MFTAnnotation {
         return latLngBounds.build()
     }
     
+    public func updateProperties() {
+        guard let mapView = self.mapView else { return }
+        mapView.updatePolylineStyle(self)
+    }
+    
+    
     
     override init() {
         self.isVisible = true
         self.style = MFTAnnotationStyle.polyline
         self.uuid = UUID()
+        
         super.init()
+        self.polylineOptions = MFTPolylineOptions(self)
+        
     }
-
+    
+    init(mapView: MFTMapView) {
+        self.isVisible = true
+        self.style = MFTAnnotationStyle.polyline
+        self.uuid = UUID()
+        self.mapView = mapView
+        super.init()
+        self.polylineOptions = MFTPolylineOptions(self)
+        
+    }
+    
 }
 
 

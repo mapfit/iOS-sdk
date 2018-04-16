@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8A6C74095F0D93A1C593480ACFF6BB3D"
+               BlueprintIdentifier = "AFB58C1DAB6B1697F967F9AFFB8FE658"
                BuildableName = "houseStyles.bundle"
                BlueprintName = "Mapfit-houseStyles"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8A6C74095F0D93A1C593480ACFF6BB3D"
+            BlueprintIdentifier = "AFB58C1DAB6B1697F967F9AFFB8FE658"
             BuildableName = "houseStyles.bundle"
             BlueprintName = "Mapfit-houseStyles"
             ReferencedContainer = "container:Pods.xcodeproj">

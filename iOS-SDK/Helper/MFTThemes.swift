@@ -10,9 +10,9 @@ import Foundation
 
 /// An Enum showing map style
 public enum MFTMapTheme: String {
-    case day = "https://cdn.mapfit.com/v2-2/themes/mapfit-day.yaml"
-    case night = "https://cdn.mapfit.com/v2-2/themes/mapfit-night.yaml"
-    case grayScale = "https://cdn.mapfit.com/v2-2/themes/mapfit-grayscale.yaml"
+    case day = "https://cdn.mapfit.com/v2-3/themes/mapfit-day.yaml"
+    case night = "https://cdn.mapfit.com/v2-3/themes/mapfit-night.yaml"
+    case grayScale = "https://cdn.mapfit.com/v2-3/themes/mapfit-grayscale.yaml"
     case custom = ""
 }
 

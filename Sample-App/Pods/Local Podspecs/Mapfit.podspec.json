@@ -1,6 +1,6 @@
 {
   "name": "Mapfit",
-  "version": "1.0.0",
+  "version": "1.1",
   "summary": "Mapfit iOS SDK",
   "description": "The Mapfit iOS SDK packages up everything you need to use Mapfit services in your iOS applications. It also simplifies setup, installation, API key management, and generally makes your life better.",
   "homepage": "https://mapfit.com/developers",
@@ -17,7 +17,7 @@
   },
   "source": {
     "git": "https://github.com/mapfit/iOS-sdk.git",
-    "tag": "1.0.0"
+    "tag": "1.1"
   },
   "dependencies": {
     "Tetragon-mobile": [
