@@ -16,11 +16,6 @@ import SystemConfiguration
  */
 
 open class MFTMapView: UIView {
-    /*
-     Decalared all out of scope funtionalities as internal
-     */
-    
-    
     //CHANGE TO PUBLIC AS NEEDED
     internal var uuid: UUID = UUID()
     public var layers: [MFTLayer] = [MFTLayer]()
@@ -38,40 +33,14 @@ open class MFTMapView: UIView {
     private var placeMarkMarker: MFTMarker?
     private var placeInfoTapGesture = UITapGestureRecognizer()
     
-    
+    /// The current center of the map.
     internal var position: CLLocationCoordinate2D
-    
-    
-    
-    
-    internal var tilt: Float {
-        set {
-            mapView.tilt = newValue
-        }
-        get {
-            return mapView.tilt
-        }
-    }
-    
+    /// The current tile level.
+    internal var tilt: Float
     /// The current zoom level.
-    internal var zoom: Float {
-        set {
-            mapView.zoom = newValue
-        }
-        get {
-            return mapView.zoom
-        }
-    }
-    
+    internal var zoom: Float
     /// The current roation, in radians from north.
-    internal var rotation: Float {
-        set {
-            mapView.rotation = newValue
-        }
-        get {
-            return mapView.rotation
-        }
-    }
+    internal var rotation: Float
     
     // Receiever for single tap callbacks
     weak public var singleTapGestureDelegate: MapSingleTapGestureDelegate?
@@ -111,10 +80,6 @@ open class MFTMapView: UIView {
     
     /// Receiver for tile load completion callbacks
     weak internal var tileLoadDelegate: MapTileLoadDelegate?
-    
-    
-    
-    
     private var isUserLocationEnabled: Bool = false
     
     internal var mapView: TGMapViewController = TGMapViewController()
@@ -124,9 +89,9 @@ open class MFTMapView: UIView {
     
     public typealias OnStyleLoaded = (MFTMapTheme) -> ()
     fileprivate var onStyleLoadedClosure : OnStyleLoaded? = nil
-    //fileprivate let styles: [MFTMapTheme:MFTStyleSheet] = [MFTMapTheme.day : MFTDayStyle(),
-    // MFTMapTheme.night : MFTNightStyle(), MFTMapTheme.grayScale : MFTGreyScaleStyle()]
+
     let application : ApplicationProtocol
+    
     //Location Properties
     var shouldShowCurrentLocation = false
     private var locale = Locale.current
@@ -145,7 +110,9 @@ open class MFTMapView: UIView {
     //Style Properties
     //var currentStyle: MFTMapTheme = .day
     
-    fileprivate(set) var latestSceneId: Int32 = 0
+    //amount of times a scene has been loaded 
+    public var latestSceneId: Int32 = 0
+    
     var firstRun: Bool = true
     private var attributionBtn: UIButton = UIButton()
     private var zoomPlusBtn: UIButton = UIButton()
@@ -160,9 +127,6 @@ open class MFTMapView: UIView {
     lazy var userLocationButton: UIButton = UIButton()
     lazy var recenterButton: UIButton = UIButton()
     lazy var compassButton: UIButton = UIButton()
-    
-    
-    
     
     //Markers
     public var currentMarkers: [TGMarker : MFTMarker] = Dictionary()
@@ -186,16 +150,7 @@ open class MFTMapView: UIView {
     
     //Legal Notices button
     lazy var legalButton: UIButton = UIButton()
-    
-    /// The camera type we want to use. Defaults to whatever is set in the style sheet.
-    private var cameraType: TGCameraType {
-        set {
-            mapView.cameraType = newValue
-        }
-        get {
-            return mapView.cameraType
-        }
-    }
+
     
     
     //MARK: - Creating Instances
@@ -213,12 +168,14 @@ open class MFTMapView: UIView {
         
         
         let configuration = URLSessionConfiguration.default
-        
         configuration.requestCachePolicy = .returnCacheDataElseLoad
         let httpHandler = TGHttpHandler.init(sessionConfiguration: configuration)
         httpHandler.httpAdditionalHeaders = NSMutableDictionary(dictionary: MFTManager.sharedManager.httpHeaders())
         mapView.httpHandler = httpHandler
         
+        self.zoom = 1
+        self.rotation = 0
+        self.tilt = 0
         
         super.init(frame: frame)
         self.directionsOptions.setMapView(self)
@@ -239,35 +196,13 @@ open class MFTMapView: UIView {
      - parameter style: The appearance style of the map.
      */
     
-    public init(frame: CGRect, position: CLLocationCoordinate2D, mapStyle: MFTMapTheme) {
-        
-        self.application = UIApplication.shared
-        self.mapfitManger = MFTManager.sharedManager
+    public convenience init(frame: CGRect, position: CLLocationCoordinate2D, mapStyle: MFTMapTheme) {
+        self.init(frame: frame)
         self.position = position
-        
-        
-        let configuration = URLSessionConfiguration.default
-        configuration.requestCachePolicy = .returnCacheDataElseLoad
-        let httpHandler = TGHttpHandler.init(sessionConfiguration: configuration)
-        
-        httpHandler.httpAdditionalHeaders = NSMutableDictionary(dictionary: MFTManager.sharedManager.httpHeaders())
-        mapView.httpHandler = httpHandler
-        
-        
-        
-        super.init(frame: frame)
         self.setCenter(position: position)
         self.directionsOptions.setMapView(self)
-        self.mapOptions = MFTMapOptions(mapView: self
-        )
+        self.mapOptions = MFTMapOptions(mapView: self)
         self.mapOptions.setTheme(theme: mapStyle)
-        
-        self.setUpView(frame: frame, position: position)
-        self.setupAttribution()
-        self.setDelegates()
-        self.setUpMapControls()
-        self.accessibilityIdentifier = "mapView"
-        
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -296,8 +231,9 @@ open class MFTMapView: UIView {
      */
     
     public func setCenter(position: CLLocationCoordinate2D, duration: Float){
-        mapView.position = TGGeoPointMake(position.longitude, position.latitude)
         self.position = position
+        mapView.animate(toPosition: TGGeoPointMake(position.longitude, position.latitude), withDuration: duration, with: .cubic)
+        
     }
     
     private func animateTocenter(position: CLLocationCoordinate2D, duration: Float){
@@ -336,6 +272,8 @@ open class MFTMapView: UIView {
         if zoomLevel < mapOptions.getMinZoomLevel() {
             zoomL = mapOptions.getMinZoomLevel()
         }
+        
+        self.mapView.zoom = zoomL
         self.zoom = zoomL
     }
     
@@ -356,8 +294,8 @@ open class MFTMapView: UIView {
         }
         
         self.zoom = zoomL
-        mapView.animate(toZoomLevel: zoomL, withDuration: duration)
-        self.zoom = zoomL
+        mapView.animate(toZoomLevel: zoomL, withDuration: duration, with: .cubic)
+        
     }
     
     /**
@@ -417,7 +355,7 @@ open class MFTMapView: UIView {
     
     public func setRotation(rotationValue: Float, duration: Float){
         self.rotation = rotationValue
-        mapView.animate(toRotation: rotationValue, withDuration: duration)
+        mapView.animate(toRotation: rotationValue, withDuration: duration, with: .cubic)
     }
     
     /**
@@ -864,10 +802,7 @@ open class MFTMapView: UIView {
         
     }
     
-    
-    
-    
-    
+
     public func addPolygon(_ polygon: [[CLLocationCoordinate2D]], color: String)-> MFTPolygon?{
         let rPolygon = MFTPolygon()
         let tgPolygon = TGGeoPolygon()
@@ -909,12 +844,6 @@ open class MFTMapView: UIView {
             polyline.tgPolyline?.add(TGGeoPointMake(point.longitude, point.latitude))
         }
     }
-    
-    
-    
-    
-    //MARK: - Directions
-    
     
     
     private func setDelegates(){
@@ -1212,39 +1141,7 @@ extension MFTMapView : TGMapViewDelegate, MapPlaceInfoSelectDelegate {
         
     }
     
-    public func mapView(_ mapView: TGMapViewController, didLoadScene sceneID: Int32, withError sceneError: Error?) {
-        
-        //We only want to call back on the latest scene load - so we gate here to make sure we only call back on the latest.
-        //TODO: For 2.0 we should pass the Error along in the callback block.
-        //reDrawAnnotations()
-        
-        restoreUserMarkers()
-        
-        if sceneID != latestSceneId {
-            return
-        }
-        if let update = globalSceneUpdates.first {
-            //update backing variable if one exists for it
-            if let updateValue = Bool(update.value), let updatePath = GlobalStyleVars(rawValue: update.path) {
-                setBackingVariableForGlobalStyleVar(variable: updatePath, to: updateValue)
-            }
-            globalSceneUpdates.remove(at: 0)
-            if !globalSceneUpdates.isEmpty {
-                let nextUpdate = globalSceneUpdates[0]
-                latestSceneId = mapView.updateSceneAsync([nextUpdate])
-                // In the event we have more to process, stop processing here.
-                return
-            }
-        }
-        
-        guard let styleClosure = sceneLoadCallback else { return }
-        styleClosure(mapOptions.mapTheme)
-        sceneLoadCallback = nil
-    }
-    
-    open func mapViewDidCompleteLoading(_ mapView: TGMapViewController) {
-        tileLoadDelegate?.mapViewDidCompleteLoading(self)
-    }
+
     
     open func mapView(_ mapView: TGMapViewController, didSelectFeature feature: [String : String]?, atScreenPosition position: CGPoint) {
         guard let feature = feature else { return }
@@ -1471,8 +1368,6 @@ extension MFTMapView : TGMapViewDelegate, MapPlaceInfoSelectDelegate {
             // self.mapOptions.accuracyCircleTimer.invalidate()
         }
         
-        
-        
         if self.zoom > mapOptions.getMaxZoomLevel() && self.zoom * Float(pinch.scale) > mapOptions.getMaxZoomLevel() {
             setZoom(zoomLevel: mapOptions.getMaxZoomLevel(), duration: 0.123)
         }
@@ -1530,6 +1425,42 @@ extension MFTMapView : TGMapViewDelegate, MapPlaceInfoSelectDelegate {
 
 
 extension MFTMapView {
+    //called when Mapview is finished loading
+    public func mapView(_ mapView: TGMapViewController, didLoadScene sceneID: Int32, withError sceneError: Error?) {
+        
+        //We only want to call back on the latest scene load - so we gate here to make sure we only call back on the latest.
+        //TODO: For 2.0 we should pass the Error along in the callback block.
+        //reDrawAnnotations()
+        
+        restoreUserMarkers()
+        
+        if sceneID != latestSceneId {
+            return
+        }
+        if let update = globalSceneUpdates.first {
+            //update backing variable if one exists for it
+            if let updateValue = Bool(update.value), let updatePath = GlobalStyleVars(rawValue: update.path) {
+                setBackingVariableForGlobalStyleVar(variable: updatePath, to: updateValue)
+            }
+            globalSceneUpdates.remove(at: 0)
+            if !globalSceneUpdates.isEmpty {
+                let nextUpdate = globalSceneUpdates[0]
+                latestSceneId = mapView.updateSceneAsync([nextUpdate])
+                // In the event we have more to process, stop processing here.
+                return
+            }
+        }
+        
+        guard let styleClosure = sceneLoadCallback else { return }
+        styleClosure(mapOptions.mapTheme)
+        sceneLoadCallback = nil
+    }
+    
+    open func mapViewDidCompleteLoading(_ mapView: TGMapViewController) {
+        tileLoadDelegate?.mapViewDidCompleteLoading(self)
+    }
+    
+    
     /**
      Loads the map style asynchronously. Recommended for production apps. Uses the system's current locale.
      - parameter styleSheet: The map style / theme combination to load.
@@ -1652,6 +1583,7 @@ extension MFTMapView {
 extension MFTMapView {
     internal func toggle3DBuildings(){
         let update = TGSceneUpdate(path: "global.show_3d_buildings", value: "\(mapOptions.is3DBuildingsEnabled)")
+        
         mapView.updateSceneAsync([update])
     }
     

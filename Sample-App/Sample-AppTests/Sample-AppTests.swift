@@ -18,7 +18,7 @@ class Sample_AppTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        MFTManager.sharedManager.apiKey = "591dccc4e499ca0001a4c6a4abab8998a9ec4e0d8efce03e489a00ea"
+        MFTManager.sharedManager.apiKey = ""
         mapView = MFTMapView()
         layer = MFTLayer()
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -36,9 +36,9 @@ class Sample_AppTests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         //XCTAssertEqual(mapView.mapStyle, .day, file: "Style created was incorrect")
         //XCTAssertEqual(mapView.isDirectionsEnabled, false, file: "Directions is enabled upon map creation")
-        XCTAssertEqual(mapView.getZoom(), 0.0, file: "zoom level is not at 0.0")
+        XCTAssertEqual(mapView.getZoom(), 1.0, file: "zoom level is not at 0.0")
         //XCTAssertEqual(mapView.tilt, 0.0, file: "tile level is not at 0.0")
-        //XCTAssertEqual(mapView.rotation, 0.0, file: "tile level is not at 0.0")
+        XCTAssertEqual(mapView.getRotation(), 0.0, file: "tile level is not at 0.0")
         
     }
     
@@ -111,7 +111,7 @@ class Sample_AppTests: XCTestCase {
             
             XCTAssertNil(error, "Unexpected error occured: \(String(describing: error?.localizedDescription))")
             XCTAssertEqual(addresses![0].locality, "New York", file: "Locality was incorrect")
-            XCTAssertEqual(addresses![0].postalCode, "10001", file: "Locality was incorrect")
+            XCTAssertEqual(addresses![0].postalCode, "10011", file: "Locality was incorrect")
             
             expect.fulfill()
             
@@ -130,8 +130,6 @@ class Sample_AppTests: XCTestCase {
                 expect.fulfill()
             }
             
-            
-            
             XCTAssertNil(error, "Unexpected error occured: \(String(describing: error?.localizedDescription))")
             XCTAssertEqual(addresses![0].viewport!.southwest!.lng,  -80.809183, file: "southwest lon was incorrect")
             XCTAssertEqual(addresses![0].viewport!.southwest!.lat, 41.755976, file: "southwest lat was incorrect")
@@ -146,6 +144,7 @@ class Sample_AppTests: XCTestCase {
         }
         
     }
+    
     
     func testCityGeocodeCallIsSuccessful() {
         let expect = expectation(description: "Download should succeed")
@@ -179,7 +178,7 @@ class Sample_AppTests: XCTestCase {
             
             XCTAssertNil(error, "Unexpected error occured: \(String(describing: error?.localizedDescription))")
             XCTAssertEqual(addresses![0].locality, "New York", file: "Locality was incorrect")
-            XCTAssertEqual(addresses![0].postalCode, "10001", file: "Locality was incorrect")
+            XCTAssertEqual(addresses![0].postalCode, "10011", file: "Locality was incorrect")
             XCTAssertEqual(addresses![0].streetAddress, "119 W 24th St", file: "address was incorrect")
             
             expect.fulfill()
