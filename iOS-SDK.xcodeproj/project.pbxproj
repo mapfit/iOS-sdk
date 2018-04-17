@@ -39,8 +39,8 @@
 		BF4BA7A020616845001F2FE3 /* LocationCorrectionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4BA79F20616845001F2FE3 /* LocationCorrectionEngine.swift */; };
 		BF4BA7A220616B45001F2FE3 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4BA7A120616B45001F2FE3 /* Utilities.swift */; };
 		BF4BA7A420616B69001F2FE3 /* MFTLocationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4BA7A320616B68001F2FE3 /* MFTLocationProvider.swift */; };
-		BF8764F7208558D00086F9BC /* MFTPolylineOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8764F5208558D00086F9BC /* MFTPolylineOptions.swift */; };
-		BF8764F8208558D00086F9BC /* MFTPolygonOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8764F6208558D00086F9BC /* MFTPolygonOptions.swift */; };
+		BF8764FB2086711F0086F9BC /* MFTPolylineOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8764F92086711F0086F9BC /* MFTPolylineOptions.swift */; };
+		BF8764FC2086711F0086F9BC /* MFTPolygonOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8764FA2086711F0086F9BC /* MFTPolygonOptions.swift */; };
 		BFC5B5532044AFBE00696417 /* DecodeFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC5B5522044AFBE00696417 /* DecodeFunctions.swift */; };
 /* End PBXBuildFile section */
 
@@ -80,8 +80,8 @@
 		BF4BA79F20616845001F2FE3 /* LocationCorrectionEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationCorrectionEngine.swift; path = MFTClasses/LocationCorrectionEngine.swift; sourceTree = "<group>"; };
 		BF4BA7A120616B45001F2FE3 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utilities.swift; path = MFTClasses/Utilities.swift; sourceTree = "<group>"; };
 		BF4BA7A320616B68001F2FE3 /* MFTLocationProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTLocationProvider.swift; path = MFTClasses/MFTLocationProvider.swift; sourceTree = "<group>"; };
-		BF8764F5208558D00086F9BC /* MFTPolylineOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MFTPolylineOptions.swift; path = "/Users/zain/Desktop/iOS-sdk/iOS-SDK/MFTPolylineOptions.swift"; sourceTree = "<absolute>"; };
-		BF8764F6208558D00086F9BC /* MFTPolygonOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MFTPolygonOptions.swift; path = "/Users/zain/Desktop/iOS-sdk/iOS-SDK/MFTPolygonOptions.swift"; sourceTree = "<absolute>"; };
+		BF8764F92086711F0086F9BC /* MFTPolylineOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTPolylineOptions.swift; path = MFTClasses/MFTPolylineOptions.swift; sourceTree = "<group>"; };
+		BF8764FA2086711F0086F9BC /* MFTPolygonOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTPolygonOptions.swift; path = MFTClasses/MFTPolygonOptions.swift; sourceTree = "<group>"; };
 		BFC5B5522044AFBE00696417 /* DecodeFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DecodeFunctions.swift; path = Extensions/DecodeFunctions.swift; sourceTree = "<group>"; };
 		E47C08BF50D46AC96C60A204 /* Pods-iOS-SDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-SDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iOS-SDK/Pods-iOS-SDK.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -130,8 +130,6 @@
 			children = (
 				BF462C7E2034AF5B001EE738 /* MFTManager.swift */,
 				BF462C7D2034AF5B001EE738 /* MFTThemes.swift */,
-				BF8764F6208558D00086F9BC /* MFTPolygonOptions.swift */,
-				BF8764F5208558D00086F9BC /* MFTPolylineOptions.swift */,
 				BF462C812034AFFF001EE738 /* MFTMapView.swift */,
 				BF462C822034AFFF001EE738 /* MFTZoomButtonView.swift */,
 				BF462C6B2034AF13001EE738 /* APPLFrameworkExtentions.swift */,
@@ -148,6 +146,8 @@
 				BF462C4F2034AEE2001EE738 /* MFTDirectionsOptions.swift */,
 				BF462C552034AEE2001EE738 /* MFTLatLngBounds.swift */,
 				BF462C4E2034AEE1001EE738 /* MFTLayer.swift */,
+				BF8764FA2086711F0086F9BC /* MFTPolygonOptions.swift */,
+				BF8764F92086711F0086F9BC /* MFTPolylineOptions.swift */,
 				BF462C512034AEE2001EE738 /* MFTMapOptions.swift */,
 				BF462C522034AEE2001EE738 /* MFTMapViewGestrues.swift */,
 				BF4BA7A320616B68001F2FE3 /* MFTLocationProvider.swift */,
@@ -312,13 +312,13 @@
 				BF462C762034AF13001EE738 /* UIKitExtensions.swift in Sources */,
 				BF462C692034AF06001EE738 /* MFTGeocoder.swift in Sources */,
 				BF462C722034AF13001EE738 /* DictionaryExtensions.swift in Sources */,
-				BF8764F7208558D00086F9BC /* MFTPolylineOptions.swift in Sources */,
+				BF8764FB2086711F0086F9BC /* MFTPolylineOptions.swift in Sources */,
 				BF462C5D2034AEE2001EE738 /* MFTDirectionsOptions.swift in Sources */,
 				BF462C6A2034AF06001EE738 /* MFTDirections.swift in Sources */,
 				BF462C602034AEE2001EE738 /* MFTMapViewGestrues.swift in Sources */,
 				BF462C842034AFFF001EE738 /* MFTZoomButtonView.swift in Sources */,
 				BF462C612034AEE2001EE738 /* MFTPolygon.swift in Sources */,
-				BF8764F8208558D00086F9BC /* MFTPolygonOptions.swift in Sources */,
+				BF8764FC2086711F0086F9BC /* MFTPolygonOptions.swift in Sources */,
 				BF462C802034AF5B001EE738 /* MFTManager.swift in Sources */,
 				BF462C732034AF13001EE738 /* BundleExtension.swift in Sources */,
 				BF462C632034AEE2001EE738 /* MFTLatLngBounds.swift in Sources */,
