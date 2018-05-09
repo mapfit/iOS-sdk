@@ -27,6 +27,11 @@ class ViewController: UIViewController {
     
     @objc func leftButtonTapped(){
         
+        //Scene updates
+        
+        let update = MFTSceneUpdate(path: "global.show_3d_buildings", value: "true")
+        mapview.updateScene(updates: [update])
+
     }
     
     @objc func rightButtonTapped(){
@@ -37,7 +42,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        MFTManager.sharedManager.apiKey = ""
+        setupNav()
         mapview.frame = self.view.bounds
         view.addSubview(mapview)
         

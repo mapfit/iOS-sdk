@@ -77,6 +77,7 @@
 		B2A16D792A2FC3ACBAB5346F89306075 /* zoomOut@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CE4963514F6A3CC51CDC01EDD761618 /* zoomOut@3x.png */; };
 		B8618A6AB3E508F36E3CB6AD22E7FA9B /* StyleGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E5CBADB2CA4C9B92AA30F21C991C10 /* StyleGuide.swift */; };
 		B96D7B6FF40FEA8A03AA76027E42B98C /* MinusButton.png in Resources */ = {isa = PBXBuildFile; fileRef = B11A00CDF82324D63DD4067A52845918 /* MinusButton.png */; };
+		BFFDC4B620A36F08008FAD60 /* MFTSceneUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFDC4B520A36F08008FAD60 /* MFTSceneUpdate.swift */; };
 		C258D6C9AE4D2CC784B3D3EB82E82557 /* MFTAPIObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544DCA0517C9E98BACACAD1274628BA2 /* MFTAPIObjects.swift */; };
 		C50195032397AFD5C1A6757CB625281F /* MFTLatLngBounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120190995A8C2E0D95B9FD7A1A2EA8F3 /* MFTLatLngBounds.swift */; };
 		C52304E1725EFBF9D22FEBF5FD0EAD3F /* MFTMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAFA1A56C92CE7052C884605CE29753 /* MFTMapView.swift */; };
@@ -219,6 +220,7 @@
 		B616AB0B420AFD29B65CA1EC3042E67D /* mapfit-night.yaml */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = "mapfit-night.yaml"; path = "iOS-SDK/houseStyles.bundle/mapfit-night.yaml"; sourceTree = "<group>"; };
 		B6A7755CA04DCD90E073A067784ECD86 /* Radius@2.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Radius@2.png"; path = "iOS-SDK/houseStyles.bundle/Radius@2.png"; sourceTree = "<group>"; };
 		B86B00CC48FA7D28DAF3BE50DE702F2B /* zoomOut@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "zoomOut@2x.png"; path = "iOS-SDK/houseStyles.bundle/zoomOut@2x.png"; sourceTree = "<group>"; };
+		BFFDC4B520A36F08008FAD60 /* MFTSceneUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFTSceneUpdate.swift; sourceTree = "<group>"; };
 		C0126A9ACB4B4FB5DBE59843102D3A37 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		C089C442D50195E72317D50A4DF452A9 /* Pods-Sample-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Sample-App.release.xcconfig"; sourceTree = "<group>"; };
 		C236512504B77A174872941AE0E941EC /* MFTLocationProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MFTLocationProvider.swift; sourceTree = "<group>"; };
@@ -315,6 +317,7 @@
 				D8F0B6E93FACFD50DAD43871A12B2336 /* MFTLayer.swift */,
 				C236512504B77A174872941AE0E941EC /* MFTLocationProvider.swift */,
 				79BED5685293F60F998E8D9253A28FC9 /* MFTMapOptions.swift */,
+				BFFDC4B520A36F08008FAD60 /* MFTSceneUpdate.swift */,
 				6AAFA1A56C92CE7052C884605CE29753 /* MFTMapView.swift */,
 				C3D60B8C6C686D0D74579CCAC0D9357A /* MFTMapViewGestrues.swift */,
 				C8C3F92F5174F08131B38E6DECF69D74 /* MFTMarker.swift */,
@@ -802,6 +805,7 @@
 				50FF1E3330CEDAA6A03AD39461CFF0B1 /* BundleExtension.swift in Sources */,
 				0183C19C6668269C84580053E12EF6E7 /* DecodeFunctions.swift in Sources */,
 				340EE77BD964963B54FDDD29AA38C93D /* DictionaryExtensions.swift in Sources */,
+				BFFDC4B620A36F08008FAD60 /* MFTSceneUpdate.swift in Sources */,
 				E8CB3ADB5AF938E2428F587602523820 /* LocationCorrectionEngine.swift in Sources */,
 				A343CD8895CCD0A6B5EC49346116C322 /* Mapfit-dummy.m in Sources */,
 				121C61081136FFDA9D10BDAF50DA2CC4 /* MFTAnnotations.swift in Sources */,

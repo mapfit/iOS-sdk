@@ -442,6 +442,23 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
     
 }
 
+extension MFTMapOptions {
+    /**
+    
+    SceneUpdate represents a DataStructure to specify a yaml path and the corresponding value for a Scene Update.
+    
+    path - Series of yaml keys separated by a ".". Represents the scene path to be updated
+    value - A yaml string which will update the value at the specified path
+    */
+    
+    public func updateScene(updates: [MFTSceneUpdate]) {
+        self.mapView?.updateScene(updates: updates)
+    }
+    
+    
+    
+}
+
 
 
 

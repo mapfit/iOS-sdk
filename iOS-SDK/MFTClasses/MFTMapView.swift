@@ -82,7 +82,7 @@ open class MFTMapView: UIView {
     weak internal var tileLoadDelegate: MapTileLoadDelegate?
     private var isUserLocationEnabled: Bool = false
     
-    internal var mapView: TGMapViewController = TGMapViewController()
+    internal var tgMapView: TGMapViewController = TGMapViewController()
     
     private static let MapfitGeneralErrorDomain = "MapfitGeneralErrorDomain"
     private static let mapfitRights =  "https://mapfit.com/terms"
@@ -171,7 +171,7 @@ open class MFTMapView: UIView {
         configuration.requestCachePolicy = .returnCacheDataElseLoad
         let httpHandler = TGHttpHandler.init(sessionConfiguration: configuration)
         httpHandler.httpAdditionalHeaders = NSMutableDictionary(dictionary: MFTManager.sharedManager.httpHeaders())
-        mapView.httpHandler = httpHandler
+        tgMapView.httpHandler = httpHandler
         
         self.zoom = 1
         self.rotation = 0
@@ -219,7 +219,7 @@ open class MFTMapView: UIView {
      */
     
     public func setCenter(position: CLLocationCoordinate2D){
-        mapView.position = TGGeoPointMake(position.longitude, position.latitude)
+        tgMapView.position = TGGeoPointMake(position.longitude, position.latitude)
         self.position = position
     }
     
@@ -232,12 +232,12 @@ open class MFTMapView: UIView {
     
     public func setCenter(position: CLLocationCoordinate2D, duration: Float){
         self.position = position
-        mapView.animate(toPosition: TGGeoPointMake(position.longitude, position.latitude), withDuration: duration, with: .cubic)
+        tgMapView.animate(toPosition: TGGeoPointMake(position.longitude, position.latitude), withDuration: duration, with: .cubic)
         
     }
     
     private func animateTocenter(position: CLLocationCoordinate2D, duration: Float){
-        mapView.animate(toPosition: TGGeoPointMake(position.longitude, position.latitude), withDuration: duration, with: .cubic)
+        tgMapView.animate(toPosition: TGGeoPointMake(position.longitude, position.latitude), withDuration: duration, with: .cubic)
     }
     
     /**
@@ -245,7 +245,7 @@ open class MFTMapView: UIView {
      */
     
     public func reCenter(){
-        mapView.animate(toPosition: TGGeoPointMake(position.longitude, position.latitude), withDuration: easeDuration, with: .cubic)
+        tgMapView.animate(toPosition: TGGeoPointMake(position.longitude, position.latitude), withDuration: easeDuration, with: .cubic)
     }
     
     
@@ -273,7 +273,7 @@ open class MFTMapView: UIView {
             zoomL = mapOptions.getMinZoomLevel()
         }
         
-        self.mapView.zoom = zoomL
+        self.tgMapView.zoom = zoomL
         self.zoom = zoomL
     }
     
@@ -294,7 +294,7 @@ open class MFTMapView: UIView {
         }
         
         self.zoom = zoomL
-        mapView.animate(toZoomLevel: zoomL, withDuration: duration, with: .cubic)
+        tgMapView.animate(toZoomLevel: zoomL, withDuration: duration, with: .cubic)
         
     }
     
@@ -314,7 +314,7 @@ open class MFTMapView: UIView {
     
     public func setTilt(tiltValue: Float){
         self.tilt = tiltValue
-        mapView.tilt = tiltValue
+        tgMapView.tilt = tiltValue
     }
     
     /**
@@ -325,7 +325,7 @@ open class MFTMapView: UIView {
     
     public func setTilt(tiltValue: Float, duration: Float){
         self.tilt = tiltValue
-        mapView.animate(toTilt: tiltValue, withDuration: duration)
+        tgMapView.animate(toTilt: tiltValue, withDuration: duration)
     }
     
     /**
@@ -334,7 +334,7 @@ open class MFTMapView: UIView {
      */
     
     public func getTilt()->Float{
-        return mapView.tilt
+        return tgMapView.tilt
     }
     
     /**
@@ -344,7 +344,7 @@ open class MFTMapView: UIView {
     
     public func setRotation(rotationValue: Float){
         self.rotation = rotationValue
-        mapView.rotation = rotationValue
+        tgMapView.rotation = rotationValue
     }
     
     /**
@@ -355,7 +355,7 @@ open class MFTMapView: UIView {
     
     public func setRotation(rotationValue: Float, duration: Float){
         self.rotation = rotationValue
-        mapView.animate(toRotation: rotationValue, withDuration: duration, with: .cubic)
+        tgMapView.animate(toRotation: rotationValue, withDuration: duration, with: .cubic)
     }
     
     /**
@@ -364,7 +364,7 @@ open class MFTMapView: UIView {
      */
     
     public func getRotation()->Float{
-        return mapView.rotation
+        return tgMapView.rotation
     }
     
     
@@ -375,7 +375,7 @@ open class MFTMapView: UIView {
      */
     
     public func setLatLngBounds(bounds: MFTLatLngBounds, padding: Float){
-        let pair = bounds.getVisibleBounds(viewWidth: Float(mapView.view.bounds.width * UIScreen.main.scale), viewHeight: Float(mapView.view.bounds.height * UIScreen.main.scale), padding: padding)
+        let pair = bounds.getVisibleBounds(viewWidth: Float(tgMapView.view.bounds.width * UIScreen.main.scale), viewHeight: Float(tgMapView.view.bounds.height * UIScreen.main.scale), padding: padding)
         self.setCenter(position: CLLocationCoordinate2D(latitude: pair.0.latitude, longitude: pair.0.longitude))
         self.setZoom(zoomLevel: pair.1)
     }
@@ -387,8 +387,8 @@ open class MFTMapView: UIView {
     
     
     public func getLatLngBounds()-> MFTLatLngBounds{
-        let sw = mapView.screenPosition(toLngLat: CGPoint(x: 0, y: mapView.view.bounds.height))
-        let ne = mapView.screenPosition(toLngLat: CGPoint(x: mapView.view.bounds.width, y: 0))
+        let sw = tgMapView.screenPosition(toLngLat: CGPoint(x: 0, y: tgMapView.view.bounds.height))
+        let ne = tgMapView.screenPosition(toLngLat: CGPoint(x: tgMapView.view.bounds.width, y: 0))
         return MFTLatLngBounds(northEast: CLLocationCoordinate2DMake(ne.latitude, ne.longitude), southWest: CLLocationCoordinate2DMake(sw.latitude, sw.longitude))
     }
     
@@ -526,7 +526,7 @@ open class MFTMapView: UIView {
         for (_,annotation) in self.currentAnnotations{
             addAnnotation(annotation)
         }
-        mapView.requestRender()
+        tgMapView.requestRender()
     }
     
     
@@ -613,7 +613,7 @@ open class MFTMapView: UIView {
         guard let tgMarker = marker.tgMarker else { return }
         currentMarkers.removeValue(forKey: tgMarker)
         currentAnnotations.removeValue(forKey: marker.uuid)
-        mapView.markerRemove(tgMarker)
+        tgMapView.markerRemove(tgMarker)
         marker.subAnnotations?.removeAll()
     }
     
@@ -643,7 +643,7 @@ open class MFTMapView: UIView {
     //adds marker to the map
     private func addMarkerToMap(_ marker: MFTMarker){
         if marker.tgMarker == nil {
-            marker.tgMarker = mapView.markerAdd()
+            marker.tgMarker = tgMapView.markerAdd()
         }
         currentMarkers[marker.tgMarker!] = marker
         currentAnnotations[marker.uuid] = marker
@@ -665,7 +665,7 @@ open class MFTMapView: UIView {
         rPolyline.tgPolyline = tgPolyline
         rPolyline.addPoints(polyline)
         drawPolyline(polyline: rPolyline)
-        let layer = mapView.addDataLayer("mz_default_line")
+        let layer = tgMapView.addDataLayer("mz_default_line")
         if let dataLayer = layer {
             
             rPolyline.dataLayer = dataLayer
@@ -674,7 +674,7 @@ open class MFTMapView: UIView {
             dataLayer.add(tgPolyline, withProperties: ["type" : "polyline", "uuid" : "\(rPolyline.uuid)", "color" : "#D2655F"])
             currentPolylines[rPolyline.tgPolyline!] = rPolyline
             currentAnnotations[rPolyline.uuid] = rPolyline
-            mapView.update()
+            tgMapView.update()
         }
         
         return rPolyline
@@ -689,7 +689,7 @@ open class MFTMapView: UIView {
         drawPolygon(polygon: rPolygon)
         
         
-        let layer = mapView.addDataLayer("mz_default_polygon")
+        let layer = tgMapView.addDataLayer("mz_default_polygon")
         if let dataLayer = layer {
             
             self.dataLayers[rPolygon.uuid] = dataLayer
@@ -697,8 +697,8 @@ open class MFTMapView: UIView {
             currentPolygons[rPolygon.tgPolygon!] = rPolygon
             currentAnnotations[rPolygon.uuid] = rPolygon
             
-            mapView.requestRender()
-            mapView.update()
+            tgMapView.requestRender()
+            tgMapView.update()
             
         }
         return rPolygon
@@ -810,7 +810,7 @@ open class MFTMapView: UIView {
         rPolygon.addPoints(polygon)
         drawPolygon(polygon: rPolygon)
         
-        let layer = mapView.addDataLayer("mz_default_polygon")
+        let layer = tgMapView.addDataLayer("mz_default_polygon")
         if let dataLayer = layer {
             
             self.dataLayers[rPolygon.uuid] = dataLayer
@@ -818,8 +818,8 @@ open class MFTMapView: UIView {
             currentPolygons[rPolygon.tgPolygon!] = rPolygon
             currentAnnotations[rPolygon.uuid] = rPolygon
             
-            mapView.requestRender()
-            mapView.update()
+            tgMapView.requestRender()
+            tgMapView.update()
             
         }
         return rPolygon
@@ -847,24 +847,24 @@ open class MFTMapView: UIView {
     
     
     private func setDelegates(){
-        mapView.mapViewDelegate = self
-        mapView.gestureDelegate = self
+        tgMapView.mapViewDelegate = self
+        tgMapView.gestureDelegate = self
         zoomButtonsView.delegate = self
     }
     
     private func setUpView(frame: CGRect, position: CLLocationCoordinate2D){
         
-        self.addSubview(mapView.view)
-        self.sendSubview(toBack: mapView.view)
+        self.addSubview(tgMapView.view)
+        self.sendSubview(toBack: tgMapView.view)
         self.layer.masksToBounds = true
         
         
-        mapView.view.translatesAutoresizingMaskIntoConstraints = false
+        tgMapView.view.translatesAutoresizingMaskIntoConstraints = false
         
-        let leftConstraint = mapView.view.leftAnchor.constraint(equalTo: self.leftAnchor)
-        let rightConstraint = mapView.view.rightAnchor.constraint(equalTo: self.rightAnchor)
-        let topConstraint = mapView.view.topAnchor.constraint(equalTo: self.topAnchor)
-        let bottomConstraint = mapView.view.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        let leftConstraint = tgMapView.view.leftAnchor.constraint(equalTo: self.leftAnchor)
+        let rightConstraint = tgMapView.view.rightAnchor.constraint(equalTo: self.rightAnchor)
+        let topConstraint = tgMapView.view.topAnchor.constraint(equalTo: self.topAnchor)
+        let bottomConstraint = tgMapView.view.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         NSLayoutConstraint.activate([leftConstraint, rightConstraint, topConstraint, bottomConstraint])
         
         
@@ -1037,15 +1037,15 @@ open class MFTMapView: UIView {
     
     
     @objc private func zoomPlusButtonTapped(){
-        mapView.animate(toZoomLevel:zoom + 1, withDuration: easeDuration, with: .cubic)
+        tgMapView.animate(toZoomLevel:zoom + 1, withDuration: easeDuration, with: .cubic)
     }
     
     @objc private func zoomMinusButtonTapped(){
-        mapView.animate(toZoomLevel: zoom - 1, withDuration: easeDuration, with: .cubic)
+        tgMapView.animate(toZoomLevel: zoom - 1, withDuration: easeDuration, with: .cubic)
     }
     
     @objc private func recenterButtonTapped(){
-        mapView.animate(toPosition: TGGeoPointMake(self.position.longitude, self.position.latitude), withDuration: easeDuration)
+        tgMapView.animate(toPosition: TGGeoPointMake(self.position.longitude, self.position.latitude), withDuration: easeDuration)
         recenterButton.setImage(UIImage(named: "reCenter.png", in: Bundle.houseStylesBundle(), compatibleWith: nil), for: .normal)
         
     }
@@ -1055,8 +1055,8 @@ open class MFTMapView: UIView {
         
         let queue: OperationQueue = OperationQueue()
         queue.maxConcurrentOperationCount = (2)
-        queue.addOperation({self.mapView.animate(toPosition: TGGeoPointMake(locationMarker.position.longitude, locationMarker.position.latitude), withDuration: self.easeDuration, with: .cubic)})
-        queue.addOperation({self.mapView.animate(toZoomLevel: 17, withDuration: self.easeDuration, with: .cubic)})
+        queue.addOperation({self.tgMapView.animate(toPosition: TGGeoPointMake(locationMarker.position.longitude, locationMarker.position.latitude), withDuration: self.easeDuration, with: .cubic)})
+        queue.addOperation({self.tgMapView.animate(toZoomLevel: 17, withDuration: self.easeDuration, with: .cubic)})
         
         mapOptions.adjustAccuracyCircle()
         
@@ -1082,7 +1082,7 @@ open class MFTMapView: UIView {
     }
     
     @objc private func compassButtonTapped(){
-        mapView.animate(toRotation: 0, withDuration: easeDuration, with: .cubic)
+        tgMapView.animate(toRotation: 0, withDuration: easeDuration, with: .cubic)
         
         UIView.animate(withDuration: 0.2) { // convert from degrees to radians
             self.compassButton.imageView?.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
@@ -1217,7 +1217,7 @@ extension MFTMapView : TGMapViewDelegate, MapPlaceInfoSelectDelegate {
         }
         
         if let placeInfo = placeInfo {
-            self.mapView.view.addSubview(placeInfo.infoView)
+            self.tgMapView.view.addSubview(placeInfo.infoView)
             
             placeInfo.infoView.addGestureRecognizer(placeInfoTapGesture)
             placeInfoTapGesture.addTarget(self, action: #selector(placeInfoPress))
@@ -1274,9 +1274,9 @@ extension MFTMapView : TGMapViewDelegate, MapPlaceInfoSelectDelegate {
     //MARK: - Gestures
     
     open func mapView(_ view: TGMapViewController, recognizer: UIGestureRecognizer, shouldRecognizeSingleTapGesture location: CGPoint) -> Bool {
-        mapView.pickLabel(at: location)
-        mapView.pickMarker(at: location)
-        mapView.pickFeature(at: location)
+        tgMapView.pickLabel(at: location)
+        tgMapView.pickMarker(at: location)
+        tgMapView.pickFeature(at: location)
         
         guard let recognize = singleTapGestureDelegate?.mapView(self, recognizer: recognizer, shouldRecognizeSingleTapGesture: location) else { return true }
         
@@ -1302,7 +1302,7 @@ extension MFTMapView : TGMapViewDelegate, MapPlaceInfoSelectDelegate {
     
     open func mapView(_ view: TGMapViewController, recognizer: UIGestureRecognizer, didRecognizeDoubleTapGesture location: CGPoint) {
         doubleTapGestureDelegate?.mapView(self, recognizer: recognizer, didRecognizeDoubleTapGesture: location)
-        mapView.animate(toPosition: mapView.screenPosition(toLngLat: location), withDuration: easeDuration)
+        tgMapView.animate(toPosition: tgMapView.screenPosition(toLngLat: location), withDuration: easeDuration)
     }
     
     open func mapView(_ view: TGMapViewController, recognizer: UIGestureRecognizer, shouldRecognizeLongPressGesture location: CGPoint) -> Bool {
@@ -1327,7 +1327,7 @@ extension MFTMapView : TGMapViewDelegate, MapPlaceInfoSelectDelegate {
         updateMFTPlaceInfoPosition()
         
         
-        if self.position.latitude == mapView.screenPosition(toLngLat: location).latitude || self.position.longitude == mapView.screenPosition(toLngLat: location).longitude{
+        if self.position.latitude == tgMapView.screenPosition(toLngLat: location).latitude || self.position.longitude == tgMapView.screenPosition(toLngLat: location).longitude{
             recenterButton.setImage(UIImage(named: "reCenter.png", in: Bundle.houseStylesBundle(), compatibleWith: nil), for: .normal)
         }else{
             recenterButton.setImage(UIImage(named: "ReCenter_OFF.png", in: Bundle.houseStylesBundle(), compatibleWith: nil), for: .normal)
@@ -1502,11 +1502,11 @@ extension MFTMapView {
         self.locale = locale
         
         if let urlPath = URL(string: theme.rawValue) {
-            mapView.loadScene(from: urlPath)
+            tgMapView.loadScene(from: urlPath)
             self.reDrawAnnotations()
             
             DispatchQueue.global().async {
-                self.mapView.httpHandler.downloadRequestAsync(theme.rawValue, completionHandler: { (data, response, error) in
+                self.tgMapView.httpHandler.downloadRequestAsync(theme.rawValue, completionHandler: { (data, response, error) in
                     if error == nil {
                         let cachedResponse = CachedURLResponse(response: response!, data: data!)
                         URLSessionConfiguration.default.urlCache?.storeCachedResponse(cachedResponse, for: URLRequest(url: urlPath, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 10))
@@ -1526,7 +1526,7 @@ extension MFTMapView {
         self.mapOptions.mapTheme = .custom
         
         if let urlPath = URL(string: path) {
-            mapView.loadScene(from: urlPath)
+            tgMapView.loadScene(from: urlPath)
             self.reDrawAnnotations()
         }
         
@@ -1580,13 +1580,23 @@ extension MFTMapView {
     
 }
 
+
+//Scene updates
 extension MFTMapView {
     internal func toggle3DBuildings(){
         let update = TGSceneUpdate(path: "global.show_3d_buildings", value: "\(mapOptions.is3DBuildingsEnabled)")
-        
-        mapView.updateSceneAsync([update])
+        tgMapView.updateSceneAsync([update])
     }
     
+    
+    public func updateScene(updates: [MFTSceneUpdate]){
+        var tgUpdates = [TGSceneUpdate]()
+        
+        for update in updates {
+            tgUpdates.append(TGSceneUpdate(path: update.path, value: update.value))
+        }
+        tgMapView.updateSceneAsync(tgUpdates)
+    }
 }
 
 
@@ -1604,11 +1614,11 @@ extension MFTMapView  {
 
 extension MFTMapView: MFTZoomButtonsViewDelegate {
     func plusButtonTapped(_ sender: AnyObject) {
-        mapView.animate(toZoomLevel:zoom + 1, withDuration: easeDuration, with: .cubic)
+        tgMapView.animate(toZoomLevel:zoom + 1, withDuration: easeDuration, with: .cubic)
     }
     
     func minusButtonTapped(_ sender: AnyObject) {
-        mapView.animate(toZoomLevel: zoom - 1, withDuration: easeDuration, with: .cubic)
+        tgMapView.animate(toZoomLevel: zoom - 1, withDuration: easeDuration, with: .cubic)
     }
 }
 

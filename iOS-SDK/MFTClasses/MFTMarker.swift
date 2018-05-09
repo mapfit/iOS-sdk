@@ -225,7 +225,7 @@ public class MFTMarker : NSObject, MFTAnnotation {
     
     internal func getScreenPosition()->CGPoint {
         if let mapView = self.mapView {
-            return mapView.mapView.lngLat(toScreenPosition: TGGeoPointMake(self.getPosition().longitude, self.getPosition().latitude))
+            return mapView.tgMapView.lngLat(toScreenPosition: TGGeoPointMake(self.getPosition().longitude, self.getPosition().latitude))
         } else {
             return CGPoint(x: 0, y: 0)
         }
