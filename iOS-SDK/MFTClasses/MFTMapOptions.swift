@@ -86,6 +86,7 @@ public class MFTMapOptions  {
     public var isRotateEnabled: Bool
     public var isTiltEnabled: Bool
     public var is3DbuildingsEnabled: Bool?
+    public var gesturesEnabled: Bool
     private var maxZoomLevel: Float
     private var minZoomLevel: Float
     internal var currentLocationGem: MFTMarker?
@@ -198,6 +199,19 @@ public class MFTMapOptions  {
         self.locationManager.startUpdatingHeading()
     }
     
+    public func setGesturesEnabled(enabled: Bool){
+        self.isPanEnabled = enabled
+        self.isPinchEnabled = enabled
+        self.isRotateEnabled = enabled
+        self.isTiltEnabled = enabled
+        self.gesturesEnabled = enabled
+    }
+    
+    
+    public func getGesturesEnabled()-> Bool {
+        return gesturesEnabled
+    }
+    
     
     internal init(mapView: MFTMapView){
         self.isCompassVisible = false
@@ -218,6 +232,7 @@ public class MFTMapOptions  {
         self.mapView = mapView
         self.firstRun = 0
         self.is3DBuildingsEnabled = false
+        self.gesturesEnabled = true 
         
     }
     
@@ -239,6 +254,7 @@ public class MFTMapOptions  {
         self.locationManager = MFTLocationProvider()
         self.firstRun = 0
         self.is3DBuildingsEnabled = false
+        self.gesturesEnabled = true
         
     }
 }

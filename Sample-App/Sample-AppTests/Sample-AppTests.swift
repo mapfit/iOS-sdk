@@ -126,7 +126,7 @@ class Sample_AppTests: XCTestCase {
         let expect = expectation(description: "Download should succeed")
         MFTGeocoder.sharedInstance.geocode(address: "new york", includeBuilding: true) { (addresses, error) in
             if let error = error {
-                XCTFail("geocode server error: \(error)")
+                XCTFail("geocode server error: \(error.localizedDescription)")
                 expect.fulfill()
             }
             
@@ -411,6 +411,23 @@ class Sample_AppTests: XCTestCase {
     
     func testSceneUpdate(){
         
+
+    }
+    
+    func testMapViewGestures(){
+        mapView.mapOptions.setGesturesEnabled(enabled: true)
+        XCTAssertEqual(mapView.mapOptions.isPinchEnabled, true, file: "Mapview pinch is not enabled")
+        XCTAssertEqual(mapView.mapOptions.isPanEnabled, true, file: "Mapview pan is not enabled")
+        XCTAssertEqual(mapView.mapOptions.isTiltEnabled, true, file: "Mapview tilt is not enabled")
+        XCTAssertEqual(mapView.mapOptions.isRotateEnabled, true, file: "Mapview rotate is not enabled")
+        XCTAssertEqual(mapView.mapOptions.getGesturesEnabled(), true, file: "Mapview gestures is not enabled")
+
+        mapView.mapOptions.setGesturesEnabled(enabled: false)
+        XCTAssertEqual(mapView.mapOptions.isPinchEnabled, false, file: "Mapview pinch is enabled")
+        XCTAssertEqual(mapView.mapOptions.isPanEnabled, false, file: "Mapview pan is enabled")
+        XCTAssertEqual(mapView.mapOptions.isTiltEnabled, false, file: "Mapview tilt is enabled")
+        XCTAssertEqual(mapView.mapOptions.isRotateEnabled, false, file: "Mapview rotate is enabled")
+        XCTAssertEqual(mapView.mapOptions.getGesturesEnabled(), false, file: "Mapview gestures is enabled")
 
     }
 

@@ -29,13 +29,16 @@ class ViewController: UIViewController {
         
         //Scene updates
         
-        let update = MFTSceneUpdate(path: "global.show_3d_buildings", value: "true")
-        mapview.updateScene(updates: [update])
+        //let update = MFTSceneUpdate(path: "global.show_3d_buildings", value: "true")
+        //mapview.updateScene(updates: [update])
+        
+        mapview.mapOptions.setGesturesEnabled(enabled: true)
 
     }
     
     @objc func rightButtonTapped(){
        
+        mapview.mapOptions.setGesturesEnabled(enabled: false)
     }
     
     override func viewDidLoad() {
