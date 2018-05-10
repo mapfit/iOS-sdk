@@ -181,7 +181,7 @@ open class MFTMapView: UIView {
         self.directionsOptions.setMapView(self)
         self.mapOptions.setMapView(mapView: self)
         self.mapOptions.setTheme(theme: .day)
-        self.setUpView(frame: frame, position: self.position ) // Default statue of liberty
+        self.setUpView(frame: frame, position: self.position, customTheme: nil) // Default statue of liberty
         
         self.setDelegates()
         self.setupAttribution()
@@ -203,6 +203,36 @@ open class MFTMapView: UIView {
         self.directionsOptions.setMapView(self)
         self.mapOptions = MFTMapOptions(mapView: self)
         self.mapOptions.setTheme(theme: mapStyle)
+    }
+    
+    public init(frame: CGRect, customMapStyle: String) {
+        self.application = UIApplication.shared
+        self.mapfitManger = MFTManager.sharedManager
+        self.position = CLLocationCoordinate2D(latitude: 40.6892, longitude: -74.0445)
+        
+        
+        let configuration = URLSessionConfiguration.default
+        configuration.requestCachePolicy = .returnCacheDataElseLoad
+        let httpHandler = TGHttpHandler.init(sessionConfiguration: configuration)
+        httpHandler.httpAdditionalHeaders = NSMutableDictionary(dictionary: MFTManager.sharedManager.httpHeaders())
+        tgMapView.httpHandler = httpHandler
+        
+        self.zoom = 1
+        self.rotation = 0
+        self.tilt = 0
+        
+        super.init(frame: frame)
+        self.directionsOptions.setMapView(self)
+        self.mapOptions.setMapView(mapView: self)
+        self.mapOptions.setTheme(theme: .custom)
+        
+        self.setUpView(frame: frame, position: self.position, customTheme: customMapStyle) // Default statue of liberty
+        
+        self.setDelegates()
+        self.setupAttribution()
+        self.setUpMapControls()
+        self.accessibilityIdentifier = "mapView"
+        
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -867,7 +897,7 @@ open class MFTMapView: UIView {
         zoomButtonsView.delegate = self
     }
     
-    private func setUpView(frame: CGRect, position: CLLocationCoordinate2D){
+    private func setUpView(frame: CGRect, position: CLLocationCoordinate2D, customTheme: String?){
         
         self.addSubview(tgMapView.view)
         self.sendSubview(toBack: tgMapView.view)
@@ -889,8 +919,12 @@ open class MFTMapView: UIView {
         //check if API Key is empty 
         guard let _ = mapfitManger.apiKey else { return }
         
-        
-        try? loadMapfitStyleAsync(mapOptions.mapTheme, locale: self.locale)
+        if let theme = customTheme {
+            try? loadCustomThemeAsync(theme)
+        }else{
+            try? loadMapfitStyleAsync(mapOptions.mapTheme, locale: self.locale)
+        }
+
         
     }
     

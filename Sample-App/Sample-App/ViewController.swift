@@ -13,7 +13,7 @@ import Mapfit
 class ViewController: UIViewController {
     
     let button: UIButton = UIButton()
-    let mapview = MFTMapView()
+    var mapview: MFTMapView?
     
     func setupNav(){
         let leftButton = UIBarButtonItem(title: "Test", style: .plain, target: self, action: #selector(leftButtonTapped))
@@ -26,7 +26,7 @@ class ViewController: UIViewController {
     @objc func leftButtonTapped(){
         
         //Scene updates
-        
+        //
         //let update = MFTSceneUpdate(path: "global.show_3d_buildings", value: "true")
         //mapview.updateScene(updates: [update])
         
@@ -34,10 +34,9 @@ class ViewController: UIViewController {
         
        setBounds()
         
-    
 
+        
     }
-    
     
     func setBounds(){
         var builder = MFTLatLngBounds.Builder()
@@ -55,13 +54,13 @@ class ViewController: UIViewController {
         let bounds = builder.build()
         let paddingPercentage = Float(1)
         
-        mapview.setLatLngBounds(bounds: bounds, padding: paddingPercentage, duration: 0.5)
+        mapview?.setLatLngBounds(bounds: bounds, padding: paddingPercentage, duration: 0.5)
         
     }
     
     @objc func rightButtonTapped(){
        
-        mapview.mapOptions.setGesturesEnabled(enabled: false)
+        mapview?.mapOptions.setGesturesEnabled(enabled: false)
     }
     
     override func viewDidLoad() {
@@ -69,10 +68,14 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         setupNav()
-        mapview.frame = self.view.bounds
-        view.addSubview(mapview)
+        if let path = Bundle.main.path(forResource: "mapfit-day", ofType: "yaml")  {
+             self.mapview = MFTMapView(frame: self.view.bounds, customMapStyle: "file:///\(path)")
+        }
+       
         
-        mapview.addMarker(address: "119 w 24th street new york, ny") { (marker, error) in
+        view.addSubview(mapview!)
+        
+        mapview?.addMarker(address: "119 w 24th street new york, ny") { (marker, error) in
 
         }
         

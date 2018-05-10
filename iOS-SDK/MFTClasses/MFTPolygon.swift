@@ -135,7 +135,7 @@
     
     init(mapView: MFTMapView) {
         self.isVisible = true
-        self.style = MFTAnnotationStyle.polyline
+        self.style = MFTAnnotationStyle.polygon
         self.uuid = UUID()
         self.mapView = mapView
         super.init()
