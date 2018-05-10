@@ -381,6 +381,8 @@ class Sample_AppTests: XCTestCase {
 
     }
     
+    
+    
     func testCustomThemes(){
         mapView.mapOptions.setCustomTheme("https://cdn.mapfit.com/v2/themes/mapfit-grayscale.yaml")
         XCTAssertEqual(mapView.mapOptions.getTheme(), .custom, file: "Theme was not set to custom")
@@ -431,6 +433,8 @@ class Sample_AppTests: XCTestCase {
 
     }
 
+    
+    
     
     
     

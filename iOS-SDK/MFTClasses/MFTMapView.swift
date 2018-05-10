@@ -381,6 +381,21 @@ open class MFTMapView: UIView {
     }
     
     /**
+     Changes the map view to fit the given coordinate bounds.
+     - parameter bounds: The bounds coordinates for the new view.
+     - parameter padding: The minimum padding that will be visible around the given coordinate bounds.
+     - parameter duration: The duration animation duration for the setting of the lat lng bounds.
+     */
+    
+    public func setLatLngBounds(bounds: MFTLatLngBounds, padding: Float, duration: Float){
+        let pair = bounds.getVisibleBounds(viewWidth: Float(tgMapView.view.bounds.width * UIScreen.main.scale), viewHeight: Float(tgMapView.view.bounds.height * UIScreen.main.scale), padding: padding)
+        let queue: OperationQueue = OperationQueue()
+        queue.maxConcurrentOperationCount = (2)
+        queue.addOperation({self.setCenter(position: CLLocationCoordinate2D(latitude: pair.0.latitude, longitude: pair.0.longitude), duration: duration)})
+        queue.addOperation({self.setZoom(zoomLevel: pair.1, duration: duration)})
+    }
+    
+    /**
      Returns the bounds coordinates of the map.
      - returns: The bounds coordinates for the map.
      */
