@@ -1671,6 +1671,31 @@ extension MFTMapView: MFTZoomButtonsViewDelegate {
     }
 }
 
+//Screen Position to Latlng
+extension MFTMapView {
+    /**
+     Returns a CLLocationCoordinate based on the point provided.
+     - parameter point: CGpoint that will be translated into a CLLocationCoordinate2D
+     - returns: CLLocationCoordinate of the given point.
+     */
+   public func screenPositionToLatLng(_ point: CGPoint) -> CLLocationCoordinate2D{
+      let screenPosition = tgMapView.screenPosition(toLngLat: point)
+        return CLLocationCoordinate2D(latitude: screenPosition.latitude, longitude: screenPosition.longitude)
+    
+    }
+    
+    /**
+     Returns a point based on the CLLocationCoordinate provided.
+     - parameter latLng: CLLocationCoordinate that will be translated into a CGPoint.
+     - returns: CGPoint of the given CLLocationCoordinate.
+     */
+    public func LatLngToScreenPosition(_ latLng: CLLocationCoordinate2D) -> CGPoint{
+        let point = tgMapView.lngLat(toScreenPosition: TGGeoPoint(longitude: latLng.longitude, latitude: latLng.latitude))
+        return point
+    }
+    
+}
+
 
 
 

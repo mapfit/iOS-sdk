@@ -129,7 +129,6 @@ class Sample_AppTests: XCTestCase {
                // XCTFail("geocode server error: \(error.localizedDescription)")
                 expect.fulfill()
             }
-            
             if let addresses = addresses {
                 if let viewport = addresses[0].viewport {
                     XCTAssertEqual(viewport.southwest!.lng,  -80.809183, file: "southwest lon was incorrect")
@@ -138,11 +137,7 @@ class Sample_AppTests: XCTestCase {
                     XCTAssertEqual(viewport.northeast!.lat, 43.755976, file: "northeat lat was incorrect")
                 }
             }
-            
-            
-  
             expect.fulfill()
-            
         }
         waitForExpectations(timeout: 10) { (error) in
             XCTAssertNil(error, "Test timed out. \(String(describing: error?.localizedDescription))")
@@ -429,6 +424,40 @@ class Sample_AppTests: XCTestCase {
 
     }
     
+    func testScreenPositionToLatLng(){
+        let expect = expectation(description: "Adding a marker")
+        var point = CGPoint()
+      
+        mapView.addMarker(address: "119 w 24th street new york, ny") { (marker, error) in
+            if let marker = marker {
+                self.mapView.setZoom(zoomLevel: 5)
+                self.mapView.setCenter(position: CLLocationCoordinate2D(latitude: 40, longitude: -73))
+                point = self.mapView.LatLngToScreenPosition(marker.position)
+                XCTAssertEqual(point, CGPoint(x: 152.48723449707, y: 162.084699503581), file: "CGPoint in incorrect")
+            }
+        
+            expect.fulfill()
+        }
+        
+        
+        waitForExpectations(timeout: 5) { (error) in
+            
+        }
+        
+    }
+
+    
+    func testLatLngToScreenPosition(){
+        let latLng = CLLocationCoordinate2D(latitude: 42.26960508994307, longitude: -74.06933831460087)
+        
+        let testLatlng = mapView.screenPositionToLatLng(CGPoint(x: 182.666615804036, y: 347.333106486003))
+        
+        XCTAssertEqual(testLatlng.latitude, latLng.latitude, file: "lat in incorrect")
+        XCTAssertEqual(testLatlng.longitude, latLng.longitude, file: "lng in incorrect")
+        
+        
+    }
+    
     func testMapViewGestures(){
         mapView.mapOptions.setGesturesEnabled(enabled: true)
         XCTAssertEqual(mapView.mapOptions.isPinchEnabled, true, file: "Mapview pinch is not enabled")
@@ -446,11 +475,6 @@ class Sample_AppTests: XCTestCase {
 
     }
 
-    
-    
-    
-    
-    
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measure {

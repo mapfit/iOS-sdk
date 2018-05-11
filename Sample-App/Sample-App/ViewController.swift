@@ -13,7 +13,7 @@ import Mapfit
 class ViewController: UIViewController {
     
     let button: UIButton = UIButton()
-    var mapview: MFTMapView?
+    var mapview = MFTMapView()
     
     func setupNav(){
         let leftButton = UIBarButtonItem(title: "Test", style: .plain, target: self, action: #selector(leftButtonTapped))
@@ -32,7 +32,7 @@ class ViewController: UIViewController {
         
        // mapview.mapOptions.setGesturesEnabled(enabled: true)
         
-       setBounds()
+       //setBounds()
         
 
         
@@ -54,28 +54,33 @@ class ViewController: UIViewController {
         let bounds = builder.build()
         let paddingPercentage = Float(1)
         
-        mapview?.setLatLngBounds(bounds: bounds, padding: paddingPercentage, duration: 0.5)
+        mapview.setLatLngBounds(bounds: bounds, padding: paddingPercentage, duration: 0.5)
         
     }
     
     @objc func rightButtonTapped(){
        
-        mapview?.mapOptions.setGesturesEnabled(enabled: false)
+        mapview.mapOptions.setGesturesEnabled(enabled: true)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        mapview.markerSelectDelegate = self
+        mapview.singleTapGestureDelegate = self
+        mapview.frame = self.view.bounds
+        
         setupNav()
-        if let path = Bundle.main.path(forResource: "mapfit-day", ofType: "yaml")  {
-             self.mapview = MFTMapView(frame: self.view.bounds, customMapStyle: "file:///\(path)")
-        }
+//        if let path = Bundle.main.path(forResource: "mapfit-day", ofType: "yaml")  {
+//             self.mapview = MFTMapView(frame: self.view.bounds, customMapStyle: "file:///\(path)")
+//        }
        
         
-        view.addSubview(mapview!)
-        
-        mapview?.addMarker(address: "119 w 24th street new york, ny") { (marker, error) in
+        view.addSubview(mapview)
+        mapview.setZoom(zoomLevel: 5)
+        mapview.setCenter(position: CLLocationCoordinate2D(latitude: 40, longitude: -73))
+        mapview.addMarker(address: "119 w 24th street new york, ny") { (marker, error) in
 
         }
         
@@ -87,6 +92,37 @@ class ViewController: UIViewController {
     }
 }
 
+
+extension ViewController : MapMarkerSelectDelegate {
+    
+    func mapView(_ view: MFTMapView, didSelectMarker marker: MFTMarker, atScreenPosition position: CGPoint) {
+        
+        let latLng = mapview.screenPositionToLatLng(position)
+        let point = mapview.LatLngToScreenPosition(latLng)
+        
+        print(point)
+        print(latLng)
+    
+    }
+    
+    
+}
+
+extension ViewController : MapSingleTapGestureDelegate {
+    
+    
+    func mapView(_ view: MFTMapView, recognizer: UIGestureRecognizer, shouldRecognizeSingleTapGesture location: CGPoint) -> Bool {
+        return true
+    }
+    
+    func mapView(_ view: MFTMapView, recognizer: UIGestureRecognizer, didRecognizeSingleTapGesture location: CGPoint) {
+        let latLng = mapview.screenPositionToLatLng(location)
+        print(latLng)
+    }
+    
+    
+    
+}
 
 
     
