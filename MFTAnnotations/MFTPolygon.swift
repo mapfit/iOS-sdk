@@ -159,6 +159,8 @@
         self.lineJoinType = polygonOptions.lineJoinType
         self.lineCapType = polygonOptions.lineCapType
         self.style = MFTAnnotationStyle.polygon
+        self.points = polygonOptions.points
+        
         self.uuid = UUID()
         self.isVisible = true
         super.init()

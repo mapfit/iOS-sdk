@@ -61,7 +61,7 @@ public class MFTPolyline : NSObject, MFTAnnotation {
         didSet {
             guard let tg  = tgPolyline else { return }
             for point in points[0] {
-                tgPolyline?.add(TGGeoPoint(longitude: point.longitude, latitude: point.latitude))
+                tg.add(TGGeoPoint(longitude: point.longitude, latitude: point.latitude))
             }
             
             tgMarker?.polyline = tg
@@ -143,6 +143,7 @@ public class MFTPolyline : NSObject, MFTAnnotation {
         self.lineJoinType = polylineOptions.lineJoinType
         self.lineCapType = polylineOptions.lineCapType
         self.style = MFTAnnotationStyle.polyline
+        self.points = polylineOptions.points
         self.uuid = UUID()
         self.isVisible = true
         super.init()

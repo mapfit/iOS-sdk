@@ -61,6 +61,14 @@ public class MFTPolylineOptions : NSObject, MFTPolyPointOptions{
     public func setLineJoinType(_ type: MFTLineJoinType){
         self.lineJoinType = type
     }
+    
+    /**
+     Adds new point to the polyline.
+     - parameter point: The new point to be drawn in the polyline.
+     */
+    public func addPoints(_ points: [[CLLocationCoordinate2D]]){
+        self.points = points
+    }
 
 //Default Init
 override public init() {

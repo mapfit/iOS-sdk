@@ -278,6 +278,26 @@ open class MFTMapView: UIView {
         tgMapView.animate(toPosition: TGGeoPointMake(position.longitude, position.latitude), withDuration: easeDuration, with: .cubic)
     }
     
+    public func setCenterWithOffset(latLng: CLLocationCoordinate2D, offsetX: Int, offsetY: Int, duration: Float){
+        let center = computeOffsetToPoint(from: latLng, distance: Double(offsetY), heading: Double(offsetX))
+        setCenter(position: center, duration: duration)
+    }
+    
+    private func computeOffsetToPoint(from: CLLocationCoordinate2D, distance: Double, heading: Double) -> CLLocationCoordinate2D {
+        let dist = distance / 6371009
+        let radHeading = heading.degreesToRadians
+        // http://williams.best.vwh.net/avform.htm#LL
+        let fromLat = from.latitude.degreesToRadians
+        let fromLng = from.longitude.degreesToRadians
+        let cosDistance = cos(dist)
+        let sinDistance = sin(dist)
+        let sinFromLat = sin(fromLat)
+        let cosFromLat = cos(fromLat)
+        let sinLat = cosDistance * sinFromLat + sinDistance * cosFromLat * cos(radHeading)
+        let dLng = atan2(sinDistance * cosFromLat * sin(radHeading), cosDistance - sinFromLat * sinLat)
+        return CLLocationCoordinate2D(latitude: asin(sinLat).radiansToDegrees, longitude: (fromLng + dLng).radiansToDegrees)
+    }
+    
     
     /**
      Returns the center coordinate of the map.

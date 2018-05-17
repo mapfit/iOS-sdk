@@ -192,8 +192,10 @@ class Sample_AppTests: XCTestCase {
     
     func testMarkerPositionAfterGeocoding(){
         let expect = expectation(description: "Marker postion should have valid lat long")
+        let options = MFTMarkerOptions()
+        options.setStreetAddress(streetAddress: "119 W 24th street new york", geocode: true)
         
-        mapView.addMarker(address: "119 W 24th street new york") { (marker, error) in
+        mapView.addMarker(options) { (marker, error) in
             if let marker = marker {
                 XCTAssertEqual(marker.position.latitude, 40.744050000000001, file: "Lat is not valid")
                 XCTAssertEqual(marker.position.longitude, -73.99324, file: "Lng is not valid")
@@ -293,7 +295,7 @@ class Sample_AppTests: XCTestCase {
         
         self.mapView.directionsOptions.setOrigin("55 east street, Hicksville NY, 11801")
             self.mapView.directionsOptions.setDestination( "119 w 24th street, New York, NY")
-                self.mapView.directionsOptions.showDirections(completion: { (polyline, error) in
+        self.mapView.directionsOptions.showDirections(options: nil, completion: { (polyline, error) in
                     
                     XCTAssertEqual(self.mapView.directionsOptions.directionsType, .driving, file: "Transit type is incorrect")
                     
@@ -427,8 +429,9 @@ class Sample_AppTests: XCTestCase {
     func testScreenPositionToLatLng(){
         let expect = expectation(description: "Adding a marker")
         var point = CGPoint()
-      
-        mapView.addMarker(address: "119 w 24th street new york, ny") { (marker, error) in
+        let options = MFTMarkerOptions()
+        options.setStreetAddress(streetAddress: "119 W 24th street new york", geocode: true)
+        mapView.addMarker(options) { (marker, error) in
             if let marker = marker {
                 self.mapView.setZoom(zoomLevel: 5)
                 self.mapView.setCenter(position: CLLocationCoordinate2D(latitude: 40, longitude: -73))

@@ -96,7 +96,7 @@ public class MFTDirectionsOptions {
      - returns: Optional polyline object or optional error.
      */
     
-    public func showDirections(options: MFTPolylineOptions, completion:@escaping (_ polyline: MFTPolyline?, _ error: Error?)->Void){
+    public func showDirections(options: MFTPolylineOptions?, completion:@escaping (_ polyline: MFTPolyline?, _ error: Error?)->Void){
             MFTDirections.sharedInstance.route(origin: origin, originAddress: originAddress, destination: destination, destinationAddress: destinationAddress, directionsType: directionsType) { (routeObject, error) in
                 if error == nil {
                     guard let route = routeObject else { return }
