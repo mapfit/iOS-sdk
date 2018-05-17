@@ -77,6 +77,7 @@
 		B2A16D792A2FC3ACBAB5346F89306075 /* zoomOut@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CE4963514F6A3CC51CDC01EDD761618 /* zoomOut@3x.png */; };
 		B8618A6AB3E508F36E3CB6AD22E7FA9B /* StyleGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E5CBADB2CA4C9B92AA30F21C991C10 /* StyleGuide.swift */; };
 		B96D7B6FF40FEA8A03AA76027E42B98C /* MinusButton.png in Resources */ = {isa = PBXBuildFile; fileRef = B11A00CDF82324D63DD4067A52845918 /* MinusButton.png */; };
+		BF5584C320AA2D8600272240 /* MFTMarkerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5584C220AA2D8600272240 /* MFTMarkerOptions.swift */; };
 		BFFDC4B620A36F08008FAD60 /* MFTSceneUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFDC4B520A36F08008FAD60 /* MFTSceneUpdate.swift */; };
 		C258D6C9AE4D2CC784B3D3EB82E82557 /* MFTAPIObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544DCA0517C9E98BACACAD1274628BA2 /* MFTAPIObjects.swift */; };
 		C50195032397AFD5C1A6757CB625281F /* MFTLatLngBounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120190995A8C2E0D95B9FD7A1A2EA8F3 /* MFTLatLngBounds.swift */; };
@@ -220,6 +221,7 @@
 		B616AB0B420AFD29B65CA1EC3042E67D /* mapfit-night.yaml */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = "mapfit-night.yaml"; path = "iOS-SDK/houseStyles.bundle/mapfit-night.yaml"; sourceTree = "<group>"; };
 		B6A7755CA04DCD90E073A067784ECD86 /* Radius@2.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Radius@2.png"; path = "iOS-SDK/houseStyles.bundle/Radius@2.png"; sourceTree = "<group>"; };
 		B86B00CC48FA7D28DAF3BE50DE702F2B /* zoomOut@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "zoomOut@2x.png"; path = "iOS-SDK/houseStyles.bundle/zoomOut@2x.png"; sourceTree = "<group>"; };
+		BF5584C220AA2D8600272240 /* MFTMarkerOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFTMarkerOptions.swift; sourceTree = "<group>"; };
 		BFFDC4B520A36F08008FAD60 /* MFTSceneUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFTSceneUpdate.swift; sourceTree = "<group>"; };
 		C0126A9ACB4B4FB5DBE59843102D3A37 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		C089C442D50195E72317D50A4DF452A9 /* Pods-Sample-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Sample-App.release.xcconfig"; sourceTree = "<group>"; };
@@ -311,23 +313,18 @@
 			isa = PBXGroup;
 			children = (
 				8C62FDCA35A7DE5C6F5285BC618590B0 /* LocationCorrectionEngine.swift */,
-				9D3249A6F630C021BC676BF141E6C42E /* MFTAnnotations.swift */,
 				368ACC9679C6C72D461EF81C08F9098A /* MFTDirectionsOptions.swift */,
 				120190995A8C2E0D95B9FD7A1A2EA8F3 /* MFTLatLngBounds.swift */,
 				D8F0B6E93FACFD50DAD43871A12B2336 /* MFTLayer.swift */,
 				C236512504B77A174872941AE0E941EC /* MFTLocationProvider.swift */,
-				79BED5685293F60F998E8D9253A28FC9 /* MFTMapOptions.swift */,
 				BFFDC4B520A36F08008FAD60 /* MFTSceneUpdate.swift */,
 				6AAFA1A56C92CE7052C884605CE29753 /* MFTMapView.swift */,
 				C3D60B8C6C686D0D74579CCAC0D9357A /* MFTMapViewGestrues.swift */,
 				C8C3F92F5174F08131B38E6DECF69D74 /* MFTMarker.swift */,
+				BF5584C220AA2D8600272240 /* MFTMarkerOptions.swift */,
 				EDDE45CF55203654FCB0C7999E1CBBAC /* MFTPlaceInfo.swift */,
 				76AC86CD4C5BE4E5BE47846A23EF5502 /* MFTPlaceInfoAdapter.swift */,
 				7CF5363C6047DC076EAB663F13F13C72 /* MFTPlaceInfoView.swift */,
-				9092274CA53E8696A4E03609E3260279 /* MFTPolygon.swift */,
-				C95115798E2D4F84B9703DA774009F4C /* MFTPolygonOptions.swift */,
-				99A31DB3FDF6863CB726C2738FC9C785 /* MFTPolyline.swift */,
-				4B28017BF6553D1D2627E5F3368612E4 /* MFTPolylineOptions.swift */,
 				08FC25CC46504CFFE26AB0768B689BFE /* MFTZoomButtonView.swift */,
 				039CA821D30E8F638BFEB76216A49DEC /* Utilities.swift */,
 			);
@@ -418,6 +415,8 @@
 				0E34E42B2274F37FFB745A6EC93F8BB1 /* Extensions */,
 				9DD6D13F599B4F31D016066CDD946AED /* Helper */,
 				19A65D57B333FA56D42648EE133E6645 /* MFTClasses */,
+				BF60B4A220ADE167009D2DF3 /* MFTAnnotations */,
+				BF60B4A120ADE141009D2DF3 /* MFTOptions */,
 				3ADE7F3C3283A4CF880145F12B06B8E2 /* Pod */,
 				85220D93B0DDEA03EB415A4CEE0EB7F2 /* Resources */,
 				D5F2C078E23CCA70A8701919EBAE0F0E /* Support Files */,
@@ -550,6 +549,26 @@
 				6908E803C90C7A83DC08A0874B529112 /* Mapfit */,
 			);
 			name = "Development Pods";
+			sourceTree = "<group>";
+		};
+		BF60B4A120ADE141009D2DF3 /* MFTOptions */ = {
+			isa = PBXGroup;
+			children = (
+				79BED5685293F60F998E8D9253A28FC9 /* MFTMapOptions.swift */,
+				C95115798E2D4F84B9703DA774009F4C /* MFTPolygonOptions.swift */,
+				4B28017BF6553D1D2627E5F3368612E4 /* MFTPolylineOptions.swift */,
+			);
+			name = MFTOptions;
+			sourceTree = "<group>";
+		};
+		BF60B4A220ADE167009D2DF3 /* MFTAnnotations */ = {
+			isa = PBXGroup;
+			children = (
+				9D3249A6F630C021BC676BF141E6C42E /* MFTAnnotations.swift */,
+				9092274CA53E8696A4E03609E3260279 /* MFTPolygon.swift */,
+				99A31DB3FDF6863CB726C2738FC9C785 /* MFTPolyline.swift */,
+			);
+			path = MFTAnnotations;
 			sourceTree = "<group>";
 		};
 		D35AF013A5F0BAD4F32504907A52519E /* iOS */ = {
@@ -825,6 +844,7 @@
 				D2CC8C5B97829F4BC72D077D6417D448 /* MFTPlaceInfoAdapter.swift in Sources */,
 				810FE145695BA860FE08C4326E158708 /* MFTPlaceInfoView.swift in Sources */,
 				16ABC55CB02B871AC742C549E13E5EA0 /* MFTPolygon.swift in Sources */,
+				BF5584C320AA2D8600272240 /* MFTMarkerOptions.swift in Sources */,
 				DB36E4CB37BB0F4CCC8BC78007338DF5 /* MFTPolygonOptions.swift in Sources */,
 				683E1CA605CA6F5C685705DE1AF2F9DB /* MFTPolyline.swift in Sources */,
 				38AA889B3AC15485726FBC6EBED1AF2A /* MFTPolylineOptions.swift in Sources */,

@@ -340,48 +340,68 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
         if firstRun == 0 {
             self.firstRun = 1
             guard let mapView = self.mapView else { return }
-            self.accuracyCircle = mapView.addMarker(position: location.coordinate)
-            
+            let accuracyCircleOptions = MFTMarkerOptions()
             
             if let circleImage = UIImage(named: "Radius", in: Bundle.houseStylesBundle(), compatibleWith: nil) {
                 
-                self.accuracyCircle?.setIcon(circleImage)
-                self.accuracyCircle?.markerOptions?.setAnchorPosition(.center)
-                self.accuracyCircle?.markerOptions?.setFlat(true)
-                self.accuracyCircle?.markerOptions?.setDrawOrder(drawOrder: accuracyCircleDrawOrder)
-                self.accuracyCircle?.markerOptions?.setInteractivity(false)
+                accuracyCircleOptions.setIcon(circleImage)
+                accuracyCircleOptions.setAnchorPosition(.center)
+                accuracyCircleOptions.setFlat(true)
+                accuracyCircleOptions.setDrawOrder(drawOrder: accuracyCircleDrawOrder)
+                accuracyCircleOptions.setInteractivity(false)
+                accuracyCircleOptions.position = location.coordinate
                 self.lastLocation = location
                 adjustAccuracyCircle()
                 
             }
             
-            self.currentLocationGem = mapView.addMarker(position: location.coordinate)
+            mapView.addMarker(accuracyCircleOptions) { (marker, error) in
+                if let accuracyMarker = marker {
+                    self.accuracyCircle = accuracyMarker
+                }
+            }
             
+            
+            let currentLocationGemOptions = MFTMarkerOptions()
+
             if let image = UIImage(named: "location", in: Bundle.houseStylesBundle(), compatibleWith: nil) {
-                self.currentLocationGem?.setIcon(image)
-                self.currentLocationGem?.markerOptions?.setAnchorPosition(.center)
-                self.currentLocationGem?.markerOptions?.setDrawOrder(drawOrder: userLocationDrawOrder)
-                self.currentLocationGem?.markerOptions?.setInteractivity(false)
-                self.currentLocationGem?.markerOptions?.setFlat(true)
+                currentLocationGemOptions.setIcon(image)
+                currentLocationGemOptions.setAnchorPosition(.center)
+                currentLocationGemOptions.setDrawOrder(drawOrder: userLocationDrawOrder)
+                currentLocationGemOptions.setInteractivity(false)
+                currentLocationGemOptions.setFlat(true)
                 
             }
             
-            self.directionPointer = mapView.addMarker(position: location.coordinate)
+            mapView.addMarker(currentLocationGemOptions) { (marker, error) in
+                if let gemMark = marker {
+                    self.currentLocationGem = gemMark
+                }
+            }
+            
+            let directionsPointerOptions = MFTMarkerOptions()
             
             if let image = UIImage(named: "directionPointer", in: Bundle.houseStylesBundle(), compatibleWith: nil) {
-                self.directionPointer?.setIcon(image)
-                self.directionPointer?.markerOptions?.setAnchorPosition(.center)
-                self.directionPointer?.markerOptions?.setDrawOrder(drawOrder: userLocationDrawOrder)
-                self.directionPointer?.markerOptions?.setInteractivity(false)
-                self.directionPointer?.markerOptions?.setFlat(true)
+                directionsPointerOptions.setIcon(image)
+                directionsPointerOptions.setAnchorPosition(.center)
+                directionsPointerOptions.setDrawOrder(drawOrder: userLocationDrawOrder)
+                directionsPointerOptions.setInteractivity(false)
+                directionsPointerOptions.setFlat(true)
                 
+            }
+            
+            mapView.addMarker(currentLocationGemOptions) { (marker, error) in
+                if let mark = marker {
+                    self.currentLocationGem = mark
+                }
             }
             
             self.pointerTimer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(updatePointer), userInfo: nil, repeats: true)
             self.accuracyCircleTimer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(adjustAccuracyCircle), userInfo: nil, repeats: true)
-            
-            
+
         }
+        
+        
         
         locEngine.addToSignalArray(location: location)
         self.lastLocation = location
@@ -404,11 +424,11 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
         if lastLocation.horizontalAccuracy == 0 {
             guard let accuracy = lastAccuracy else { return }
             let sideLength = Int(accuracy / 2 * pixelMeterValue)
-            self.accuracyCircle?.markerOptions?.updateSize(height: sideLength, width: sideLength)
+            self.accuracyCircle?.setSize(width: sideLength, height: sideLength)
         }else {
             lastAccuracy = lastLocation.horizontalAccuracy
             let sideLength = Int(lastLocation.horizontalAccuracy / 2 * pixelMeterValue)
-            self.accuracyCircle?.markerOptions?.updateSize(height: sideLength, width: sideLength)
+            self.accuracyCircle?.setSize(width: sideLength, height: sideLength)
         }
         
         

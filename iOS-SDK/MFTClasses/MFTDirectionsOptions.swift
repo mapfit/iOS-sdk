@@ -96,11 +96,11 @@ public class MFTDirectionsOptions {
      - returns: Optional polyline object or optional error.
      */
     
-    public func showDirections(completion:@escaping (_ polyline: MFTPolyline?, _ error: Error?)->Void){
+    public func showDirections(options: MFTPolylineOptions, completion:@escaping (_ polyline: MFTPolyline?, _ error: Error?)->Void){
             MFTDirections.sharedInstance.route(origin: origin, originAddress: originAddress, destination: destination, destinationAddress: destinationAddress, directionsType: directionsType) { (routeObject, error) in
                 if error == nil {
                     guard let route = routeObject else { return }
-                    self.drawRoute(route: route, completion: { (polyline, error) in
+                    self.drawRoute(options: options, route: route, completion: { (polyline, error) in
                         if error == nil {
                             completion(polyline, nil)
                         }
@@ -116,20 +116,21 @@ public class MFTDirectionsOptions {
      - returns: Optional polyline object or optional error.
      */
     
-    public func drawRoute(route: Route, completion:@escaping (_ polyline: MFTPolyline?, _ error: Error?)->Void){
+    public func drawRoute(options: MFTPolylineOptions?, route: Route, completion:@escaping (_ polyline: MFTPolyline?, _ error: Error?)->Void){
         
         guard let trip = route.trip else { return }
         guard let legs = trip.legs else { return }
         guard let shape = legs[0].shape else { return }
         guard let path = decodePolyline(shape) else { return }
         
-
-        let polyline = mapView?.addPolyline([path])
+        let opt = options ?? MFTPolylineOptions()
+        opt.addpoints([path])
+        let polyline = mapView?.addPolyline(options: opt)
         completion(polyline, nil)
         
     }
     
-    public func extendRoute(route: Route, addressOfExtension: String, completion:@escaping (_ polyline: MFTPolyline?, _ error: Error?)->Void){
+    public func extendRoute(options: MFTPolylineOptions?, route: Route, addressOfExtension: String, completion:@escaping (_ polyline: MFTPolyline?, _ error: Error?)->Void){
         guard let destinationLocation = route.destinationLocation else { return }
         
         let pointToExtendfrom = CLLocationCoordinate2D(latitude: destinationLocation[1], longitude: destinationLocation[0])
@@ -139,7 +140,7 @@ public class MFTDirectionsOptions {
         MFTDirections.sharedInstance.route(origin: pointToExtendfrom, originAddress: nil, destination: nil, destinationAddress: addressOfExtension, directionsType: directionsType) { (routeObject, error) in
             if error == nil {
                 guard let route = routeObject else { return }
-                self.drawRoute(route: route, completion: { (polyline, error) in
+                self.drawRoute(options: options ?? MFTPolylineOptions(), route: route, completion: { (polyline, error) in
                     if error == nil {
                         completion(polyline, nil)
                     }

@@ -513,11 +513,11 @@ open class MFTMapView: UIView {
             
         case .polygon:
             let polygon = annotation as! MFTPolygon
-            _ = addPolygon(polygon.points)
+            self.addPolygon(polygon: polygon)
             
         case .polyline:
             let polyline = annotation as! MFTPolyline
-            _ = addPolyline(polyline.points)
+            self.addPolyline(polyline: polyline)
             
             
         }
@@ -582,10 +582,45 @@ open class MFTMapView: UIView {
      */
     
     public func addMarker(position: CLLocationCoordinate2D) -> MFTMarker {
-        let marker = MFTMarker(position: position, mapView: self)
+        let options = MFTMarkerOptions()
+        options.position = position
+        let marker = MFTMarker(markerOptions: options)
+        marker.mapView = self
         self.addMarkerToMap(marker)
         return marker
+        
+        
     }
+    
+    public func addMarker(_ options: MFTMarkerOptions, completion: ((_ returnedMarker: MFTMarker?, _ error: Error?)->Void)?){
+        let marker = MFTMarker(markerOptions: options)
+        
+        if (options.geocode) || (options.building){
+            
+            marker.geocode { (marker, error) in
+                
+                if let err = error {
+                    if let comp = completion {
+                        comp(nil, err)
+                    }
+                 
+                }
+                
+                if let mark = marker {
+                    if let comp = completion {
+                        mark.mapView = self
+                        self.addMarkerToMap(mark)
+                        if let polygon = mark.buildingPolygon {
+                            self.addPolygon(polygon: polygon)
+                        }
+                        
+                        comp(mark, nil)
+                    }
+                }
+            }
+        }
+    }
+    
     
     /**
      Adds a marker to the map after the address has been geocoded. Returns marker for styling and place info customization.
@@ -595,51 +630,56 @@ open class MFTMapView: UIView {
     
     
     
-    public func addMarker(address: String, completion:@escaping (_ marker: MFTMarker?, _ errror: Error?)->Void){
-        MFTGeocoder.sharedInstance.geocode(address: address, includeBuilding: true) { (addresses, error) in
-            var marker: MFTMarker?
-            if error == nil {
-                guard let addressObject = addresses else { return }
-                
-                let response = MFTGeocoder.sharedInstance.parseAddressObjectForPosition(addressObject: addressObject)
-                
-                guard let position = response.0 else { return }
-                
-                
-                DispatchQueue.main.async {
-                    let address = addressObject[0]
-                    //add Marker
-                    marker = MFTMarker(position: CLLocationCoordinate2DMake(position.latitude, position.longitude), mapView: self)
-                    self.addAnnotation(marker!)
-                    
-                    //add building polygon
-                    if let building = address.building{
-                        var polygon = [CLLocationCoordinate2D]()
-                        if let _ = building.coordinates {
-                            guard let polygonCoordinates = building.coordinates else { return }
-                            for point in polygonCoordinates[0]{
-                                polygon.append(CLLocationCoordinate2DMake(point[1], point[0]))
-                            }
-                            let markerPolygon = self.addPolygon([polygon])
-                            markerPolygon?.mapView = self
-                            if var annotations = marker?.subAnnotations {
-                                annotations["building"] = markerPolygon
-                            }else{
-                                marker?.subAnnotations = ["building" : markerPolygon as! MFTAnnotation] 
-                            }
-                            
-                        }
-                    }
-                    completion(marker, nil)
-                }
-                
-                
-            } else {
-                completion(nil, error)
-            }
-            
-        }
-    }
+//    public func addMarker(address: String, completion:@escaping (_ marker: MFTMarker?, _ errror: Error?)->Void){
+//        MFTGeocoder.sharedInstance.geocode(address: address, includeBuilding: true) { (addresses, error) in
+//            if error == nil {
+//                guard let addressObject = addresses else { return }
+//                
+//                let response = MFTGeocoder.sharedInstance.parseAddressObjectForPosition(addressObject: addressObject)
+//                
+//                guard let position = response.0 else { return }
+//                
+//                
+//                DispatchQueue.main.async {
+//                    let address = addressObject[0]
+//                    //add Marker
+//                    let markerOptions = MFTMarkerOptions()
+//                    markerOptions.position = CLLocationCoordinate2DMake(position.latitude, position.longitude)
+//                    
+//                    //self.addAnnotation(marker!)
+//                    
+//                    //add building polygon
+//                    if let building = address.building{
+//                        var polygon = [CLLocationCoordinate2D]()
+//                        if let _ = building.coordinates {
+//                            guard let polygonCoordinates = building.coordinates else { return }
+//                            for point in polygonCoordinates[0]{
+//                                polygon.append(CLLocationCoordinate2DMake(point[1], point[0]))
+//                            }
+//                            
+//    
+//                            
+//                            markerOptions.addBuildingPolygon(true, options: markerOptions.buildingPolygonOptions ?? MFTPolygonOptions())
+//                            
+//                            
+//                            self.addMarker(markerOptions, completion: { (marker, error) in
+//                                if var annotations = marker?.subAnnotations {
+//                                    annotations["building"] = marker?.buildingPolygon
+//                                }else{
+//                                    marker?.subAnnotations = ["building" : marker?.buildingPolygon as! MFTAnnotation]
+//                                }
+//                                completion(marker, nil)
+//                            })
+//                        }
+//                    }
+//                    
+//                }
+//            } else {
+//                completion(nil, error)
+//            }
+//            
+//        }
+//    }
     
     /**
      Enables customizaion of placeinfo view.
@@ -704,19 +744,16 @@ open class MFTMapView: UIView {
         }
     }
     
-    public func addPolyline(_ polyline: [[CLLocationCoordinate2D]]) -> MFTPolyline?{
-        let rPolyline = MFTPolyline(mapView: self)
+    public func addPolyline(options: MFTPolylineOptions) -> MFTPolyline?{
+        let rPolyline = MFTPolyline(polylineOptions: options)
         let tgPolyline = TGGeoPolyline()
         rPolyline.tgPolyline = tgPolyline
-        rPolyline.addPoints(polyline)
         drawPolyline(polyline: rPolyline)
         let layer = tgMapView.addDataLayer("mz_default_line")
         if let dataLayer = layer {
-            
             rPolyline.dataLayer = dataLayer
-            
             self.dataLayers[rPolyline.uuid] = dataLayer
-            dataLayer.add(tgPolyline, withProperties: ["type" : "polyline", "uuid" : "\(rPolyline.uuid)", "color" : "#D2655F"])
+            dataLayer.add(tgPolyline, withProperties: ["type":"polyline", "uuid" : "\(rPolyline.uuid)", "line_color" : "\(rPolyline.strokeColor)", "line_width" : "\(rPolyline.strokeWidth)", "line_stroke_width" : "\(rPolyline.strokeOutlineWidth)", "line_stroke_color" : "\(rPolyline.strokeOutlineColor)", "line_cap" : "\(rPolyline.lineCapType.rawValue)", "line_join" : "\(rPolyline.lineJoinType.rawValue)", "line_order" : "\(rPolyline.drawOrder)"])
             currentPolylines[rPolyline.tgPolyline!] = rPolyline
             currentAnnotations[rPolyline.uuid] = rPolyline
             tgMapView.update()
@@ -726,19 +763,32 @@ open class MFTMapView: UIView {
         
     }
     
-    public func addPolygon(_ polygon: [[CLLocationCoordinate2D]])-> MFTPolygon?{
-        let rPolygon = MFTPolygon(mapView: self)
+    internal func addPolyline(polyline: MFTPolyline) {
+        let tgPolyline = TGGeoPolyline()
+        polyline.tgPolyline = tgPolyline
+        drawPolyline(polyline: polyline)
+        let layer = tgMapView.addDataLayer("mz_default_line")
+        if let dataLayer = layer {
+            polyline.dataLayer = dataLayer
+            self.dataLayers[polyline.uuid] = dataLayer
+            dataLayer.add(tgPolyline, withProperties: ["type":"polyline", "uuid" : "\(polyline.uuid)", "line_color" : "\(polyline.strokeColor)", "line_width" : "\(polyline.strokeWidth)", "line_stroke_width" : "\(polyline.strokeOutlineWidth)", "line_stroke_color" : "\(polyline.strokeOutlineColor)", "line_cap" : "\(polyline.lineCapType.rawValue)", "line_join" : "\(polyline.lineJoinType.rawValue)", "line_order" : "\(polyline.drawOrder)"])
+            currentPolylines[polyline.tgPolyline!] = polyline
+            currentAnnotations[polyline.uuid] = polyline
+            tgMapView.update()
+        }
+    }
+    
+    public func addPolygon(options: MFTPolygonOptions)-> MFTPolygon?{
+        let rPolygon = MFTPolygon(polygonOptions: options)
         let tgPolygon = TGGeoPolygon()
         rPolygon.tgPolygon = tgPolygon
-        rPolygon.addPoints(polygon)
         drawPolygon(polygon: rPolygon)
-        
-        
+
         let layer = tgMapView.addDataLayer("mz_default_polygon")
         if let dataLayer = layer {
             
             self.dataLayers[rPolygon.uuid] = dataLayer
-            dataLayer.add(tgPolygon, withProperties: ["type":"polygon", "uuid" : "\(rPolygon.uuid)"])
+            dataLayer.add(tgPolygon, withProperties: ["type":"polygon", "uuid" : "\(rPolygon.uuid)", "line_color" : "\(rPolygon.strokeColor)", "line_width" : "\(rPolygon.strokeWidth)", "line_stroke_width" : "\(rPolygon.strokeOutlineWidth)", "line_stroke_color" : "\(rPolygon.strokeOutlineColor)", "line_cap" : "\(rPolygon.lineCapType.rawValue)", "line_join" : "\(rPolygon.lineJoinType.rawValue)", "line_order" : "\(rPolygon.drawOrder)", "polygon_color" : "\(rPolygon.fillColor)"])
             currentPolygons[rPolygon.tgPolygon!] = rPolygon
             currentAnnotations[rPolygon.uuid] = rPolygon
             
@@ -749,6 +799,25 @@ open class MFTMapView: UIView {
         return rPolygon
     }
     
+    internal func addPolygon(polygon: MFTPolygon) {
+        polygon.mapView = self
+        let tgPolygon = TGGeoPolygon()
+        polygon.tgPolygon = tgPolygon
+        drawPolygon(polygon: polygon)
+        let layer = tgMapView.addDataLayer("mz_default_polygon")
+       
+        DispatchQueue.main.async {
+            if let dataLayer = layer {
+                self.dataLayers[polygon.uuid] = dataLayer
+                dataLayer.add(tgPolygon, withProperties: ["type":"polygon", "uuid" : "\(polygon.uuid)", "line_color" : "\(polygon.strokeColor)", "line_width" : "\(polygon.strokeWidth)", "line_stroke_width" : "\(polygon.strokeOutlineWidth)", "line_stroke_color" : "\(polygon.strokeOutlineColor)", "line_cap" : "\(polygon.lineCapType.rawValue)", "line_join" : "\(polygon.lineJoinType.rawValue)", "line_order" : "\(polygon.drawOrder)", "polygon_color" : "\(polygon.fillColor)"])
+                self.currentPolygons[polygon.tgPolygon!] = polygon
+                self.currentAnnotations[polygon.uuid] = polygon
+                self.tgMapView.update()
+            }
+        }
+    }
+    
+    
     internal func updatePolylineStyle(_ polyline: MFTPolyline){
         
         let dataLayer = self.dataLayers[polyline.uuid]
@@ -756,39 +825,16 @@ open class MFTMapView: UIView {
         guard let tgPolyline = polyline.tgPolyline else { return }
         if let layer = dataLayer {
             
-            guard let options = polyline.polylineOptions else { return }
             var properties = [String : String]()
             properties["type"] = "polyline"
             properties["uuid"] = "\(polyline.uuid)"
-            
-            if polyline.polylineOptions?.strokeColor != "default" {
-                properties["line_color"] = String(describing: options.strokeColor)
-            }
-            
-            if polyline.polylineOptions?.strokeWidth != -1 {
-                properties["line_width"] = String(describing: options.strokeWidth)
-            }
-            
-            if polyline.polylineOptions?.strokeOutlineWidth != -1 {
-                properties["line_stroke_width"] = String(describing: options.strokeOutlineWidth)
-            }
-            
-            if polyline.polylineOptions?.strokeOutlineColor != "default" {
-                properties["line_stroke_color"] = String(describing: options.strokeOutlineColor)
-            }
-            
-            if options.lineJoinType != .miter {
-                properties["line_cap"] = String(describing: options.lineJoinType.rawValue)
-            }
-            
-            if options.lineCapType != .bound {
-                properties["line_join"] = String(describing: options.lineCapType.rawValue)
-            }
-            
-            if options.drawOrder != Int.min {
-                properties["line_order"] = String(describing: options.drawOrder)
-            }
-            
+            properties["line_color"] = String(describing: polyline.strokeColor)
+            properties["line_width"] = String(describing: polyline.strokeWidth)
+            properties["line_stroke_width"] = String(describing: polyline.strokeOutlineWidth)
+            properties["line_stroke_color"] = String(describing: polyline.strokeOutlineColor)
+            properties["line_cap"] = String(describing: polyline.lineJoinType.rawValue)
+            properties["line_join"] = String(describing: polyline.lineCapType.rawValue)
+            properties["line_order"] = String(describing: polyline.drawOrder)
             self.dataLayers[polyline.uuid] = layer
             layer.add(tgPolyline, withProperties: properties)
         }
@@ -801,44 +847,18 @@ open class MFTMapView: UIView {
         dataLayer?.clear()
         guard let tgPolygon = polygon.tgPolygon else { return }
         if let layer = dataLayer {
-            
-            guard let options = polygon.polygonOptions else { return }
+
             var properties = [String : String]()
             properties["type"] = "polygon"
             properties["uuid"] = "\(polygon.uuid)"
-            
-            if options.fillColor != "default" {
-                properties["polygon_color"] = String(describing: options.fillColor)
-            }
-            
-            if options.drawOrder != Int.min {
-                properties["polygon_order"] = String(describing: options.drawOrder)
-                properties["line_order"] = String(describing: options.drawOrder - 1)
-            }
-
-            if options.strokeColor != "default" {
-                properties["line_color"] = String(describing: options.strokeColor)
-            }
-            
-            if options.strokeOutlineColor != "default" {
-                properties["line_stroke_color"] = String(describing: options.strokeOutlineColor)
-            }
-            
-            if options.strokeWidth != -1 {
-                properties["line_width"] = String(describing: options.strokeWidth)
-            }
-            
-            if options.strokeOutlineWidth != -1 {
-                properties["line_stroke_width"] = String(describing: options.strokeOutlineWidth)
-            }
-            
-            if options.lineJoinType != .miter {
-                properties["line_cap"] = String(describing: options.lineJoinType.rawValue)
-            }
-            
-            if options.lineCapType != .bound {
-                properties["line_join"] = String(describing: options.lineCapType.rawValue)
-            }
+            properties["polygon_color"] = String(describing: polygon.fillColor)
+            properties["line_color"] = String(describing: polygon.strokeColor)
+            properties["line_width"] = String(describing: polygon.strokeWidth)
+            properties["line_stroke_width"] = String(describing: polygon.strokeOutlineWidth)
+            properties["line_stroke_color"] = String(describing: polygon.strokeOutlineColor)
+            properties["line_cap"] = String(describing: polygon.lineJoinType.rawValue)
+            properties["line_join"] = String(describing: polygon.lineCapType.rawValue)
+            properties["line_order"] = String(describing: polygon.drawOrder)
             
             self.dataLayers[polygon.uuid] = layer
             layer.add(tgPolygon, withProperties: properties)
@@ -848,27 +868,27 @@ open class MFTMapView: UIView {
     }
     
 
-    public func addPolygon(_ polygon: [[CLLocationCoordinate2D]], color: String)-> MFTPolygon?{
-        let rPolygon = MFTPolygon()
-        let tgPolygon = TGGeoPolygon()
-        rPolygon.tgPolygon = tgPolygon
-        rPolygon.addPoints(polygon)
-        drawPolygon(polygon: rPolygon)
-        
-        let layer = tgMapView.addDataLayer("mz_default_polygon")
-        if let dataLayer = layer {
-            
-            self.dataLayers[rPolygon.uuid] = dataLayer
-            dataLayer.add(tgPolygon, withProperties: ["type":"polygon", "uuid" : "\(rPolygon.uuid)"])
-            currentPolygons[rPolygon.tgPolygon!] = rPolygon
-            currentAnnotations[rPolygon.uuid] = rPolygon
-            
-            tgMapView.requestRender()
-            tgMapView.update()
-            
-        }
-        return rPolygon
-    }
+//    public func addPolygon(_ polygon: [[CLLocationCoordinate2D]], color: String)-> MFTPolygon?{
+//        let rPolygon = MFTPolygon()
+//        let tgPolygon = TGGeoPolygon()
+//        rPolygon.tgPolygon = tgPolygon
+//        rPolygon.addPoints(polygon)
+//        drawPolygon(polygon: rPolygon)
+//        
+//        let layer = tgMapView.addDataLayer("mz_default_polygon")
+//        if let dataLayer = layer {
+//            
+//            self.dataLayers[rPolygon.uuid] = dataLayer
+//            dataLayer.add(tgPolygon, withProperties: ["type":"polygon", "uuid" : "\(rPolygon.uuid)"])
+//            currentPolygons[rPolygon.tgPolygon!] = rPolygon
+//            currentAnnotations[rPolygon.uuid] = rPolygon
+//            
+//            tgMapView.requestRender()
+//            tgMapView.update()
+//            
+//        }
+//        return rPolygon
+//    }
     
     
     

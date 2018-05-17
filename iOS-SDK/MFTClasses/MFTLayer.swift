@@ -66,8 +66,9 @@ public class MFTLayer  {
     
     public func setVisibility(show: Bool){
         isVisible = show
-        for annotation in self.annotations {
-            annotation.setVisibility(show: show)
+        for var annotation in self.annotations {
+            annotation.isVisible = true
+            
         }
     }
     

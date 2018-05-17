@@ -16,111 +16,6 @@ public enum MFTAnchorPosition : String {
     case center = "center"
 }
 
-@objc(MFTMarkerOptions)
-public class MFTMarkerOptions : NSObject{
-    //set width of the marker -- pixels
-    public var width: Int
-    //set height of the marker -- pixels
-    public var height: Int
-    //Marker for map options
-    internal var marker: MFTMarker
-    // Sets the draw order for the marker. The draw order is relative to other annotations. Note that higher values are drawn above lower ones.
-    public var drawOrder: Int
-    internal var color: String
-    public var flat: Bool
-    internal var interactive: Bool
-    
-    
-    // Set Anchor
-    public var anchorPosition: MFTAnchorPosition
-    
-    /**
-     Sets the height for the marker icon.
-     
-     - parameter height: height of marker icon.
-     */
-    public func setHeight(
-        height: Int){
-        self.height = height
-        marker.setStyle()
-    }
-    
-    /**
-     Sets anchor position of marker.
-     
-     - parameter position: position of marker icon.
-     */
-    internal func setAnchorPosition(_ position: MFTAnchorPosition){
-        self.anchorPosition = position
-        marker.setStyle()
-    }
-    
-    /**
-     Sets the width for the marker icon.
-     
-     - parameter width: width of marker icon.
-     */
-    
-    public func setWidth(width: Int){
-        self.width = width
-        marker.setStyle()
-    }
-    /**
-     Sets the color for the marker icon.
-     
-     - parameter color: color of marker icon.
-     */
-    
-    public func setDrawOrder(drawOrder: Int){
-        self.drawOrder = drawOrder
-        marker.tgMarker?.drawOrder = drawOrder
-    }
-    /**
-     Sets the color for the marker icon.
-     
-     - parameter color: color of marker icon.
-     */
-    internal func setColor(color: String) {
-        self.color = color
-        marker.setStyle()
-    }
-    
-    internal func setFlat(_ flat: Bool) {
-        self.flat = flat
-        marker.setStyle()
-    }
-    
-    
-    
-    internal func updateSize(height: Int, width: Int){
-        self.height = height
-        self.width = width
-        marker.setStyle()
-    }
-    
-    internal func setInteractivity(_ interactive: Bool){
-        self.interactive = interactive
-        marker.setStyle()
-    }
-    
-    //Default Init
-    internal init(_ marker: MFTMarker) {
-        height = 59
-        width = 55
-        drawOrder = 2000
-        anchorPosition = .top
-        color = "white"
-        flat = false
-        interactive = true
-        self.marker = marker
-        
-        super.init()
-        
-    }
-}
-
-
-
 /**
  `MFTMarker` A marker is an icon placed at a particular position on the map.
  */
@@ -129,7 +24,47 @@ public class MFTMarker : NSObject, MFTAnnotation {
     
     public var uuid: UUID
     public var mapView: MFTMapView?
+    public var width: Int
+    public var height: Int
+    public var address: Address?
+    public var streetAddress: String
+    public var anchor: MFTAnchorPosition
+    public var building: Bool
     
+    /**
+     Position of marker. Can only be changed by calling 'setPosition(position: CLLocationCoordinate2D)'.
+     */
+    
+    public var position: CLLocationCoordinate2D
+
+    public var tag: Any
+    public var buildingPolygon: MFTPolygon?
+    
+    public var drawOrder: Int {
+        didSet {
+            createStyle()
+        }
+    }
+    /**
+     Visibility of marker. Can only be changed by calling 'setVisibility(show: Bool)'.
+     */
+
+    public var isVisible: Bool {
+        didSet {
+            createStyle()
+        }
+    }
+    
+    public var isFlat: Bool{
+        didSet {
+            createStyle()
+        }
+    }
+    public var isInteractive: Bool{
+        didSet {
+            createStyle()
+        }
+    }
     /**
      Title of Marker.
      */
@@ -150,53 +85,23 @@ public class MFTMarker : NSObject, MFTAnnotation {
     
     internal var subAnnotations: [String : MFTAnnotation]?
     
-    public var buildingPolygon: MFTPolygon?
-    
     internal var tgMarker: TGMarker?  {
         didSet {
             tgMarker?.visible = isVisible
             tgMarker?.point = TGGeoPoint(coordinate: position)
-            tgMarker?.drawOrder = 2000
-            setStyle()
+            tgMarker?.drawOrder = drawOrder
+            restoreIcon()
+            createStyle()
         }
         
-    }
-    
-    /**
-     Options used to set style for marker.
-     */
-    
-    
-    public var markerOptions: MFTMarkerOptions? {
-        didSet {
-            setStyle()
-        }
     }
     
     /**
      Initial style set for marker.
      */
     
-    public var style: MFTAnnotationStyle {
-        didSet {
-            setStyle()
-        }
-    }
-    
-    /**
-     Visibility of marker. Can only be changed by calling 'setVisibility(show: Bool)'.
-     */
-    
-    public var isVisible: Bool
-    
-    
-    /**
-     Position of marker. Can only be changed by calling 'setPosition(position: CLLocationCoordinate2D)'.
-     */
-    
-    public var position: CLLocationCoordinate2D
-    
-    
+    public var style: MFTAnnotationStyle
+
     /**
      Icon of marker. Can only be changed by calling one of the 'setIcon' methods.
      */
@@ -206,6 +111,83 @@ public class MFTMarker : NSObject, MFTAnnotation {
      Changes the coordinate of the marker.
      - parameter position: The coordinate of the marker.
      */
+
+    
+    
+    
+    public init(markerOptions: MFTMarkerOptions){
+
+        self.uuid = UUID()
+        self.style = .point
+        self.width = markerOptions.width
+        self.height = markerOptions.height
+        self.address = markerOptions.address
+        self.streetAddress = markerOptions.streetAddress
+        self.position = markerOptions.position ?? CLLocationCoordinate2DMake(0.0, 0.0)
+        self.tag = markerOptions.tag as Any
+        self.anchor = markerOptions.anchorPosition
+        self.building = markerOptions.building
+        self.buildingPolygon = MFTPolygon(polygonOptions: markerOptions.buildingPolygonOptions ?? MFTPolygonOptions())
+        self.drawOrder = markerOptions.drawOrder
+        self.isVisible = markerOptions.visible
+        self.isFlat = markerOptions.flat
+        self.isInteractive = markerOptions.interactive
+        super.init()
+        self.title = markerOptions.title
+        self.subtitle1 = markerOptions.subTitle1
+        self.subtitle2 = markerOptions.subTitle2
+        self.handleIconSetting(markerOptions)
+        self.createStyle()
+    }
+    
+    internal func setMapView(_ mapView: MFTMapView){
+        self.mapView = mapView
+    }
+    
+    
+    internal func geocode(completion:@escaping (_ marker: MFTMarker?, _ errror: Error?)->Void){
+        MFTGeocoder.sharedInstance.geocode(address: streetAddress, includeBuilding: building) { (addresses, error) in
+            if error == nil {
+                guard let addressObject = addresses else { return }
+                
+                let response = MFTGeocoder.sharedInstance.parseAddressObjectForPosition(addressObject: addressObject)
+                guard let position = response.0 else { return }
+                self.position = position
+                
+                DispatchQueue.main.async {
+                    let address = addressObject[0]
+                    
+                    if self.streetAddress == "" {
+                        if let streetAddress = address.streetAddress{
+                            self.streetAddress = streetAddress
+                        }
+                    }
+                    //add building polygon
+                    if let building = address.building{
+                        if let _ = building.coordinates {
+                            guard let polygonCoordinates = building.coordinates else { return }
+                            for point in polygonCoordinates[0]{
+                                self.buildingPolygon?.addPoint(CLLocationCoordinate2DMake(point[1], point[0]))
+                            }
+
+                            if var annotations = self.subAnnotations {
+                                annotations["building"] = self.buildingPolygon
+                            }else{
+                                self.subAnnotations = ["building" : self.buildingPolygon as! MFTAnnotation]
+                            }
+                            
+                        }
+                    }
+                    completion(self, nil)
+                }
+                
+                
+            } else {
+                completion(nil, error)
+            }
+            
+        }
+    }
     
     private var workItem: DispatchWorkItem?
     
@@ -277,6 +259,16 @@ public class MFTMarker : NSObject, MFTAnnotation {
         
     }
     
+    /**
+     Sets the icon image for the marker.
+     - parameter mapfitMarker: MapfitMarker that will be used for the marker icon.
+     */
+    public func setSize(width: Int, height: Int){
+        self.height = height
+        self.width = width
+        createStyle() 
+    }
+    
     
     //private function for loading image from URLString
     private func loadImage(_ imageString: String) {
@@ -296,74 +288,26 @@ public class MFTMarker : NSObject, MFTAnnotation {
         }
     }
     
-    /**
-     Sets the style for the marker based on the markerOptions.
-     */
-    @objc public func setStyle() {
+    
+    private func createStyle(){
         guard let marker = tgMarker else { return }
-        if let options = markerOptions {
-            marker.stylingString = generateStyle(options)
-        } else {
-            marker.stylingString =  style.rawValue
+        marker.stylingString = "{ style: sdk-point-overlay, anchor: \(self.anchor.rawValue), size: [\(self.width)px, \(self.height)px], interactive: \(self.isInteractive), collide: false, flat: \(self.isFlat)}"
+    }
+
+    
+    private func handleIconSetting(_ markerOptions: MFTMarkerOptions){
+        if let url = markerOptions.imageURL {
+            self.setIcon(url)
         }
         
-    }
-    
-    private func generateStyle(_ markerOptions: MFTMarkerOptions) -> String{
-        return "{ style: 'sdk-point-overlay', color: \(markerOptions.color), anchor: \(markerOptions.anchorPosition.rawValue), size: [\(markerOptions.width)px, \(markerOptions.height)px], interactive: \(markerOptions.interactive), collide: false, flat: \(markerOptions.flat)}"
-    }
-    
-    /**
-     Sets the visibility of the marker.
-     parameter show: True or False value setting markers visibility.
-     */
-    
-    @objc public func setVisibility(show: Bool) {
-        tgMarker?.visible = show
-    }
-    
-    @objc public func getVisibility()->Bool {
-        return tgMarker?.visible ?? false
-    }
-    
-    
-    
-    internal init(position: CLLocationCoordinate2D, mapView: MFTMapView) {
-        self.position = position
-        self.isVisible = true
-        self.style = MFTAnnotationStyle.point
-        self.uuid = UUID()
-        self.mapView = mapView
-        super.init()
-        self.setIcon(.defaultPin)
-        self.markerOptions = MFTMarkerOptions(self)
+        if let mapfitMarker = markerOptions.mapfitMarker {
+            self.setIcon(mapfitMarker)
+        }
         
-        
-    }
-    
-    internal init(address: String, mapView: MFTMapView) {
-        self.position = CLLocationCoordinate2DMake(0.0, 0.0)
-        self.isVisible = true
-        self.style = MFTAnnotationStyle.point
-        self.uuid = UUID()
-        self.mapView = mapView
-        super.init()
-        self.setIcon(.defaultPin)
-        self.getPositionFromAddress(Address: address)
-        self.markerOptions = MFTMarkerOptions(self)
-        
-    }
-    
-    internal init(position: CLLocationCoordinate2D, icon: MFTMarkerImage, mapView: MFTMapView) {
-        self.position = position
-        self.isVisible = true
-        self.style = MFTAnnotationStyle.point
-        self.uuid = UUID()
-        self.mapView = mapView
-        super.init()
-        self.markerOptions = MFTMarkerOptions(self)
-        self.setIcon(icon)
-        
+        if let image = markerOptions.image {
+            self.setIcon(image)
+        }
+
     }
     
     private func getPositionFromAddress(Address: String){

@@ -18,6 +18,21 @@
  
  @objc(MFTPolygon)
  public class MFTPolygon : NSObject, MFTAnnotation {
+    //The stroke color of the polygon -- pixels
+    public var strokeWidth: Int
+    //The stroke outline width of the polygon -- pixels
+    public var strokeOutlineWidth: Int
+    //The stroke color of the polygon -- pixels
+    public var strokeColor: String
+    //The fill color for the polygon
+    public var fillColor: String
+    //The fill color for the polygon
+    public var strokeOutlineColor: String
+    // Sets the draw order for the polygon. The draw order is relative to other annotations. Note that higher values are drawn above lower ones.
+    public var drawOrder: Int
+    public var lineCapType: MFTLineCapType
+    public var lineJoinType: MFTLineJoinType
+    
     /**
      Initial style of the annotation(polyine, polygon, or marker).
      */
@@ -46,8 +61,13 @@
     /// The polygon that should be displayed on the map.
     internal var tgPolygon: TGGeoPolygon?  {
         didSet {
-            guard let l  = tgPolygon else { return }
-            tgMarker?.polygon = l
+            guard let tg = tgPolygon else { return }
+            
+            for point in points[0]  {
+                tg.add(TGGeoPoint(longitude: point.longitude, latitude: point.latitude))
+            }
+            
+            tgMarker?.polygon = tg
             setStyle()
         }
     }
@@ -72,6 +92,10 @@
      */
     public func addPoints(_ points: [[CLLocationCoordinate2D]]){
         self.points = points
+    }
+    
+    public func addPoint(_ point: CLLocationCoordinate2D){
+        self.points[0].append(point)
     }
     
     
@@ -125,23 +149,21 @@
     }
     
     
-    override init() {
-        self.isVisible = true
+    public init(polygonOptions: MFTPolygonOptions) {
+        self.strokeWidth = polygonOptions.strokeWidth
+        self.strokeColor = polygonOptions.strokeColor
+        self.strokeOutlineColor = polygonOptions.strokeOutlineColor
+        self.strokeOutlineWidth = polygonOptions.strokeOutlineWidth
+        self.fillColor = polygonOptions.fillColor
+        self.drawOrder = polygonOptions.drawOrder
+        self.lineJoinType = polygonOptions.lineJoinType
+        self.lineCapType = polygonOptions.lineCapType
         self.style = MFTAnnotationStyle.polygon
         self.uuid = UUID()
+        self.isVisible = true
         super.init()
-        self.polygonOptions = MFTPolygonOptions(self)
     }
     
-    init(mapView: MFTMapView) {
-        self.isVisible = true
-        self.style = MFTAnnotationStyle.polygon
-        self.uuid = UUID()
-        self.mapView = mapView
-        super.init()
-        self.polygonOptions = MFTPolygonOptions(self)
-        
-    }
     
  }
 

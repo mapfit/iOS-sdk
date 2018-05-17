@@ -42,10 +42,4 @@ public protocol MFTAnnotation {
      var style: MFTAnnotationStyle { get set }
     
     
-    /**
-     Sets visibility of the annotation.
-     - parameter show: True or False value indicating the visibility.
-     */
-    func setVisibility(show: Bool)
-    
 }

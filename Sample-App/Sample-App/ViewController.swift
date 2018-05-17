@@ -34,6 +34,21 @@ class ViewController: UIViewController {
         
        //setBounds()
         
+        let polygonOptions = MFTPolygonOptions()
+        polygonOptions.strokeColor = "#32b3ff"
+        
+        let markerOptions = MFTMarkerOptions()
+        markerOptions.setIcon(.active)
+        markerOptions.setStreetAddress(streetAddress: "119 w 24th street new york, NY", geocode: true)
+        markerOptions.addBuildingPolygon(true, options: polygonOptions)
+        
+        mapview.addMarker(markerOptions) { (marker, error) in
+
+
+        }
+        
+        
+
 
         
     }
@@ -80,9 +95,7 @@ class ViewController: UIViewController {
         view.addSubview(mapview)
         mapview.setZoom(zoomLevel: 5)
         mapview.setCenter(position: CLLocationCoordinate2D(latitude: 40, longitude: -73))
-        mapview.addMarker(address: "119 w 24th street new york, ny") { (marker, error) in
 
-        }
         
     }
     

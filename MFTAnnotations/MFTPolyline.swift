@@ -16,6 +16,20 @@ import CoreLocation
 
 @objc(MFTPolyline)
 public class MFTPolyline : NSObject, MFTAnnotation {
+    //The stroke color of the polyline -- pixels
+    public var strokeWidth: Int
+    //The stroke outline width of the polyline -- pixels
+    public var strokeOutlineWidth: Int
+    //The stroke color of the polyline -- pixels
+    public var strokeColor: String
+    
+    //The fill color for the polyline
+    public var strokeOutlineColor: String
+    // Sets the draw order for the polyline. The draw order is relative to other annotations. Note that higher values are drawn above lower ones.
+    public var drawOrder: Int
+    public var lineCapType: MFTLineCapType
+    public var lineJoinType: MFTLineJoinType
+    
     
     internal var dataLayer: TGMapData?
     
@@ -32,8 +46,6 @@ public class MFTPolyline : NSObject, MFTAnnotation {
     
     public var uuid: UUID
     
-    public var polylineOptions: MFTPolylineOptions?
-    
     
     internal var tgMarker: TGMarker? {
         didSet {
@@ -47,8 +59,12 @@ public class MFTPolyline : NSObject, MFTAnnotation {
     /// The polyline that should be displayed on the map.
     internal var tgPolyline: TGGeoPolyline?  {
         didSet {
-            guard let l  = tgPolyline else { return }
-            tgMarker?.polyline = l
+            guard let tg  = tgPolyline else { return }
+            for point in points[0] {
+                tgPolyline?.add(TGGeoPoint(longitude: point.longitude, latitude: point.latitude))
+            }
+            
+            tgMarker?.polyline = tg
             setStyle()
         }
     }
@@ -118,24 +134,18 @@ public class MFTPolyline : NSObject, MFTAnnotation {
     
     
     
-    override init() {
-        self.isVisible = true
+    public init(polylineOptions: MFTPolylineOptions) {
+        self.strokeWidth = polylineOptions.strokeWidth
+        self.strokeColor = polylineOptions.strokeColor
+        self.strokeOutlineColor = polylineOptions.strokeOutlineColor
+        self.strokeOutlineWidth = polylineOptions.strokeOutlineWidth
+        self.drawOrder = polylineOptions.drawOrder
+        self.lineJoinType = polylineOptions.lineJoinType
+        self.lineCapType = polylineOptions.lineCapType
         self.style = MFTAnnotationStyle.polyline
         self.uuid = UUID()
-        
-        super.init()
-        self.polylineOptions = MFTPolylineOptions(self)
-        
-    }
-    
-    init(mapView: MFTMapView) {
         self.isVisible = true
-        self.style = MFTAnnotationStyle.polyline
-        self.uuid = UUID()
-        self.mapView = mapView
         super.init()
-        self.polylineOptions = MFTPolylineOptions(self)
-        
     }
     
 }
