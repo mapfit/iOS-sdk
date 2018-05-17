@@ -210,6 +210,104 @@ class Sample_AppTests: XCTestCase {
         
     }
     
+    
+    func testMarkerAndBuildingPolygonCreationWithOptions(){
+        let expect = expectation(description: "Marker and building polygon initialized with options")
+        let markerOptions = MFTMarkerOptions()
+        markerOptions.setStreetAddress(streetAddress: "119 w 24th street new york, NY", geocode: true)
+        markerOptions.setHeight(height: 50)
+        markerOptions.setWidth(width: 80)
+        markerOptions.setFlat(false)
+        markerOptions.setDrawOrder(drawOrder: 300)
+        markerOptions.setInteractivity(false)
+        markerOptions.setAnchorPosition(.center)
+        markerOptions.setTitle("title")
+        markerOptions.setSubTitle1("subtitle1")
+        markerOptions.setSubTitle2("subtitle2")
+        markerOptions.setVisibility(false)
+       
+        let polygonOptions = MFTPolygonOptions()
+        polygonOptions.fillColor = "#800000"
+        polygonOptions.strokeColor = "#FFFF00"
+        polygonOptions.setStrokeOutlineColor("#808000")
+        polygonOptions.setStrokeWidth(4)
+        polygonOptions.setLineCapType(.square)
+        polygonOptions.setLineJoinType(.bevel)
+        polygonOptions.setDrawOrder(100)
+        polygonOptions.setOutlineWidth(50)
+        markerOptions.addBuildingPolygon(true, options: polygonOptions)
+        
+        
+        
+        mapView.addMarker(markerOptions) { (marker, error) in
+           
+            if let mark = marker {
+                //Marker
+                XCTAssertEqual(mark.streetAddress, "119 w 24th street new york, NY", file: "street address is incorrect")
+                XCTAssertEqual(mark.height, 50, file: "height is incorrect")
+                XCTAssertEqual(mark.width, 80, file: "width is incorrect")
+                XCTAssertEqual(mark.isFlat, false, file: "isFlat is incorrect")
+                XCTAssertEqual(mark.drawOrder, 300, file: "draworder is incorrect")
+                XCTAssertEqual(mark.isInteractive, false, file: "isInteractive is incorrect")
+                XCTAssertEqual(mark.anchor, .center, file: "anchor is incorrect")
+                XCTAssertEqual(mark.title, "title", file: "title is incorrect")
+                XCTAssertEqual(mark.subtitle1, "subtitle1", file: "subtitle1 is incorrect")
+                XCTAssertEqual(mark.subtitle2, "subtitle2", file: "subtitle2 is incorrect")
+                XCTAssertEqual(mark.isVisible, false, file: "visibility is incorrect")
+                //building polygon
+                guard let buildingPolygon = mark.buildingPolygon else { return }
+                XCTAssertEqual(buildingPolygon.strokeColor, "#FFFF00", file: "stroke color is incorrect")
+                XCTAssertEqual(buildingPolygon.strokeWidth, 4, file: "stroke width is incorrect")
+                XCTAssertEqual(buildingPolygon.strokeOutlineColor, "#808000", file: "stroke outline color is incorrect")
+                XCTAssertEqual(buildingPolygon.strokeOutlineWidth, 50, file: "stroke outline width is incorrect")
+                XCTAssertEqual(buildingPolygon.fillColor, "#800000", file: "fill color is incorrect")
+                XCTAssertEqual(buildingPolygon.drawOrder, 100, file: "draw order is incorrect")
+                XCTAssertEqual(buildingPolygon.lineCapType, .square, file: "line cap type is incorrect")
+                XCTAssertEqual(buildingPolygon.lineJoinType, .bevel, file: "line join type is incorrect")
+
+            }
+
+            expect.fulfill()
+        }
+        
+        waitForExpectations(timeout: 8) { (error) in
+            XCTAssertNil(error, "Test timed out. \(String(describing: error?.localizedDescription))")
+        }
+    
+    }
+    
+    func testPolylineCreationWithOptions(){
+        
+        
+        let polylineOptions = MFTPolylineOptions()
+        polylineOptions.strokeColor = "#FFFF00"
+        polylineOptions.setStrokeOutlineColor("#808000")
+        polylineOptions.setStrokeWidth(4)
+        polylineOptions.setLineCapType(.square)
+        polylineOptions.setLineJoinType(.bevel)
+        polylineOptions.setDrawOrder(100)
+        polylineOptions.setOutlineWidth(50)
+        polylineOptions.addPoints([[CLLocationCoordinate2D(latitude:40.729877, longitude:-74.000588),
+                                    CLLocationCoordinate2D(latitude:40.729171, longitude:-74.001191),
+                                    CLLocationCoordinate2D(latitude:40.728103, longitude:-74.002099),
+                                    CLLocationCoordinate2D(latitude:40.728248, longitude:-74.002396),
+                                    CLLocationCoordinate2D(latitude:40.728382, longitude:-74.002663)]])
+        
+        let polyline = mapView.addPolyline(options: polylineOptions)
+        
+        guard let poly = polyline else { return }
+        
+        XCTAssertEqual(poly.strokeColor, "#FFFF00", file: "stroke color is incorrect")
+        XCTAssertEqual(poly.strokeWidth, 4, file: "stroke width is incorrect")
+        XCTAssertEqual(poly.strokeOutlineColor, "#808000", file: "stroke outline color is incorrect")
+        XCTAssertEqual(poly.strokeOutlineWidth, 50, file: "stroke outline width is incorrect")
+        XCTAssertEqual(poly.drawOrder, 100, file: "draw order is incorrect")
+        XCTAssertEqual(poly.lineCapType, .square, file: "line cap type is incorrect")
+        XCTAssertEqual(poly.lineJoinType, .bevel, file: "line join type is incorrect")
+        
+    }
+    
+    
     func testDirectionsCallWithJustAddresses(){
         let expect = expectation(description: "Directions should return sourceLocation, destinationLocation, trip")
         MFTDirections.sharedInstance.route(origin: nil, originAddress: "new york, new york", destination: nil, destinationAddress: "119 w 24th street,new york NY", directionsType: .driving) { (routeObject, error) in

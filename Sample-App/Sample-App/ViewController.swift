@@ -13,7 +13,8 @@ import Mapfit
 class ViewController: UIViewController {
     
     let button: UIButton = UIButton()
-    var mapview = MFTMapView()
+    var mapview: MFTMapView?
+
     
     func setupNav(){
         let leftButton = UIBarButtonItem(title: "Test", style: .plain, target: self, action: #selector(leftButtonTapped))
@@ -27,8 +28,7 @@ class ViewController: UIViewController {
         
         //Scene updates
         //
-        //let update = MFTSceneUpdate(path: "global.show_3d_buildings", value: "true")
-        //mapview.updateScene(updates: [update])
+
         
        // mapview.mapOptions.setGesturesEnabled(enabled: true)
         
@@ -42,11 +42,10 @@ class ViewController: UIViewController {
         markerOptions.setStreetAddress(streetAddress: "119 w 24th street new york, NY", geocode: true)
         markerOptions.addBuildingPolygon(true, options: polygonOptions)
         
-        mapview.addMarker(markerOptions) { (marker, error) in
+        mapview?.addMarker(markerOptions) { (marker, error) in
         guard let mark = marker else { return }
         
-        self.mapview.setCenterWithOffset(latLng: mark.position, offsetX: 500, offsetY: 500, duration: 1)
-        
+        self.mapview?.setCenterWithOffset(latLng: mark.position, offsetX: 500, offsetY: 500, duration: 1)
         }
         
         let polylineOptions = MFTPolylineOptions()
@@ -107,7 +106,7 @@ class ViewController: UIViewController {
                                    CLLocationCoordinate2D(latitude:40.744766, longitude:-73.9951629999999),
                                    CLLocationCoordinate2D(latitude:40.74398, longitude:-73.9932939999999)]])
         
-        let polyline = mapview.addPolyline(options: polylineOptions)
+        let polyline = mapview?.addPolyline(options: polylineOptions)
  
     }
     
@@ -127,32 +126,43 @@ class ViewController: UIViewController {
         let bounds = builder.build()
         let paddingPercentage = Float(1)
         
-        mapview.setLatLngBounds(bounds: bounds, padding: paddingPercentage, duration: 0.5)
+        mapview?.setLatLngBounds(bounds: bounds, padding: paddingPercentage, duration: 0.5)
         
     }
     
     @objc func rightButtonTapped(){
-       
-        mapview.mapOptions.setGesturesEnabled(enabled: true)
+        mapview?.mapOptions.setGesturesEnabled(enabled: true)
+        mapview?.mapOptions.getGesturesEnabled()
+        
+        mapview?.mapOptions.setGesturesEnabled(enabled: true)
+        
+        
+
+        
+        let update = MFTSceneUpdate(path: "global.show_3d_buildings", value: "true")
+        mapview?.updateScene(updates: [update])
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        if let path = Bundle.main.path(forResource: "mapfit-day", ofType: "yaml")  {
+            self.mapview = MFTMapView(frame: self.view.bounds, customMapStyle: "file:///\(path)")
+        }
         
-        mapview.markerSelectDelegate = self
-        mapview.singleTapGestureDelegate = self
-        mapview.frame = self.view.bounds
+        mapview?.markerSelectDelegate = self
+        mapview?.singleTapGestureDelegate = self
+        
         
         setupNav()
-//        if let path = Bundle.main.path(forResource: "mapfit-day", ofType: "yaml")  {
-//             self.mapview = MFTMapView(frame: self.view.bounds, customMapStyle: "file:///\(path)")
-//        }
+
        
-        
-        view.addSubview(mapview)
-        mapview.setZoom(zoomLevel: 15)
-        mapview.setCenter(position: CLLocationCoordinate2D(latitude: 40, longitude: -73))
+        if let mapview = self.mapview {
+            view.addSubview(mapview)
+            mapview.setZoom(zoomLevel: 15)
+            mapview.setCenter(position: CLLocationCoordinate2D(latitude: 40, longitude: -73))
+        }
+ 
 
         
     }
@@ -167,12 +177,16 @@ class ViewController: UIViewController {
 extension ViewController : MapMarkerSelectDelegate {
     
     func mapView(_ view: MFTMapView, didSelectMarker marker: MFTMarker, atScreenPosition position: CGPoint) {
+        if let mapview = self.mapview {
+            let latLng = mapview.screenPositionToLatLng(position)
+            let point = mapview.LatLngToScreenPosition(latLng)
+            
+            print(point)
+            print(latLng)
+        }
+
         
-        let latLng = mapview.screenPositionToLatLng(position)
-        let point = mapview.LatLngToScreenPosition(latLng)
-        
-        print(point)
-        print(latLng)
+   
     
     }
     
@@ -187,8 +201,7 @@ extension ViewController : MapSingleTapGestureDelegate {
     }
     
     func mapView(_ view: MFTMapView, recognizer: UIGestureRecognizer, didRecognizeSingleTapGesture location: CGPoint) {
-        let latLng = mapview.screenPositionToLatLng(location)
-        print(latLng)
+
     }
     
     
