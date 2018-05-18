@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     
     let button: UIButton = UIButton()
     var mapview: MFTMapView?
+    var polygon: MFTPolygon?
 
     
     func setupNav(){
@@ -28,26 +29,28 @@ class ViewController: UIViewController {
         
         //Scene updates
         //
+        self.polygon?.strokeColor = "#FFFFFF"
+        self.polygon?.strokeWidth = 10
+        self.polygon?.strokeOutlineColor = "#808000"
 
         
-       // mapview.mapOptions.setGesturesEnabled(enabled: true)
-        
+       
        //setBounds()
         
-        let polygonOptions = MFTPolygonOptions()
-        polygonOptions.strokeColor = "#FFFFFF"
+
+        
         
         let markerOptions = MFTMarkerOptions()
         markerOptions.setIcon(.active)
         markerOptions.setStreetAddress(streetAddress: "119 w 24th street new york, NY", geocode: true)
-        markerOptions.addBuildingPolygon(true, options: polygonOptions)
-        
+   
+
         mapview?.addMarker(markerOptions) { (marker, error) in
         guard let mark = marker else { return }
-        
+
         self.mapview?.setCenterWithOffset(latLng: mark.position, offsetX: 500, offsetY: 500, duration: 1)
         }
-        
+
         let polylineOptions = MFTPolylineOptions()
         polylineOptions.addPoints([[CLLocationCoordinate2D(latitude:40.729877, longitude:-74.000588),
                                    CLLocationCoordinate2D(latitude:40.729171, longitude:-74.001191),
@@ -105,8 +108,13 @@ class ViewController: UIViewController {
                                    CLLocationCoordinate2D(latitude:40.745384, longitude:-73.9947059999999),
                                    CLLocationCoordinate2D(latitude:40.744766, longitude:-73.9951629999999),
                                    CLLocationCoordinate2D(latitude:40.74398, longitude:-73.9932939999999)]])
-        
+
         let polyline = mapview?.addPolyline(options: polylineOptions)
+
+//
+//        let polygon
+        
+        
  
     }
     
@@ -131,24 +139,39 @@ class ViewController: UIViewController {
     }
     
     @objc func rightButtonTapped(){
-        mapview?.mapOptions.setGesturesEnabled(enabled: true)
+ 
         mapview?.mapOptions.getGesturesEnabled()
-        
-        mapview?.mapOptions.setGesturesEnabled(enabled: true)
         
         
 
         
         let update = MFTSceneUpdate(path: "global.show_3d_buildings", value: "true")
         mapview?.updateScene(updates: [update])
+
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        if let path = Bundle.main.path(forResource: "mapfit-day", ofType: "yaml")  {
+        if let path = Bundle.main.path(forResource: "bubble-wrap-style", ofType: "yaml")  {
             self.mapview = MFTMapView(frame: self.view.bounds, customMapStyle: "file:///\(path)")
         }
+        
+        let polygonOptions = MFTPolygonOptions()
+        polygonOptions.setLineCapType(.round)
+        polygonOptions.setLineJoinType(.miter)
+        polygonOptions.addPoints([[CLLocationCoordinate2D(latitude: 40.7368876593604, longitude: -73.9785409464787),
+                                   CLLocationCoordinate2D(latitude: 40.7313501345546, longitude: -73.982556292978),
+                                   CLLocationCoordinate2D(latitude:  40.7344347901369, longitude: -73.9899029597005),
+                                   CLLocationCoordinate2D(latitude: 40.7354082589172, longitude: -73.9898742137078),
+                                   CLLocationCoordinate2D(latitude: 40.7433247184166, longitude: -73.9840748526015),
+                                   CLLocationCoordinate2D(latitude:  40.7419697680819, longitude:-73.9808596541241),
+                                   CLLocationCoordinate2D(latitude: 40.739498439778, longitude: -73.9826675979102),
+                                   CLLocationCoordinate2D(latitude: 40.7375539536562, longitude: -73.9780522649762),
+                                   CLLocationCoordinate2D(latitude: 40.7368876593604, longitude: -73.9785409464787)
+            ]])
+        
+        self.polygon = mapview?.addPolygon(options: polygonOptions)
         
         mapview?.markerSelectDelegate = self
         mapview?.singleTapGestureDelegate = self

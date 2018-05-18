@@ -638,7 +638,29 @@ open class MFTMapView: UIView {
                     }
                 }
             }
-        }
+        } else if options.reverseGeocode {
+            marker.reverseGeocode { (marker, error) in
+                
+                if let err = error {
+                    if let comp = completion {
+                        comp(nil, err)
+                    }
+                    
+                }
+                
+                if let mark = marker {
+                    if let comp = completion {
+                        mark.mapView = self
+                        self.addMarkerToMap(mark)
+                        if let polygon = mark.buildingPolygon {
+                            self.addPolygon(polygon: polygon)
+                        }
+                        
+                        comp(mark, nil)
+                    }
+                }
+            }
+        }  
     }
     
     
@@ -767,6 +789,7 @@ open class MFTMapView: UIView {
     public func addPolyline(options: MFTPolylineOptions) -> MFTPolyline?{
         let rPolyline = MFTPolyline(polylineOptions: options)
         let tgPolyline = TGGeoPolyline()
+        rPolyline.mapView = self
         rPolyline.tgPolyline = tgPolyline
         drawPolyline(polyline: rPolyline)
         let layer = tgMapView.addDataLayer("mz_default_line")
@@ -786,6 +809,7 @@ open class MFTMapView: UIView {
     internal func addPolyline(polyline: MFTPolyline) {
         let tgPolyline = TGGeoPolyline()
         polyline.tgPolyline = tgPolyline
+        polyline.mapView = self
         drawPolyline(polyline: polyline)
         let layer = tgMapView.addDataLayer("mz_default_line")
         if let dataLayer = layer {
@@ -800,6 +824,7 @@ open class MFTMapView: UIView {
     
     public func addPolygon(options: MFTPolygonOptions)-> MFTPolygon?{
         let rPolygon = MFTPolygon(polygonOptions: options)
+        rPolygon.mapView = self
         let tgPolygon = TGGeoPolygon()
         rPolygon.tgPolygon = tgPolygon
         drawPolygon(polygon: rPolygon)
@@ -888,28 +913,6 @@ open class MFTMapView: UIView {
     }
     
 
-//    public func addPolygon(_ polygon: [[CLLocationCoordinate2D]], color: String)-> MFTPolygon?{
-//        let rPolygon = MFTPolygon()
-//        let tgPolygon = TGGeoPolygon()
-//        rPolygon.tgPolygon = tgPolygon
-//        rPolygon.addPoints(polygon)
-//        drawPolygon(polygon: rPolygon)
-//        
-//        let layer = tgMapView.addDataLayer("mz_default_polygon")
-//        if let dataLayer = layer {
-//            
-//            self.dataLayers[rPolygon.uuid] = dataLayer
-//            dataLayer.add(tgPolygon, withProperties: ["type":"polygon", "uuid" : "\(rPolygon.uuid)"])
-//            currentPolygons[rPolygon.tgPolygon!] = rPolygon
-//            currentAnnotations[rPolygon.uuid] = rPolygon
-//            
-//            tgMapView.requestRender()
-//            tgMapView.update()
-//            
-//        }
-//        return rPolygon
-//    }
-    
     
     
     private func drawPolygon(polygon: MFTPolygon){

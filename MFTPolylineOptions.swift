@@ -13,19 +13,19 @@ import CoreLocation
 public class MFTPolylineOptions : NSObject, MFTPolyPointOptions{
     
     //The stroke color of the polyline -- pixels
-    public var strokeWidth: Int
+    internal var strokeWidth: Int
     //The stroke outline width of the polyline -- pixels
-    public var strokeOutlineWidth: Int
+    internal var strokeOutlineWidth: Int
     //The stroke color of the polyline -- pixels
-    public var strokeColor: String
+    internal var strokeColor: String
 
     //The fill color for the polyline
-    public var strokeOutlineColor: String
+    internal var strokeOutlineColor: String
     // Sets the draw order for the polyline. The draw order is relative to other annotations. Note that higher values are drawn above lower ones.
-    public var drawOrder: Int
-    public var lineCapType: MFTLineCapType
-    public var lineJoinType: MFTLineJoinType
-    public var points: [[CLLocationCoordinate2D]]
+    internal var drawOrder: Int
+    internal var lineCapType: MFTLineCapType
+    internal var lineJoinType: MFTLineJoinType
+    internal var points: [[CLLocationCoordinate2D]]
     
     public func addpoints(_ points: [[CLLocationCoordinate2D]]){
         self.points = points
@@ -75,7 +75,7 @@ override public init() {
     strokeWidth = 3
     strokeColor = "#32b3ff"
     strokeOutlineColor = "#5932b3ff"
-    strokeOutlineWidth = 8
+    strokeOutlineWidth = 3
     drawOrder = 501
     lineCapType = .bound
     lineJoinType = .round

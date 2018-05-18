@@ -19,19 +19,50 @@
  @objc(MFTPolygon)
  public class MFTPolygon : NSObject, MFTAnnotation {
     //The stroke color of the polygon -- pixels
-    public var strokeWidth: Int
+    public var strokeWidth: Int {
+        didSet {
+            mapView?.updatePolygonStyle(self)
+        }
+    }
     //The stroke outline width of the polygon -- pixels
-    public var strokeOutlineWidth: Int
+    public var strokeOutlineWidth: Int {
+        didSet {
+            mapView?.updatePolygonStyle(self)
+        }
+    }
     //The stroke color of the polygon -- pixels
-    public var strokeColor: String
+    public var strokeColor: String {
+        didSet {
+            mapView?.updatePolygonStyle(self)
+        }
+    }    //The fill color for the polygon
+    public var fillColor: String {
+        didSet {
+            mapView?.updatePolygonStyle(self)
+        }
+    }
     //The fill color for the polygon
-    public var fillColor: String
-    //The fill color for the polygon
-    public var strokeOutlineColor: String
+    public var strokeOutlineColor: String {
+        didSet {
+            mapView?.updatePolygonStyle(self)
+        }
+    }
     // Sets the draw order for the polygon. The draw order is relative to other annotations. Note that higher values are drawn above lower ones.
-    public var drawOrder: Int
-    public var lineCapType: MFTLineCapType
-    public var lineJoinType: MFTLineJoinType
+    public var drawOrder: Int {
+        didSet {
+            mapView?.updatePolygonStyle(self)
+        }
+    }
+    public var lineCapType: MFTLineCapType {
+        didSet {
+            mapView?.updatePolygonStyle(self)
+        }
+    }
+    public var lineJoinType: MFTLineJoinType {
+        didSet {
+            mapView?.updatePolygonStyle(self)
+        }
+    }
     
     /**
      Initial style of the annotation(polyine, polygon, or marker).

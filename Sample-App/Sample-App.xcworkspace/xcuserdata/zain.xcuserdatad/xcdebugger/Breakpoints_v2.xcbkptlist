@@ -73,28 +73,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../iOS-SDK/MFTClasses/MFTMarker.swift"
-            timestampString = "548294216.028183"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "181"
-            endingLineNumber = "181"
-            landmarkName = "geocode(completion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "../MFTAnnotations/MFTPolygon.swift"
-            timestampString = "548294216.028284"
+            timestampString = "548357815.1604331"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "67"
-            endingLineNumber = "67"
+            startingLineNumber = "98"
+            endingLineNumber = "98"
             landmarkName = "tgPolygon"
             landmarkType = "24">
          </BreakpointContent>
@@ -106,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../iOS-SDK/MFTClasses/MFTMapView.swift"
-            timestampString = "548294216.028353"
+            timestampString = "548357815.160511"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "919"
-            endingLineNumber = "919"
+            startingLineNumber = "900"
+            endingLineNumber = "900"
             landmarkName = "drawPolygon(polygon:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -122,7 +106,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../iOS-SDK/MFTClasses/MFTMapView.swift"
-            timestampString = "548294216.0284441"
+            timestampString = "548357815.16057"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "751"
@@ -138,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../iOS-SDK/MFTClasses/MFTMapView.swift"
-            timestampString = "548294216.0285209"
+            timestampString = "548357815.160622"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "921"
-            endingLineNumber = "921"
+            startingLineNumber = "902"
+            endingLineNumber = "902"
             landmarkName = "drawPolygon(polygon:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -154,7 +138,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Sample-AppTests/Sample-AppTests.swift"
-            timestampString = "548294216.02859"
+            timestampString = "548357815.160673"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "266"
@@ -170,7 +154,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Sample-AppTests/Sample-AppTests.swift"
-            timestampString = "548294216.028644"
+            timestampString = "548357815.160722"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "253"
@@ -186,7 +170,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Sample-AppTests/Sample-AppTests.swift"
-            timestampString = "548294216.028697"
+            timestampString = "548357815.160767"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "303"
@@ -202,12 +186,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Sample-AppTests/Sample-AppTests.swift"
-            timestampString = "548294216.028746"
+            timestampString = "548357815.160814"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "300"
             endingLineNumber = "300"
             landmarkName = "testPolylineCreationWithOptions()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Sample-App/ViewController.swift"
+            timestampString = "548357815.160862"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
+            landmarkName = "leftButtonTapped()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -199,7 +199,7 @@ public class MFTMapOptions  {
         self.locationManager.startUpdatingHeading()
     }
     
-    public func setGesturesEnabled(enabled: Bool){
+    public func setGesturesEnabled(_ enabled: Bool){
         self.isPanEnabled = enabled
         self.isPinchEnabled = enabled
         self.isRotateEnabled = enabled

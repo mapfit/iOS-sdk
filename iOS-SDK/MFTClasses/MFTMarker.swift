@@ -156,12 +156,11 @@ public class MFTMarker : NSObject, MFTAnnotation {
                 
                 DispatchQueue.main.async {
                     let address = addressObject[0]
-                    
-                    if self.streetAddress == "" {
+
                         if let streetAddress = address.streetAddress{
                             self.streetAddress = streetAddress
                         }
-                    }
+                    
                     //add building polygon
                     if let building = address.building{
                         if let _ = building.coordinates {
@@ -184,6 +183,50 @@ public class MFTMarker : NSObject, MFTAnnotation {
                 
             } else {
                 completion(nil, error)
+            }
+            
+        }
+    }
+    
+    
+    internal func reverseGeocode(completion:@escaping (_ marker: MFTMarker?, _ errror: Error?)->Void){
+        MFTGeocoder.sharedInstance.reverseGeocode(latLng: position, includeBuilding: true) { (addresses, error) in
+            if error == nil {
+                guard let addressObject = addresses else { return }
+                
+                let response = MFTGeocoder.sharedInstance.parseAddressObjectForPosition(addressObject: addressObject)
+                guard let position = response.0 else { return }
+                self.position = position
+                
+                DispatchQueue.main.async {
+                    let address = addressObject[0]
+                    
+                        if let streetAddress = address.streetAddress{
+                            self.streetAddress = streetAddress
+                        }
+                    
+                    //add building polygon
+                    if let building = address.building{
+                        if let _ = building.coordinates {
+                            guard let polygonCoordinates = building.coordinates else { return }
+                            for point in polygonCoordinates[0]{
+                                self.buildingPolygon?.addPoint(CLLocationCoordinate2DMake(point[1], point[0]))
+                            }
+                            
+                            if var annotations = self.subAnnotations {
+                                annotations["building"] = self.buildingPolygon
+                            }else{
+                                self.subAnnotations = ["building" : self.buildingPolygon as! MFTAnnotation]
+                            }
+                            
+                        }
+                    }
+                    completion(self, nil)
+                
+                }
+            }else {
+                    completion(nil, error)
+
             }
             
         }

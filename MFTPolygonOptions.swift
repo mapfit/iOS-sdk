@@ -21,40 +21,35 @@ public enum MFTLineJoinType : String {
     case round = "5"
 }
 
-@objc(MFTPolyPointOptions)
-public protocol MFTPolyPointOptions {
-     var strokeWidth: Int { get set }
-     var strokeOutlineWidth: Int { get set }
-     var strokeColor: String { get set }
-     var strokeOutlineColor: String { get set }
-     var drawOrder: Int { get set }
-     var points: [[CLLocationCoordinate2D]] { get set }
-}
+
+
 
 
 
 @objc(MFTPolygonOptions)
 public class MFTPolygonOptions : NSObject, MFTPolyPointOptions{
-    //The stroke color of the polygon -- pixels
-    public var strokeWidth: Int
-    //The stroke outline width of the polygon -- pixels
-    public var strokeOutlineWidth: Int
-    //The stroke color of the polygon -- pixels
-    public var strokeColor: String
-    //The fill color for the polygon
-    public var fillColor: String
-    //The fill color for the polygon
-    public var strokeOutlineColor: String
-    // Sets the draw order for the polygon. The draw order is relative to other annotations. Note that higher values are drawn above lower ones.
-    public var drawOrder: Int
-    public var lineCapType: MFTLineCapType
-    public var lineJoinType: MFTLineJoinType
-    public var points: [[CLLocationCoordinate2D]]
-    
 
+    
+    //The stroke color of the polygon -- pixels
+    internal var strokeWidth: Int
+    //The stroke outline width of the polygon -- pixels
+    internal var strokeOutlineWidth: Int
+    //The stroke color of the polygon -- pixels
+    internal var strokeColor: String
+    //The fill color for the polygon
+    internal var fillColor: String
+    //The fill color for the polygon
+    internal var strokeOutlineColor: String
+    // Sets the draw order for the polygon. The draw order is relative to other annotations. Note that higher values are drawn above lower ones.
+    internal var drawOrder: Int
+    internal var lineCapType: MFTLineCapType
+    internal var lineJoinType: MFTLineJoinType
+    internal var points: [[CLLocationCoordinate2D]]
+    
     public func setStrokeWidth(_ width: Int){
         self.strokeWidth = width
     }
+
 
     public func setOutlineWidth(_ width: Int){
         self.strokeOutlineWidth = width
@@ -100,7 +95,7 @@ public class MFTPolygonOptions : NSObject, MFTPolyPointOptions{
         strokeColor = "#32b3ff"
         fillColor = "#2732b3ff"
         strokeOutlineColor = "#5932b3ff"
-        strokeOutlineWidth = 8
+        strokeOutlineWidth = 3
         drawOrder = 501
         lineCapType = .bound
         lineJoinType = .round

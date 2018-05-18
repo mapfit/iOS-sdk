@@ -227,8 +227,8 @@ class Sample_AppTests: XCTestCase {
         markerOptions.setVisibility(false)
        
         let polygonOptions = MFTPolygonOptions()
-        polygonOptions.fillColor = "#800000"
-        polygonOptions.strokeColor = "#FFFF00"
+        polygonOptions.setFillColor("#800000")
+        polygonOptions.setStrokeColor("#FFFF00")
         polygonOptions.setStrokeOutlineColor("#808000")
         polygonOptions.setStrokeWidth(4)
         polygonOptions.setLineCapType(.square)
@@ -280,7 +280,7 @@ class Sample_AppTests: XCTestCase {
         
         
         let polylineOptions = MFTPolylineOptions()
-        polylineOptions.strokeColor = "#FFFF00"
+        polylineOptions.setStrokeColor("#FFFF00")
         polylineOptions.setStrokeOutlineColor("#808000")
         polylineOptions.setStrokeWidth(4)
         polylineOptions.setLineCapType(.square)
@@ -560,14 +560,14 @@ class Sample_AppTests: XCTestCase {
     }
     
     func testMapViewGestures(){
-        mapView.mapOptions.setGesturesEnabled(enabled: true)
+        mapView.mapOptions.setGesturesEnabled(true)
         XCTAssertEqual(mapView.mapOptions.isPinchEnabled, true, file: "Mapview pinch is not enabled")
         XCTAssertEqual(mapView.mapOptions.isPanEnabled, true, file: "Mapview pan is not enabled")
         XCTAssertEqual(mapView.mapOptions.isTiltEnabled, true, file: "Mapview tilt is not enabled")
         XCTAssertEqual(mapView.mapOptions.isRotateEnabled, true, file: "Mapview rotate is not enabled")
         XCTAssertEqual(mapView.mapOptions.getGesturesEnabled(), true, file: "Mapview gestures is not enabled")
 
-        mapView.mapOptions.setGesturesEnabled(enabled: false)
+        mapView.mapOptions.setGesturesEnabled(false)
         XCTAssertEqual(mapView.mapOptions.isPinchEnabled, false, file: "Mapview pinch is enabled")
         XCTAssertEqual(mapView.mapOptions.isPanEnabled, false, file: "Mapview pan is enabled")
         XCTAssertEqual(mapView.mapOptions.isTiltEnabled, false, file: "Mapview tilt is enabled")

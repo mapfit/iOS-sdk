@@ -17,18 +17,53 @@ import CoreLocation
 @objc(MFTPolyline)
 public class MFTPolyline : NSObject, MFTAnnotation {
     //The stroke color of the polyline -- pixels
-    public var strokeWidth: Int
+    public var strokeWidth: Int {
+        didSet {
+            mapView?.updatePolylineStyle(self)
+        }
+    }
+    
     //The stroke outline width of the polyline -- pixels
-    public var strokeOutlineWidth: Int
+    public var strokeOutlineWidth: Int {
+        didSet {
+            mapView?.updatePolylineStyle(self)
+        }
+    }
+    
     //The stroke color of the polyline -- pixels
-    public var strokeColor: String
+    public var strokeColor: String {
+        didSet {
+            mapView?.updatePolylineStyle(self)
+        }
+    }
+    
     
     //The fill color for the polyline
-    public var strokeOutlineColor: String
+    public var strokeOutlineColor: String {
+        didSet {
+            mapView?.updatePolylineStyle(self)
+        }
+    }
+    
     // Sets the draw order for the polyline. The draw order is relative to other annotations. Note that higher values are drawn above lower ones.
-    public var drawOrder: Int
-    public var lineCapType: MFTLineCapType
-    public var lineJoinType: MFTLineJoinType
+    public var drawOrder: Int {
+        didSet {
+            mapView?.updatePolylineStyle(self)
+        }
+    }
+    
+    public var lineCapType: MFTLineCapType {
+        didSet {
+            mapView?.updatePolylineStyle(self)
+        }
+    }
+    
+    public var lineJoinType: MFTLineJoinType {
+        didSet {
+            mapView?.updatePolylineStyle(self)
+        }
+    }
+    
     
     
     internal var dataLayer: TGMapData?

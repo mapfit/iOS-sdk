@@ -11,13 +11,13 @@ import CoreLocation
 @objc(MFTMarkerOptions)
 public class MFTMarkerOptions : NSObject{
     //set width of the marker -- pixels
-    public var width: Int
+    internal var width: Int
     //set height of the marker -- pixels
-    public var height: Int
+    internal var height: Int
     //Marker for map options
-    public var address: Address?
+    internal var address: Address?
     //Street address
-    public var streetAddress: String
+    internal var streetAddress: String
     //Geocode Address
     internal var geocode: Bool
     
