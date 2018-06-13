@@ -284,7 +284,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Sample-AppTests/Pods-Sample-AppTests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Mapfit/Mapfit.framework",
-				"${PODS_ROOT}/Tetragon-mobile/tetragon-release-1.1.1/TangramMap.framework",
+				"${PODS_ROOT}/Tetragon-mobile/tetragon-release-1.2/TangramMap.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -304,7 +304,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Sample-App/Pods-Sample-App-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Mapfit/Mapfit.framework",
-				"${PODS_ROOT}/Tetragon-mobile/tetragon-release-1.1.1/TangramMap.framework",
+				"${PODS_ROOT}/Tetragon-mobile/tetragon-release-1.2/TangramMap.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (

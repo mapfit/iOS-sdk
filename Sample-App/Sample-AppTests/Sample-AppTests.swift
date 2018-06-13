@@ -578,7 +578,8 @@ class Sample_AppTests: XCTestCase {
                 self.mapView.setZoom(zoomLevel: 5)
                 self.mapView.setCenter(position: CLLocationCoordinate2D(latitude: 40, longitude: -73))
                 point = self.mapView.latLngToScreenPosition(marker.position)
-                XCTAssertEqual(point, CGPoint(x: 2412.24271644444, y: 3079.09632368462), file: "CGPoint in incorrect")
+                XCTAssertEqual(point.x, CGFloat(2412.24271644444), file: "CGPoint in incorrect")
+                XCTAssertEqual(point.y, CGFloat(3079.09632368462), file: "CGPoint in incorrect")
             }
         
             expect.fulfill()
@@ -586,7 +587,7 @@ class Sample_AppTests: XCTestCase {
         
         
         waitForExpectations(timeout: 5) { (error) in
-            
+            XCTAssertNil(error, "Test timed out. \(String(describing: error?.localizedDescription))")
         }
         
     }

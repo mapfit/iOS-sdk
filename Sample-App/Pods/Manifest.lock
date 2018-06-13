@@ -1,7 +1,7 @@
 PODS:
-  - Mapfit (1.1):
+  - Mapfit (1.2):
     - Tetragon-mobile
-  - Tetragon-mobile (1.1.1)
+  - Tetragon-mobile (1.2)
 
 DEPENDENCIES:
   - Mapfit (from `../`)
@@ -11,9 +11,9 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  Mapfit: ca416315e3fce60cca6e86bcef53c685e730fe54
-  Tetragon-mobile: f4b8b0e7745f660d01989e680eeb96d43066596a
+  Mapfit: a6849ce9a68eede410a52fda34ae7163083821de
+  Tetragon-mobile: ab793e0966ca4922c56c0b5287cb3836842b39a1
 
-PODFILE CHECKSUM: e6eb032cca0c288488e36b591fa806658cf678a9
+PODFILE CHECKSUM: b76bf0c1df657da674b3e190c20110588699af55
 
 COCOAPODS: 1.4.0

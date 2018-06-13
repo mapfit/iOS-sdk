@@ -6,15 +6,16 @@ target 'Sample-App' do
   use_frameworks!
 
   # Pods for Sample-App
-	 
-   pod 'Mapfit' , :path => "../"
+  pod 'Mapfit' , :path => "../"
+   
 
 
   target 'Sample-AppTests' do
     inherit! :search_paths
     # Pods for testing
+    pod 'Mapfit' , :path => "../"
 
-     pod 'Mapfit' , :path => "../"
+     
   end
 
 
