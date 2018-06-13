@@ -1,11 +1,11 @@
 PODS:
-  - Tetragon-mobile (1.1.1)
+  - Tetragon-mobile (1.2)
 
 DEPENDENCIES:
   - Tetragon-mobile
 
 SPEC CHECKSUMS:
-  Tetragon-mobile: f4b8b0e7745f660d01989e680eeb96d43066596a
+  Tetragon-mobile: ab793e0966ca4922c56c0b5287cb3836842b39a1
 
 PODFILE CHECKSUM: 3dcf173308fc68b89348e5c9d057f6006f7fa442
 
