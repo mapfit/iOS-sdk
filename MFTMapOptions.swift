@@ -27,6 +27,12 @@ public class MFTMapOptions  {
         }
     }
     
+    public var isTransitLayerEnabled: Bool {
+        didSet {
+            mapView?.toggleTransitLayer()
+        }
+    }
+    
     
     /**
      Indicates if user location button is enabled. Set by setUserLocationButtonVisibility.
@@ -232,6 +238,7 @@ public class MFTMapOptions  {
         self.mapView = mapView
         self.firstRun = 0
         self.is3DBuildingsEnabled = false
+        self.isTransitLayerEnabled = false
         self.gesturesEnabled = true 
         
     }
@@ -254,6 +261,7 @@ public class MFTMapOptions  {
         self.locationManager = MFTLocationProvider()
         self.firstRun = 0
         self.is3DBuildingsEnabled = false
+        self.isTransitLayerEnabled = false
         self.gesturesEnabled = true
         
     }

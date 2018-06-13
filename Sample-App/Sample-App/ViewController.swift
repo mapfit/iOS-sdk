@@ -176,14 +176,18 @@ class ViewController: UIViewController {
     }
     
     @objc func rightButtonTapped(){
- 
-        mapview?.mapOptions.getGesturesEnabled()
+        if mapview!.mapOptions.isTransitLayerEnabled{
+            mapview?.mapOptions.isTransitLayerEnabled = false
+        }else {
+            mapview?.mapOptions.isTransitLayerEnabled = true
+        }
         
+        if mapview!.mapOptions.is3DBuildingsEnabled{
+            mapview?.mapOptions.is3DBuildingsEnabled = false
+        }else {
+            mapview?.mapOptions.is3DBuildingsEnabled = true
+        }
         
-
-        
-        let update = MFTSceneUpdate(path: "global.show_3d_buildings", value: "true")
-        mapview?.updateScene(updates: [update])
 
     }
     

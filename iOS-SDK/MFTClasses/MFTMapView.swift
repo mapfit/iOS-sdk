@@ -1668,6 +1668,10 @@ extension MFTMapView {
         tgMapView.updateSceneAsync([update])
     }
     
+    func toggleTransitLayer(){
+        let update = TGSceneUpdate(path: "global.show_transit", value: "\(mapOptions.isTransitLayerEnabled)")
+        tgMapView.updateSceneAsync([update])
+    }
     
     public func updateScene(updates: [MFTSceneUpdate]){
         var tgUpdates = [TGSceneUpdate]()
