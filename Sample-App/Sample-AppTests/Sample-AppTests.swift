@@ -18,7 +18,7 @@ class Sample_AppTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        MFTManager.sharedManager.apiKey = "591dccc4e499ca0001a4c6a4abab8998a9ec4e0d8efce03e489a00ea"
+        MFTManager.sharedManager.apiKey = "591dccc4e499ca0001a4c6a4413a1efe64344fb599b501aaeef6937d"
         mapView = MFTMapView()
         layer = MFTLayer()
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -74,8 +74,19 @@ class Sample_AppTests: XCTestCase {
     }
     
     func testMarkerAddedToDefaultMFTLayer(){
-        _ = mapView.addMarker(position: CLLocationCoordinate2DMake(40, 75))
-        XCTAssertEqual(mapView.defaultAnnotationMFTLayer.annotations.isEmpty, false, "Annotation was not added to default layer")
+        let options = MFTMarkerOptions()
+        let expect = expectation(description: "Marker position should be valid")
+        options.setPosition(position: CLLocationCoordinate2DMake(40, 75), reverseGeocode: false)
+        mapView.addMarker(options) { (marker, error) in
+            XCTAssertEqual(self.mapView.defaultAnnotationMFTLayer.annotations.isEmpty, false, "Annotation was not added to default layer")
+            expect.fulfill()
+        }
+        
+        waitForExpectations(timeout: 10) { (error) in
+            XCTAssertNil(error, "Test timed out. \(String(describing: error?.localizedDescription))")
+        }
+        
+        
         
     }
     
@@ -90,28 +101,61 @@ class Sample_AppTests: XCTestCase {
     func testIfMarkerHasValidLatLng() {
         //Valid Lat must be between -90 and 90
         //Valid Lng must be between -180 and 180
-        let marker = mapView.addMarker(position: CLLocationCoordinate2DMake(40, 75))
-        XCTAssertEqual(CLLocationCoordinate2DIsValid(marker.position), true, "This is not a valid LatLng")
+        let options = MFTMarkerOptions()
+        options.setPosition(position: CLLocationCoordinate2DMake(40, 75), reverseGeocode: false)
+        let expect = expectation(description: "Marker position should be valid")
+        mapView.addMarker(options) { (marker, error) in
+            
+            if let marker = marker {
+                 XCTAssertEqual(CLLocationCoordinate2DIsValid(marker.position), true, "This is not a valid LatLng")
+                expect.fulfill()
+            }
+        }
         
-        let secondMarker = mapView.addMarker(position: CLLocationCoordinate2DMake(-91, 75))
-        XCTAssertEqual(CLLocationCoordinate2DIsValid(secondMarker.position), false, "-91 is not a valid lattitude")
         
-        let thirdMarker = mapView.addMarker(position: CLLocationCoordinate2DMake(40, -185))
-        XCTAssertEqual(CLLocationCoordinate2DIsValid(thirdMarker.position), false, "-185 is not a valid longitude")
+        let sOptions = MFTMarkerOptions()
+        sOptions.setPosition(position: CLLocationCoordinate2DMake(-91, 75), reverseGeocode: false)
+        
+        let expect2 = expectation(description: "Marker position should be valid")
+        mapView.addMarker(sOptions) { (marker, error) in
+            if let marker = marker {
+                XCTAssertEqual(CLLocationCoordinate2DIsValid(marker.position), false, "This is a valid LatLng")
+                expect2.fulfill()
+            }
+        }
+        
+        let tOptions = MFTMarkerOptions()
+        tOptions.setPosition(position: CLLocationCoordinate2DMake(40, -185), reverseGeocode: false)
+        let expect3 = expectation(description: "Marker position should be valid")
+        mapView.addMarker(tOptions) { (marker, error) in
+            if let marker = marker {
+                XCTAssertEqual(CLLocationCoordinate2DIsValid(marker.position), false, "This is a valid LatLng")
+                expect3.fulfill()
+            }
+        }
+        
+        waitForExpectations(timeout: 10) { (error) in
+            XCTAssertNil(error, "Test timed out. \(String(describing: error?.localizedDescription))")
+        }
         
     }
+    
+    
     
     
     func testGeocodeCallIsSuccessful() {
         let expect = expectation(description: "Download should succeed")
         MFTGeocoder.sharedInstance.geocode(address: "119 W 24th street new york", includeBuilding: true) { (addresses, error) in
             if let error = error {
-                XCTFail("geocode server error: \(error)")
+                XCTFail("geocode server error: \(error.localizedDescription)")
             }
             
             XCTAssertNil(error, "Unexpected error occured: \(String(describing: error?.localizedDescription))")
-            XCTAssertEqual(addresses![0].locality, "New York", file: "Locality was incorrect")
-            XCTAssertEqual(addresses![0].postalCode, "10011", file: "Locality was incorrect")
+            if let addresses = addresses {
+                XCTAssertEqual(addresses[0].locality, "New York", file: "Locality was incorrect")
+                XCTAssertEqual(addresses[0].postalCode, "10011", file: "Locality was incorrect")
+            }
+
             
             expect.fulfill()
             
@@ -243,7 +287,7 @@ class Sample_AppTests: XCTestCase {
            
             if let mark = marker {
                 //Marker
-                XCTAssertEqual(mark.streetAddress, "119 w 24th street new york, NY", file: "street address is incorrect")
+                XCTAssertEqual(mark.streetAddress, "119 W 24th St", file: "street address is incorrect")
                 XCTAssertEqual(mark.height, 50, file: "height is incorrect")
                 XCTAssertEqual(mark.width, 80, file: "width is incorrect")
                 XCTAssertEqual(mark.isFlat, false, file: "isFlat is incorrect")
@@ -533,8 +577,8 @@ class Sample_AppTests: XCTestCase {
             if let marker = marker {
                 self.mapView.setZoom(zoomLevel: 5)
                 self.mapView.setCenter(position: CLLocationCoordinate2D(latitude: 40, longitude: -73))
-                point = self.mapView.LatLngToScreenPosition(marker.position)
-                XCTAssertEqual(point, CGPoint(x: 152.48723449707, y: 162.084699503581), file: "CGPoint in incorrect")
+                point = self.mapView.latLngToScreenPosition(marker.position)
+                XCTAssertEqual(point, CGPoint(x: 2412.24271644444, y: 3079.09632368462), file: "CGPoint in incorrect")
             }
         
             expect.fulfill()
@@ -549,7 +593,7 @@ class Sample_AppTests: XCTestCase {
 
     
     func testLatLngToScreenPosition(){
-        let latLng = CLLocationCoordinate2D(latitude: 42.26960508994307, longitude: -74.06933831460087)
+        let latLng = CLLocationCoordinate2D(latitude: -53.88698076354973, longitude: -51.562535762787178)
         
         let testLatlng = mapView.screenPositionToLatLng(CGPoint(x: 182.666615804036, y: 347.333106486003))
         

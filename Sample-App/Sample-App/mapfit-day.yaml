@@ -57,8 +57,8 @@ global:
     military_fill:                  rgba(207, 209, 221,1)
 
     # BUILDINGS
-    building_fill:	                rgba(235, 235, 235,1)
-    building_outline:	              rgba(230, 230, 230,1)
+    building_fill:	                rgba(200, 200, 200,1)
+    building_outline:	              rgba(235, 235, 235,1)
 
     # AIRPORTS
     airport_road_fill:	            rgba(192, 195, 214,1)

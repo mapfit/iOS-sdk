@@ -278,9 +278,23 @@ open class MFTMapView: UIView {
         tgMapView.animate(toPosition: TGGeoPointMake(position.longitude, position.latitude), withDuration: easeDuration, with: .cubic)
     }
     
-    public func setCenterWithOffset(latLng: CLLocationCoordinate2D, offsetX: Int, offsetY: Int, duration: Float){
-        let center = computeOffsetToPoint(from: latLng, distance: Double(offsetY), heading: Double(offsetX))
-        setCenter(position: center, duration: duration)
+    /**
+     Changes the center coordinate of the map.
+     - parameter latLng: The point from which the center will be calculated from.
+     - parameter offsetX: The horizontal distance from the point that the center will be.
+     - parameter offsetY: The vertical distance from the point that the center will be.
+     - parameter duration: The duration of the centering animation.
+     */
+    
+    public func setCenterWithOffset(latLng: CLLocationCoordinate2D, offsetX: CGFloat, offsetY: CGFloat, duration: Float){
+        var screenPosition = latLng.toPoint(zoomLevel: self.getZoom())
+        
+        screenPosition.x += offsetX / UIScreen.main.scale
+        screenPosition.y += offsetY / UIScreen.main.scale
+        
+        let geoPosition = screenPosition.toCLLocationCoordinate2D(zoomLevel: self.getZoom())
+        
+        setCenter(position: geoPosition, duration: duration)
     }
     
     private func computeOffsetToPoint(from: CLLocationCoordinate2D, distance: Double, heading: Double) -> CLLocationCoordinate2D {
@@ -454,6 +468,7 @@ open class MFTMapView: UIView {
     public func getLatLngBounds()-> MFTLatLngBounds{
         let sw = tgMapView.screenPosition(toLngLat: CGPoint(x: 0, y: tgMapView.view.bounds.height))
         let ne = tgMapView.screenPosition(toLngLat: CGPoint(x: tgMapView.view.bounds.width, y: 0))
+        
         return MFTLatLngBounds(northEast: CLLocationCoordinate2DMake(ne.latitude, ne.longitude), southWest: CLLocationCoordinate2DMake(sw.latitude, sw.longitude))
     }
     
@@ -601,27 +616,31 @@ open class MFTMapView: UIView {
      - returns: The marker that was added to the map.
      */
     
-    public func addMarker(position: CLLocationCoordinate2D) -> MFTMarker {
+    internal func addMarker(position: CLLocationCoordinate2D) -> MFTMarker {
         let options = MFTMarkerOptions()
         options.position = position
         let marker = MFTMarker(markerOptions: options)
         marker.mapView = self
         self.addMarkerToMap(marker)
         return marker
-        
-        
     }
     
+    /**
+     Adds a marker to the map after the address has been geocoded. Returns marker for styling and place info customization.
+     - parameter oprtions: The address of the marker to be added to the map.
+     - returns: The marker that was added to the map.
+     */
     public func addMarker(_ options: MFTMarkerOptions, completion: ((_ returnedMarker: MFTMarker?, _ error: Error?)->Void)?){
         let marker = MFTMarker(markerOptions: options)
         
-        if (options.geocode) || (options.building){
+        if (options.geocode) {
             
             marker.geocode { (marker, error) in
                 
                 if let err = error {
                     if let comp = completion {
                         comp(nil, err)
+                        
                     }
                  
                 }
@@ -631,36 +650,56 @@ open class MFTMapView: UIView {
                         mark.mapView = self
                         self.addMarkerToMap(mark)
                         if let polygon = mark.buildingPolygon {
-                            self.addPolygon(polygon: polygon)
+                            if mark.building{
+                                self.addPolygon(polygon: polygon)
+                            }
+                            
                         }
                         
                         comp(mark, nil)
+                        
                     }
                 }
             }
-        } else if options.reverseGeocode {
+        } else if (options.reverseGeocode) {
             marker.reverseGeocode { (marker, error) in
                 
                 if let err = error {
                     if let comp = completion {
                         comp(nil, err)
+                        
                     }
                     
                 }
-                
                 if let mark = marker {
                     if let comp = completion {
                         mark.mapView = self
                         self.addMarkerToMap(mark)
                         if let polygon = mark.buildingPolygon {
-                            self.addPolygon(polygon: polygon)
+                            if mark.building{
+                                self.addPolygon(polygon: polygon)
+                            }
                         }
                         
                         comp(mark, nil)
+                        
                     }
                 }
             }
-        }  
+        } else {
+            if let comp = completion {
+                marker.mapView = self
+                self.addMarkerToMap(marker)
+                
+                if let polygon = marker.buildingPolygon {
+                    if marker.building{
+                        self.addPolygon(polygon: polygon)
+                    }
+                }
+                comp(marker, nil)
+            }
+       
+        }
     }
     
     
@@ -671,57 +710,6 @@ open class MFTMapView: UIView {
      */
     
     
-    
-//    public func addMarker(address: String, completion:@escaping (_ marker: MFTMarker?, _ errror: Error?)->Void){
-//        MFTGeocoder.sharedInstance.geocode(address: address, includeBuilding: true) { (addresses, error) in
-//            if error == nil {
-//                guard let addressObject = addresses else { return }
-//                
-//                let response = MFTGeocoder.sharedInstance.parseAddressObjectForPosition(addressObject: addressObject)
-//                
-//                guard let position = response.0 else { return }
-//                
-//                
-//                DispatchQueue.main.async {
-//                    let address = addressObject[0]
-//                    //add Marker
-//                    let markerOptions = MFTMarkerOptions()
-//                    markerOptions.position = CLLocationCoordinate2DMake(position.latitude, position.longitude)
-//                    
-//                    //self.addAnnotation(marker!)
-//                    
-//                    //add building polygon
-//                    if let building = address.building{
-//                        var polygon = [CLLocationCoordinate2D]()
-//                        if let _ = building.coordinates {
-//                            guard let polygonCoordinates = building.coordinates else { return }
-//                            for point in polygonCoordinates[0]{
-//                                polygon.append(CLLocationCoordinate2DMake(point[1], point[0]))
-//                            }
-//                            
-//    
-//                            
-//                            markerOptions.addBuildingPolygon(true, options: markerOptions.buildingPolygonOptions ?? MFTPolygonOptions())
-//                            
-//                            
-//                            self.addMarker(markerOptions, completion: { (marker, error) in
-//                                if var annotations = marker?.subAnnotations {
-//                                    annotations["building"] = marker?.buildingPolygon
-//                                }else{
-//                                    marker?.subAnnotations = ["building" : marker?.buildingPolygon as! MFTAnnotation]
-//                                }
-//                                completion(marker, nil)
-//                            })
-//                        }
-//                    }
-//                    
-//                }
-//            } else {
-//                completion(nil, error)
-//            }
-//            
-//        }
-//    }
     
     /**
      Enables customizaion of placeinfo view.
@@ -1715,6 +1703,39 @@ extension MFTMapView: MFTZoomButtonsViewDelegate {
 }
 
 //Screen Position to Latlng
+
+public extension CGPoint {
+    
+    public func toCLLocationCoordinate2D(zoomLevel: Float) -> CLLocationCoordinate2D {
+        let worldWidth = toWorldWidthPixels(zoomLevel: zoomLevel)
+        
+        let x = self.x / CGFloat(worldWidth) - CGFloat(0.5)
+        let lng = x * 360
+        
+        let y = 0.5 - self.y / CGFloat(worldWidth)
+        let lat = 90 - (atan(exp(-y * 2.0 * CGFloat.pi)) * 2).toDegrees
+        
+        return CLLocationCoordinate2D(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(lng))
+        
+    }
+}
+
+public extension CLLocationCoordinate2D {
+    
+   public  func toPoint(zoomLevel: Float) -> CGPoint {
+        let worldWidth = CGFloat(toWorldWidthPixels(zoomLevel: zoomLevel))
+
+        let x = CGFloat(longitude / 360 + 0.5)
+        let siny = (sin((latitude).degreesToRadians))
+
+        let eq = CGFloat(0.5 * log((1 + siny) / (1 - siny)))
+        let y = eq / -(2 * CGFloat.pi) + 0.5
+        return  CGPoint(x: CGFloat(x * worldWidth), y: CGFloat(y * worldWidth))
+        
+    }
+}
+
+
 extension MFTMapView {
     /**
      Returns a CLLocationCoordinate based on the point provided.
@@ -1722,9 +1743,7 @@ extension MFTMapView {
      - returns: CLLocationCoordinate of the given point.
      */
    public func screenPositionToLatLng(_ point: CGPoint) -> CLLocationCoordinate2D{
-      let screenPosition = tgMapView.screenPosition(toLngLat: point)
-        return CLLocationCoordinate2D(latitude: screenPosition.latitude, longitude: screenPosition.longitude)
-    
+        return point.toCLLocationCoordinate2D(zoomLevel: self.getZoom())
     }
     
     /**
@@ -1732,9 +1751,8 @@ extension MFTMapView {
      - parameter latLng: CLLocationCoordinate that will be translated into a CGPoint.
      - returns: CGPoint of the given CLLocationCoordinate.
      */
-    public func LatLngToScreenPosition(_ latLng: CLLocationCoordinate2D) -> CGPoint{
-        let point = tgMapView.lngLat(toScreenPosition: TGGeoPoint(longitude: latLng.longitude, latitude: latLng.latitude))
-        return point
+    public func latLngToScreenPosition(_ latLng: CLLocationCoordinate2D) -> CGPoint{
+        return latLng.toPoint(zoomLevel: self.getZoom())
     }
     
 }

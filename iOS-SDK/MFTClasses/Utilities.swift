@@ -168,8 +168,11 @@ public class Utilities: NSObject {
         
         return location
     }
-    
-    
+  
+}
+
+public func toWorldWidthPixels(zoomLevel: Float) -> Float{
+    return Float(256 * pow(2.0, Double(zoomLevel)))
 }
 
 

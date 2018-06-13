@@ -21,11 +21,6 @@ public enum MFTLineJoinType : String {
     case round = "5"
 }
 
-
-
-
-
-
 @objc(MFTPolygonOptions)
 public class MFTPolygonOptions : NSObject, MFTPolyPointOptions{
 

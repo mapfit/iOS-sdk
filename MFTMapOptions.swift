@@ -265,8 +265,9 @@ public enum MFTLocationAccuracy {
 
 extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDelegate {
     
-    public func headingDidUpdate(_ heading: CLHeading) {
-        
+public func headingDidUpdate(_ heading: CLHeading) {
+    
+    
         if isCompassVisible {
             mapView?.updateCompass()
         }
@@ -275,6 +276,7 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
     
     @objc private func updatePointer(){
         guard let image = UIImage(named: "directionPointer", in: Bundle.houseStylesBundle(), compatibleWith: nil) else { return }
+        
         
         if let heading = lastHeading?.trueHeading.degreesToRadians {
             let newImage = image.image(withRotation: CGFloat(heading))
@@ -315,6 +317,7 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
                 isUserLocationEnabled = false
             }
             
+            locationManager.startUpdatingHeading()
         } else {
             locationManager.requestWhenInUseAuthorization()
         }
@@ -330,6 +333,7 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
         self.currentLocationGem?.setPositionWithEase(alphaLocation.coordinate)
         self.accuracyCircle?.setPositionWithEase(alphaLocation.coordinate)
         self.directionPointer?.setPositionWithEase(alphaLocation.coordinate)
+        
         
     }
     
@@ -349,7 +353,7 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
                 accuracyCircleOptions.setFlat(true)
                 accuracyCircleOptions.setDrawOrder(drawOrder: accuracyCircleDrawOrder)
                 accuracyCircleOptions.setInteractivity(false)
-                accuracyCircleOptions.position = location.coordinate
+                accuracyCircleOptions.setPosition(position: location.coordinate, reverseGeocode: false)
                 self.lastLocation = location
                 adjustAccuracyCircle()
                 
@@ -369,6 +373,7 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
                 currentLocationGemOptions.setAnchorPosition(.center)
                 currentLocationGemOptions.setDrawOrder(drawOrder: userLocationDrawOrder)
                 currentLocationGemOptions.setInteractivity(false)
+                currentLocationGemOptions.setPosition(position: location.coordinate, reverseGeocode: false)
                 currentLocationGemOptions.setFlat(true)
                 
             }
@@ -385,14 +390,15 @@ extension MFTMapOptions : LocationCorrectionEngineDelegate, LocationManagerDeleg
                 directionsPointerOptions.setIcon(image)
                 directionsPointerOptions.setAnchorPosition(.center)
                 directionsPointerOptions.setDrawOrder(drawOrder: userLocationDrawOrder)
+                directionsPointerOptions.setPosition(position: location.coordinate, reverseGeocode: false)
                 directionsPointerOptions.setInteractivity(false)
                 directionsPointerOptions.setFlat(true)
                 
             }
             
-            mapView.addMarker(currentLocationGemOptions) { (marker, error) in
+            mapView.addMarker(directionsPointerOptions) { (marker, error) in
                 if let mark = marker {
-                    self.currentLocationGem = mark
+                    self.directionPointer = mark
                 }
             }
             

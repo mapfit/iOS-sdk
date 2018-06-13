@@ -35,21 +35,58 @@ class ViewController: UIViewController {
 
         
        
-       //setBounds()
-        
-
-        
-        
         let markerOptions = MFTMarkerOptions()
         markerOptions.setIcon(.active)
+        
+        //sets address with geocoder true
         markerOptions.setStreetAddress(streetAddress: "119 w 24th street new york, NY", geocode: true)
-   
-
-        mapview?.addMarker(markerOptions) { (marker, error) in
-        guard let mark = marker else { return }
-
-        self.mapview?.setCenterWithOffset(latLng: mark.position, offsetX: 500, offsetY: 500, duration: 1)
-        }
+        markerOptions.addBuildingPolygon(true, options: MFTPolygonOptions())
+        //position and street address assigned to marker
+        //CHECK
+        
+        //set address with geocoder false
+        //markerOptions.setStreetAddress(streetAddress: "119 w 24th street new york, NY", geocode: false)
+        //no marker
+        //CHECK
+        
+        //marker with no street address
+        //markerOptions.setPosition(position: CLLocationCoordinate2D(latitude: 40.744050000000001, longitude: -73.99324), reverseGeocode: false)
+        //no street Address
+        //positions
+        //CHECK
+        
+        //marker with street address
+        //markerOptions.setPosition(position: CLLocationCoordinate2D(latitude: 40.744050000000001, longitude: -73.99324), reverseGeocode: true)
+        //street Address
+        //position
+        //CHECK
+        //mapview?.mapOptions.setUserLocationEnabled(true, accuracy: .high)
+      
+        mapview?.addMarker(markerOptions, completion: { (marker, error) in
+            guard let mark = marker else { return }
+            print("marker?.position")
+            print(mark.position)
+            print("marker?.streetAddress")
+            print(mark.streetAddress)
+            print("marker?.address")
+            print(mark.address)
+            
+            self.mapview?.setCenter(position: mark.position)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+                self.mapview?.setCenterWithOffset(latLng: mark.position, offsetX: 100, offsetY: 100, duration: 2)
+            })
+            
+            
+        })
+    
+//        mapview?.addMarker(markerOptions) { (marker, error) in
+//        guard let mark = marker else { return }
+//
+//            print(marker?.position)
+//
+//
+//        }
 
         let polylineOptions = MFTPolylineOptions()
         polylineOptions.addPoints([[CLLocationCoordinate2D(latitude:40.729877, longitude:-74.000588),
@@ -153,9 +190,11 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        if let path = Bundle.main.path(forResource: "bubble-wrap-style", ofType: "yaml")  {
-            self.mapview = MFTMapView(frame: self.view.bounds, customMapStyle: "file:///\(path)")
-        }
+//        if let path = Bundle.main.path(forResource: "mapfit-day", ofType: "yaml")  {
+//            self.mapview = MFTMapView(frame: self.view.bounds, customMapStyle: "file:///\(path)")
+//        }
+        
+        self.mapview = MFTMapView(frame: self.view.bounds)
         
         let polygonOptions = MFTPolygonOptions()
         polygonOptions.setLineCapType(.round)
@@ -201,16 +240,8 @@ extension ViewController : MapMarkerSelectDelegate {
     
     func mapView(_ view: MFTMapView, didSelectMarker marker: MFTMarker, atScreenPosition position: CGPoint) {
         if let mapview = self.mapview {
-            let latLng = mapview.screenPositionToLatLng(position)
-            let point = mapview.LatLngToScreenPosition(latLng)
-            
-            print(point)
-            print(latLng)
-        }
-
         
-   
-    
+        }
     }
     
     

@@ -161,6 +161,8 @@ public class MFTMarker : NSObject, MFTAnnotation {
                             self.streetAddress = streetAddress
                         }
                     
+                    self.address = address
+                    
                     //add building polygon
                     if let building = address.building{
                         if let _ = building.coordinates {
@@ -204,6 +206,8 @@ public class MFTMarker : NSObject, MFTAnnotation {
                         if let streetAddress = address.streetAddress{
                             self.streetAddress = streetAddress
                         }
+                    
+                    self.address = address
                     
                     //add building polygon
                     if let building = address.building{
