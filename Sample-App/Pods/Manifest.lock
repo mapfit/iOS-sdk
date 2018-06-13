@@ -1,5 +1,5 @@
 PODS:
-  - Mapfit (1.2):
+  - Mapfit (2.0):
     - Tetragon-mobile
   - Tetragon-mobile (1.2)
 
@@ -11,7 +11,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  Mapfit: a6849ce9a68eede410a52fda34ae7163083821de
+  Mapfit: 4f6b3e052f155ffae89ae5c73d0da12df5bf8a0d
   Tetragon-mobile: ab793e0966ca4922c56c0b5287cb3836842b39a1
 
 PODFILE CHECKSUM: b76bf0c1df657da674b3e190c20110588699af55

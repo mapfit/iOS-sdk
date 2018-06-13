@@ -62,7 +62,7 @@ class ViewController: UIViewController {
         if let mapview = self.mapview {
             view.addSubview(mapview)
             mapview.setZoom(zoomLevel: 15)
-            mapview.setCenter(position: CLLocationCoordinate2D(latitude: 40, longitude: -73))
+            mapview.setCenter(position: CLLocationCoordinate2D(latitude: 40.74405, longitude: -73.99324))
         }
  
 
