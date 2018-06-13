@@ -30,9 +30,6 @@ class ViewController: UIViewController {
         let markerOptions = MFTMarkerOptions()
         markerOptions.setStreetAddress(streetAddress: "119 w 24th street ny, ny", geocode: true)
         markerOptions.setIcon(.airport)
-        
-        
-        
         mapview?.addMarker(markerOptions, completion: { (marker, error) in
         
         })
