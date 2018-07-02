@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     let button: UIButton = UIButton()
     var mapview: MFTMapView?
     var polygon: MFTPolygon?
+    
 
     
     func setupNav(){
@@ -27,6 +28,8 @@ class ViewController: UIViewController {
     }
     
     @objc func leftButtonTapped(){
+        
+        
         let markerOptions = MFTMarkerOptions()
         markerOptions.setStreetAddress(streetAddress: "119 w 24th street ny, ny", geocode: true)
         markerOptions.setIcon(.airport)
@@ -43,11 +46,8 @@ class ViewController: UIViewController {
     }
     
     @objc func rightButtonTapped(){
-        if !(mapview?.mapOptions.getTheme() == .night){
-            self.mapview?.mapOptions.setTheme(theme: .night)
-        }else{
-            self.mapview?.mapOptions.setTheme(theme: .day)
-        }
+        
+            mapview?.setZoom(zoomLevel: 5, duration: 2, easeType: .sineInOut)
         
     }
     
@@ -55,8 +55,10 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.mapview = MFTMapView(frame: view.bounds)
+        self.mapview?.mapOptions.setTheme(theme: .night)
         mapview?.markerSelectDelegate = self
         mapview?.singleTapGestureDelegate = self
+        
         
         
         setupNav()

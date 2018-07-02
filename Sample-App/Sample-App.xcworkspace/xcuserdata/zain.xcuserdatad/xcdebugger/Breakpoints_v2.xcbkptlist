@@ -90,12 +90,75 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../iOS-SDK/MFTClasses/MFTMapView.swift"
-            timestampString = "550605884.650715"
+            timestampString = "552258389.420912"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "289"
-            endingLineNumber = "289"
-            landmarkName = "setCenterWithOffset(latLng:offsetX:offsetY:duration:)"
+            startingLineNumber = "281"
+            endingLineNumber = "281"
+            landmarkName = "setCenterWithOffset(latLng:offsetX:offsetY:duration:easeType:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "default argument 3 of Mapfit.MFTMapView.setCenterWithOffset(latLng: __C.CLLocationCoordinate2D, offsetX: CoreGraphics.CGFloat, offsetY: CoreGraphics.CGFloat, duration: Swift.Float, easeType: Mapfit.MFTEaseType) -&gt; ()"
+                  moduleName = "Mapfit"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zain/Desktop/iOS-sdk/iOS-SDK/MFTClasses/MFTMapView.swift"
+                  timestampString = "552258390.826247"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "281"
+                  endingLineNumber = "281"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "default argument 4 of Mapfit.MFTMapView.setCenterWithOffset(latLng: __C.CLLocationCoordinate2D, offsetX: CoreGraphics.CGFloat, offsetY: CoreGraphics.CGFloat, duration: Swift.Float, easeType: Mapfit.MFTEaseType) -&gt; ()"
+                  moduleName = "Mapfit"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zain/Desktop/iOS-sdk/iOS-SDK/MFTClasses/MFTMapView.swift"
+                  timestampString = "552258390.828926"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "281"
+                  endingLineNumber = "281"
+                  offsetFromSymbolStart = "0">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Mapfit.MFTMapView.setCenterWithOffset(latLng: __C.CLLocationCoordinate2D, offsetX: CoreGraphics.CGFloat, offsetY: CoreGraphics.CGFloat, duration: Swift.Float, easeType: Mapfit.MFTEaseType) -&gt; ()"
+                  moduleName = "Mapfit"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zain/Desktop/iOS-sdk/iOS-SDK/MFTClasses/MFTMapView.swift"
+                  timestampString = "552258390.831499"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "282"
+                  endingLineNumber = "282"
+                  offsetFromSymbolStart = "52">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../iOS-SDK/MFTClasses/MFTMapView.swift"
+            timestampString = "552258389.421376"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "284"
+            endingLineNumber = "284"
+            landmarkName = "setCenterWithOffset(latLng:offsetX:offsetY:duration:easeType:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -106,28 +169,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../iOS-SDK/MFTClasses/MFTMapView.swift"
-            timestampString = "550605884.650787"
+            timestampString = "552258389.421705"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "292"
-            endingLineNumber = "292"
-            landmarkName = "setCenterWithOffset(latLng:offsetX:offsetY:duration:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../iOS-SDK/MFTClasses/MFTMapView.swift"
-            timestampString = "550605884.6508451"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "293"
-            endingLineNumber = "293"
-            landmarkName = "setCenterWithOffset(latLng:offsetX:offsetY:duration:)"
+            startingLineNumber = "285"
+            endingLineNumber = "285"
+            landmarkName = "setCenterWithOffset(latLng:offsetX:offsetY:duration:easeType:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -138,12 +185,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../iOS-SDK/MFTClasses/MFTMapView.swift"
-            timestampString = "550605884.6509351"
+            timestampString = "552258389.422026"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "295"
-            endingLineNumber = "295"
-            landmarkName = "setCenterWithOffset(latLng:offsetX:offsetY:duration:)"
+            startingLineNumber = "287"
+            endingLineNumber = "287"
+            landmarkName = "setCenterWithOffset(latLng:offsetX:offsetY:duration:easeType:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -154,12 +201,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../iOS-SDK/MFTClasses/MFTMapView.swift"
-            timestampString = "550605884.651001"
+            timestampString = "552258389.422354"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "297"
-            endingLineNumber = "297"
-            landmarkName = "setCenterWithOffset(latLng:offsetX:offsetY:duration:)"
+            startingLineNumber = "289"
+            endingLineNumber = "289"
+            landmarkName = "setCenterWithOffset(latLng:offsetX:offsetY:duration:easeType:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

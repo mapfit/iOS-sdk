@@ -3079,6 +3079,7 @@ layers:
                 - { $zoom: { min: 16 } } #16.5 is preferred
                 - not: { location: underground }
 #                - { $zoom: { max: 18 } }
+
         draw:
             polygons:
                 #order: function() { if( $zoom < 17) { return 5; } else { return 9; } }
@@ -3091,6 +3092,17 @@ layers:
                 color: global.building_outline
                 width: [[17,1px],[18,1m],[19,1m]]
                 extrude: global.sdk_building_extrude
+    buildings_client:
+        data: { source: mapfit, layer: buildings }
+        filter: function() { return feature.id == "316278155"; }
+        interactive: true
+        draw:
+            sdk-polygon-overlay:
+            interactive: true
+            order: 600
+            color: rgba(100.0, 100.0 , 150.0 , 1)
+            extrude: true
+            animated: true
 
         # basement:
         #     filter:
