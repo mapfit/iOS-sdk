@@ -6,3 +6,21 @@
 //
 
 import Foundation
+
+public enum MFTEaseType {
+    case cubicIn
+    case cubicOut
+    case cubicInOut
+    case quartIn
+    case quartOut
+    case quartInOut
+    case quintIn
+    case quintOut
+    case quintInOut
+    case sineIn
+    case sineOut
+    case sineInOut
+    case expIn
+    case expOut
+    case expInOut
+}

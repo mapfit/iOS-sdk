@@ -47,7 +47,7 @@ class ViewController: UIViewController {
     
     @objc func rightButtonTapped(){
         
-            mapview?.setZoom(zoomLevel: 5, duration: 2, easeType: .sineInOut)
+        
         
     }
     
