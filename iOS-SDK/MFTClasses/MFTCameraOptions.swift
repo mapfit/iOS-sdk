@@ -17,20 +17,20 @@ import CoreLocation
  */
 public class Cinematography {
     var mapView: MFTMapView!
-    init(mapfitMap: MFTMapView) {
+    public init(_ mapfitMap: MFTMapView) {
         self.mapView = mapfitMap
     }
     
-    func create(cameraOptions: MFTCameraOptions, cameraAnimationCallback: CameraAnimationCallback? = nil) -> CameraAnimation {
+    public func create(cameraOptions: MFTCameraOptions, cameraAnimationCallback: @escaping ()->AnimationCallback) -> CameraAnimation {
         if type(of: cameraOptions) == OrbitTrajectory.self {
-            return OrbitAnimation(orbitTrajectory: cameraOptions as! OrbitTrajectory, map: mapView, cameraAnimationCallback: cameraAnimationCallback!)
+            return OrbitAnimation(orbitTrajectory: cameraOptions as! OrbitTrajectory, map: mapView, cameraAnimationCallback: cameraAnimationCallback)
         }else{
             return AnyObject.self as! CameraAnimation
         }
     }
 }
 
-public class OrbitTrajectory : MFTCameraOptions {
+open class OrbitTrajectory : MFTCameraOptions {
 
     var speedMultiplier: Float = 1
     var centerToPivot: Bool = true
@@ -47,7 +47,7 @@ public class OrbitTrajectory : MFTCameraOptions {
      * @param duration animation duration in milliseconds
      * @param easeType easing type for the animation
      */
-    func pivot(position: CLLocationCoordinate2D, centerToPivot: Bool = true, duration: Float = 0, easeType: MFTEaseType = .quartInOut) {
+   public func pivot(position: CLLocationCoordinate2D, centerToPivot: Bool = true, duration: Float = 0, easeType: MFTEaseType = .quartInOut) {
         self.pivotPosition = position
         self.centerToPivot = centerToPivot
         self.centeringDuration = duration
@@ -59,7 +59,7 @@ public class OrbitTrajectory : MFTCameraOptions {
      *
      * @param loop
      */
-    func loop(loop: Bool){
+    public func loop(loop: Bool){
         self.loop = loop
     }
     
@@ -70,8 +70,12 @@ public class OrbitTrajectory : MFTCameraOptions {
      *
      * @param multiplier
      */
-    func speedMultiplier(multiplier: Float){
+    public func speedMultiplier(multiplier: Float){
         self.speedMultiplier = multiplier
+    }
+    
+   public override init() {
+    
     }
     
 }
@@ -80,7 +84,7 @@ public class OrbitAnimation : CameraAnimation {
 
     var orbitTrajectory: OrbitTrajectory
     var mapfitMap: MFTMapView
-    var cameraAnimationCallback: CameraAnimationCallback
+    var cameraAnimationCallback: ()->AnimationCallback
     
     private var stepDuration: Int = 150
     private var rotation: Float = Float.nan
@@ -92,32 +96,35 @@ public class OrbitAnimation : CameraAnimation {
         return 1.0 * orbitTrajectory.speedMultiplier
     }
     
-    init(orbitTrajectory: OrbitTrajectory, map: MFTMapView, cameraAnimationCallback: CameraAnimationCallback) {
+    init(orbitTrajectory: OrbitTrajectory, map: MFTMapView, cameraAnimationCallback: @escaping ()->AnimationCallback) {
         self.orbitTrajectory = orbitTrajectory
         self.mapfitMap = map
         self.cameraAnimationCallback = cameraAnimationCallback
     }
 
-    func start() {
+    public func start() {
         running = true
+        
+        cameraAnimationCallback().onStart()
         
         if orbitTrajectory.loop {
             while orbitTrajectory.loop && running {
-                DispatchQueue.main.asyncAfter(deadline: .now() + DispatchTimeInterval.seconds(stepDuration)) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + DispatchTimeInterval.milliseconds(stepDuration)) {
                     self.animate()
                 }
             }
         } else {
-            let repeatCount = Int(orbitTrajectory.duration - playedDuration) / stepDuration
+            let repeatCount = Int(orbitTrajectory.duration - playedDuration) / (stepDuration)
             
             for i in 1...repeatCount {
-                DispatchQueue.main.asyncAfter(deadline: .now() + DispatchTimeInterval.seconds(stepDuration)) {
-                    self.playedDuration += Float(self.stepDuration)
+                DispatchQueue.main.asyncAfter(deadline: .now() + DispatchTimeInterval.milliseconds(stepDuration)) {
+                    self.playedDuration += Float(self.stepDuration / 1000)
                     self.animate()
                     
                     if (i == repeatCount - 1){
                         
-                        self.cameraAnimationCallback.onFinish()
+                        self.cameraAnimationCallback().onFinish()
+                       
                     }
                     
                     if (!self.running){
@@ -132,25 +139,28 @@ public class OrbitAnimation : CameraAnimation {
     
     private func animate(){
         if runInitialAnimations {
+            rotation = mapfitMap.getRotation()
+            
             runInitialAnimations = false
             
             setInitialTilt()
             setInitialZoom()
             setInitialCenter()
             
+            
         }
         
-        rotation = Float(Int(rotation + Float(rotationDegrees).degreesToRadians) % 360)
-        mapfitMap.setRotation(rotationValue: rotation, duration: Float(stepDuration), easeType: .quartIn)
+        rotation = Float(rotation + Float(rotationDegrees).degreesToRadians.truncatingRemainder(dividingBy: 360))
+        mapfitMap.setRotation(rotationValue: rotation, duration: Float(self.stepDuration / 1000), easeType: .quartIn)
     }
     
     
     
-    func isRunning() -> Bool {
+    public func isRunning() -> Bool {
         return self.running
     }
     
-    func stop() {
+    public func stop() {
         running = false
     }
 
@@ -192,10 +202,10 @@ public class OrbitAnimation : CameraAnimation {
     
 }
 
-protocol CameraAnimation : Animatable {}
+public protocol CameraAnimation : Animatable {}
 
 
-protocol CameraAnimationCallback {
+public protocol AnimationCallback {
     
     /**
      * Invoked on animation start.
@@ -210,7 +220,7 @@ protocol CameraAnimationCallback {
     
 }
 
-protocol Animatable {
+public protocol Animatable {
     
     /**
      * Returns if the animation is running.
@@ -252,7 +262,7 @@ open class MFTCameraOptions {
      *
      * @param duration
      */
-    func duration(duration: Float) {
+    public func duration(duration: Float) {
         self.duration = duration
     }
     
@@ -264,7 +274,7 @@ open class MFTCameraOptions {
      * @param easeType for the animation
      */
     
-    func tiltTo(angle: Float, duration: Float, easeType: MFTEaseType) {
+   public func tiltTo(angle: Float, duration: Float, easeType: MFTEaseType) {
         self.tiltAngle = angle
         self.tiltDuration = duration
         self.tiltEaseType = easeType
@@ -278,7 +288,7 @@ open class MFTCameraOptions {
      * @param easeType for the animation
      */
     
-    func rotateTo(angle: Float, duration: Float = 0, easeType: MFTEaseType) {
+    public func rotateTo(angle: Float, duration: Float = 0, easeType: MFTEaseType) {
         self.rotateAngle = angle
         self.rotationDuration = duration
         self.rotationEaseType = easeType
@@ -292,7 +302,7 @@ open class MFTCameraOptions {
      * @param easeType for the animation
      */
 
-    func zoomTo(zoomLevel: Float, duration: Float = 0, easeType: MFTEaseType) {
+    public func zoomTo(zoomLevel: Float, duration: Float = 0, easeType: MFTEaseType) {
         self.zoomLevel = zoomLevel
         self.zoomDuration = duration
         self.zoomEaseType = easeType

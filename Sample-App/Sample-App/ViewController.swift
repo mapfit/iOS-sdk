@@ -47,6 +47,45 @@ class ViewController: UIViewController {
     
     @objc func rightButtonTapped(){
         
+        let callBack: ()->AnimationCallback = {
+            struct c : AnimationCallback {
+                func onStart() {
+                    print("Started animation")
+                }
+                
+                func onFinish() {
+                     print("Finished animation")
+                }
+            }
+            
+            return c() as AnimationCallback
+        }
+        
+        let pivotPosition = CLLocationCoordinate2D(latitude: 40.743502, longitude: -73.991667)
+        
+        let orbitTrajectory = OrbitTrajectory()
+        
+        orbitTrajectory.loop(loop: false)
+        orbitTrajectory.pivot(position: pivotPosition, centerToPivot: true, duration: 500, easeType: .quartIn)
+        orbitTrajectory.duration(duration: 4000)
+        orbitTrajectory.tiltTo(angle: 2, duration: 4000, easeType: .quartIn)
+        orbitTrajectory.zoomTo(zoomLevel: 15, duration: 4000, easeType: .expInOut)
+        orbitTrajectory.speedMultiplier(multiplier: 2)
+        
+        
+        // create the animation
+        if let mapview = self.mapview {
+            let orbitAnimation = Cinematography(mapview)
+            let animation = orbitAnimation.create(cameraOptions: orbitTrajectory, cameraAnimationCallback: callBack)
+           
+            //start the animation
+            animation.start()
+            
+            
+        }
+        
+      
+        
         
         
     }
