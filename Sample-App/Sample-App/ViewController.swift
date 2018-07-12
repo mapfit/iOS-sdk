@@ -65,11 +65,11 @@ class ViewController: UIViewController {
 
         let orbitTrajectory = OrbitTrajectory()
 
-        orbitTrajectory.loop(loop: true)
-        orbitTrajectory.pivot(position: pivotPosition, centerToPivot: true, duration: 5, easeType: .quartIn)
-        orbitTrajectory.duration(duration: 4)
-        orbitTrajectory.tiltTo(angle: 2, duration: 4, easeType: .quartIn)
-        orbitTrajectory.zoomTo(zoomLevel: 15, duration: 4, easeType: .expInOut)
+        orbitTrajectory.loop(loop: false)
+        orbitTrajectory.pivot(position: pivotPosition, centerToPivot: true, duration: 0.5, easeType: .quartIn)
+        orbitTrajectory.duration(duration: 10)
+        orbitTrajectory.tiltTo(angle: 2, duration: 4, easeType: .linear)
+        orbitTrajectory.zoomTo(zoomLevel: 15, duration: 4, easeType: .linear)
         
         orbitTrajectory.speedMultiplier(multiplier: 2)
 
@@ -103,8 +103,8 @@ class ViewController: UIViewController {
        
         if let mapview = self.mapview {
             view.addSubview(mapview)
-            mapview.setZoom(zoomLevel: 15)
-            mapview.setCenter(position: CLLocationCoordinate2D(latitude: 40, longitude: -73))
+            mapview.setZoom(zoomLevel: 17)
+            mapview.setCenter(position: CLLocationCoordinate2D(latitude: 40.747, longitude: -73.97))
         }
  
 

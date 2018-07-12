@@ -107,20 +107,17 @@ public class OrbitAnimation : NSObject, CameraAnimation{
         
             self.cameraAnimationCallback().onStart()
             if self.orbitTrajectory.loop {
-                
+                DispatchQueue.global().async {
                 while self.orbitTrajectory.loop && self.running {
-                    DispatchQueue.global().async {
                         usleep(150000)
                         DispatchQueue.main.sync {
                             self.animate()
                         }
                     }
- 
-                  
                 }
                 
             } else {
-                let repeatCount = Int(Float(self.orbitTrajectory.duration - (self.playedDuration / 1000)) / (Float(self.stepDuration) / 1000))
+                let repeatCount = Int(Float(self.orbitTrajectory.duration - (self.playedDuration)) / (Float(self.stepDuration) / 1000))
                 
                 DispatchQueue.global().async {
                     for i in 1...repeatCount {
@@ -194,11 +191,11 @@ public class OrbitAnimation : NSObject, CameraAnimation{
         if orbitTrajectory.centerToPivot {
             orbitTrajectory.centerToPivot = false
             
-            let spCenter = mapfitMap.tgMapView.lngLat(toScreenPosition: TGGeoPoint(coordinate: mapfitMap.getCenter()))
-            let spPivot = mapfitMap.tgMapView.lngLat(toScreenPosition: TGGeoPoint(coordinate: orbitTrajectory.pivotPosition))
+//            let spCenter = mapfitMap.tgMapView.lngLat(toScreenPosition: TGGeoPoint(coordinate: mapfitMap.getCenter()))
+//            let spPivot = mapfitMap.tgMapView.lngLat(toScreenPosition: TGGeoPoint(coordinate: orbitTrajectory.pivotPosition))
             
-//            let spCenter = mapfitMap.getCenter().toPoint(zoomLevel: mapfitMap.getZoom())
-//            let spPivot = orbitTrajectory.pivotPosition.toPoint(zoomLevel: mapfitMap.getZoom())
+            let spCenter = mapfitMap.getCenter().toPoint(zoomLevel: mapfitMap.getZoom())
+            let spPivot = orbitTrajectory.pivotPosition.toPoint(zoomLevel: mapfitMap.getZoom())
             
             let newX = Double(spCenter.x) + Double(spPivot.x - spCenter.x) *  cos(Double(rotation)) - Double(spPivot.y - spCenter.y) * sin(Double(rotation))
             //let newX = Double(newXeq) + Double(spPivot.y - spCenter.y) * cos(Double(rotation))
@@ -208,10 +205,10 @@ public class OrbitAnimation : NSObject, CameraAnimation{
             let newPoint = CGPoint(x: newX, y: newY)
             
           
-            let tLatLng = mapfitMap.tgMapView.screenPosition(toLngLat: newPoint)
-            let latLng = CLLocationCoordinate2D(latitude: tLatLng.latitude, longitude: tLatLng.longitude)
+//            let tLatLng = mapfitMap.tgMapView.screenPosition(toLngLat: newPoint)
+//            let latLng = CLLocationCoordinate2D(latitude: tLatLng.latitude, longitude: tLatLng.longitude)
             
-            mapfitMap.setCenter(position: latLng, duration: orbitTrajectory.centeringDuration, easeType: orbitTrajectory.centeringEaseType)
+            mapfitMap.setCenter(position: newPoint.toCLLocationCoordinate2D(zoomLevel: mapfitMap.getZoom()), duration: orbitTrajectory.centeringDuration, easeType: orbitTrajectory.centeringEaseType)
     
         }
         
