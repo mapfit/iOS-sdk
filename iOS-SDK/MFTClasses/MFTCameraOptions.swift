@@ -80,7 +80,7 @@ open class OrbitTrajectory : MFTCameraOptions {
     
 }
 
-public class OrbitAnimation : CameraAnimation {
+public class OrbitAnimation : NSObject, CameraAnimation{
 
     var orbitTrajectory: OrbitTrajectory
     var mapfitMap: MFTMapView
@@ -105,56 +105,75 @@ public class OrbitAnimation : CameraAnimation {
     public func start() {
         running = true
         
-        cameraAnimationCallback().onStart()
-        
-        if orbitTrajectory.loop {
-            while orbitTrajectory.loop && running {
-                DispatchQueue.main.asyncAfter(deadline: .now() + DispatchTimeInterval.milliseconds(stepDuration)) {
-                    self.animate()
+            self.cameraAnimationCallback().onStart()
+            if self.orbitTrajectory.loop {
+                
+                while self.orbitTrajectory.loop && self.running {
+                    DispatchQueue.global().async {
+                        usleep(150000)
+                        DispatchQueue.main.sync {
+                            self.animate()
+                        }
+                    }
+ 
+                  
+                }
+                
+            } else {
+                let repeatCount = Int(Float(self.orbitTrajectory.duration - (self.playedDuration / 1000)) / (Float(self.stepDuration) / 1000))
+                
+                DispatchQueue.global().async {
+                    for i in 1...repeatCount {
+                        usleep(150000)
+                        DispatchQueue.main.sync(execute: {
+                            self.playedDuration = Float(self.playedDuration / 1000) + Float(Float(self.stepDuration) / Float(1000))
+                            self.animate()
+                            if (i == repeatCount - 1){
+                                self.cameraAnimationCallback().onFinish()
+                            }
+                            
+                            if (!self.running){
+                                
+                            }
+                        })
+                    }
                 }
             }
-        } else {
-            let repeatCount = Int(orbitTrajectory.duration - playedDuration) / (stepDuration)
-            
-            for i in 1...repeatCount {
-                DispatchQueue.main.asyncAfter(deadline: .now() + DispatchTimeInterval.milliseconds(stepDuration)) {
-                    self.playedDuration += Float(self.stepDuration / 1000)
-                    self.animate()
-                    
-                    if (i == repeatCount - 1){
-                        
-                        self.cameraAnimationCallback().onFinish()
-                       
-                    }
-                    
-                    if (!self.running){
-                        //retrun@
-                    }
-            }
-                
-            }
-            
-        }
     }
     
-    private func animate(){
+    
+    @objc private func animate(){
+        let d = Date()
+        let df = DateFormatter()
+        df.dateFormat = "y-MM-dd H:m:ss.SSSS"
+             print(df.string(from: d))
+        
+        rotation = mapfitMap.getRotation()
+        
         if runInitialAnimations {
-            rotation = mapfitMap.getRotation()
-            
             runInitialAnimations = false
             
-            setInitialTilt()
-            setInitialZoom()
-            setInitialCenter()
-            
-            
+            DispatchQueue.main.async {
+                let queue: OperationQueue = OperationQueue()
+                queue.maxConcurrentOperationCount = (3)
+                queue.addOperation({self.setInitialTilt()})
+                queue.addOperation({self.setInitialZoom()})
+                queue.addOperation({self.setInitialCenter()})
+
+            }
+  
+        
         }
         
-        rotation = Float(rotation + Float(rotationDegrees).degreesToRadians.truncatingRemainder(dividingBy: 360))
-        mapfitMap.setRotation(rotationValue: rotation, duration: Float(self.stepDuration / 1000), easeType: .quartIn)
+        rotation = Float((Double(rotation) + Double(rotationDegrees.degreesToRadians)).truncatingRemainder(dividingBy: 360))
+        print("Rotation \(rotation)")
+        
+    
+       self.mapfitMap.setRotation(rotationValue: self.rotation, duration: 0.15, easeType: .linear)
+ 
     }
     
-    
+
     
     public func isRunning() -> Bool {
         return self.running
@@ -165,7 +184,7 @@ public class OrbitAnimation : CameraAnimation {
     }
 
         private func setInitialTilt() {
-            if !orbitTrajectory.tiltAngle.isNaN && mapfitMap.getTilt() != orbitTrajectory.tiltAngle {
+            if !orbitTrajectory.tiltAngle.isNaN && (mapfitMap.getTilt() != orbitTrajectory.tiltAngle) {
                 mapfitMap.setTilt(tiltValue: orbitTrajectory.tiltAngle, duration: orbitTrajectory.tiltDuration, easeType: orbitTrajectory.tiltEaseType)
                 
             }
@@ -175,18 +194,24 @@ public class OrbitAnimation : CameraAnimation {
         if orbitTrajectory.centerToPivot {
             orbitTrajectory.centerToPivot = false
             
-            let spCenter = mapfitMap.getCenter().toPoint(zoomLevel: mapfitMap.getZoom())
-            let spPivot = orbitTrajectory.pivotPosition.toPoint(zoomLevel: mapfitMap.getZoom())
+            let spCenter = mapfitMap.tgMapView.lngLat(toScreenPosition: TGGeoPoint(coordinate: mapfitMap.getCenter()))
+            let spPivot = mapfitMap.tgMapView.lngLat(toScreenPosition: TGGeoPoint(coordinate: orbitTrajectory.pivotPosition))
             
-            let newXeq = Double(spCenter.x) + Double(spPivot.x - spCenter.x) * sin(Double(rotation))
-            let newX = Double(newXeq) + Double(spPivot.y - spCenter.y) * cos(Double(rotation))
+//            let spCenter = mapfitMap.getCenter().toPoint(zoomLevel: mapfitMap.getZoom())
+//            let spPivot = orbitTrajectory.pivotPosition.toPoint(zoomLevel: mapfitMap.getZoom())
             
-            let newYeq = Double(spCenter.y) + Double(spPivot.x - spCenter.x)
-            let newY = newYeq * sin(Double(rotation)) + Double(spPivot.y - spCenter.y) * cos(Double(rotation))
+            let newX = Double(spCenter.x) + Double(spPivot.x - spCenter.x) *  cos(Double(rotation)) - Double(spPivot.y - spCenter.y) * sin(Double(rotation))
+            //let newX = Double(newXeq) + Double(spPivot.y - spCenter.y) * cos(Double(rotation))
+            
+            let newY = Double(spCenter.y) + Double(spPivot.x - spCenter.x) * sin(Double(rotation)) + Double(spPivot.y - spCenter.y) * cos(Double(rotation))
+//            let newY = newYeq * sin(Double(rotation)) +
             let newPoint = CGPoint(x: newX, y: newY)
             
+          
+            let tLatLng = mapfitMap.tgMapView.screenPosition(toLngLat: newPoint)
+            let latLng = CLLocationCoordinate2D(latitude: tLatLng.latitude, longitude: tLatLng.longitude)
             
-            mapfitMap.setCenter(position: newPoint.toCLLocationCoordinate2D(zoomLevel: mapfitMap.getZoom()), duration: orbitTrajectory.centeringDuration, easeType: orbitTrajectory.centeringEaseType)
+            mapfitMap.setCenter(position: latLng, duration: orbitTrajectory.centeringDuration, easeType: orbitTrajectory.centeringEaseType)
     
         }
         
@@ -194,7 +219,7 @@ public class OrbitAnimation : CameraAnimation {
     }
     
     private func setInitialZoom(){
-        if (!orbitTrajectory.zoomLevel.isNaN && mapfitMap.getZoom() != orbitTrajectory.zoomLevel){
+        if !orbitTrajectory.zoomLevel.isNaN && (mapfitMap.getZoom() != orbitTrajectory.zoomLevel){
             mapfitMap.setZoom(zoomLevel: orbitTrajectory.zoomLevel, duration: orbitTrajectory.zoomDuration, easeType: orbitTrajectory.zoomEaseType)
         }
     }

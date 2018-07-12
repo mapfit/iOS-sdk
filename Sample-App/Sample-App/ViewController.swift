@@ -31,7 +31,7 @@ class ViewController: UIViewController {
         
         
         let markerOptions = MFTMarkerOptions()
-        markerOptions.setStreetAddress(streetAddress: "119 w 24th street ny, ny", geocode: true)
+        markerOptions.setPosition(position: CLLocationCoordinate2D(latitude: 40.743502, longitude: -73.991667), reverseGeocode: false)
         markerOptions.setIcon(.airport)
         
         
@@ -52,40 +52,40 @@ class ViewController: UIViewController {
                 func onStart() {
                     print("Started animation")
                 }
-                
+
                 func onFinish() {
                      print("Finished animation")
                 }
             }
-            
+
             return c() as AnimationCallback
         }
-        
+
         let pivotPosition = CLLocationCoordinate2D(latitude: 40.743502, longitude: -73.991667)
-        
+
         let orbitTrajectory = OrbitTrajectory()
+
+        orbitTrajectory.loop(loop: true)
+        orbitTrajectory.pivot(position: pivotPosition, centerToPivot: true, duration: 5, easeType: .quartIn)
+        orbitTrajectory.duration(duration: 4)
+        orbitTrajectory.tiltTo(angle: 2, duration: 4, easeType: .quartIn)
+        orbitTrajectory.zoomTo(zoomLevel: 15, duration: 4, easeType: .expInOut)
         
-        orbitTrajectory.loop(loop: false)
-        orbitTrajectory.pivot(position: pivotPosition, centerToPivot: true, duration: 500, easeType: .quartIn)
-        orbitTrajectory.duration(duration: 4000)
-        orbitTrajectory.tiltTo(angle: 2, duration: 4000, easeType: .quartIn)
-        orbitTrajectory.zoomTo(zoomLevel: 15, duration: 4000, easeType: .expInOut)
         orbitTrajectory.speedMultiplier(multiplier: 2)
-        
-        
+
+
         // create the animation
         if let mapview = self.mapview {
             let orbitAnimation = Cinematography(mapview)
             let animation = orbitAnimation.create(cameraOptions: orbitTrajectory, cameraAnimationCallback: callBack)
-           
+
             //start the animation
             animation.start()
-            
-            
+
         }
-        
+
       
-        
+
         
         
     }
@@ -95,8 +95,6 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         self.mapview = MFTMapView(frame: view.bounds)
         self.mapview?.mapOptions.setTheme(theme: .night)
-        mapview?.markerSelectDelegate = self
-        mapview?.singleTapGestureDelegate = self
         
         
         
@@ -120,31 +118,9 @@ class ViewController: UIViewController {
 }
 
 
-extension ViewController : MapMarkerSelectDelegate {
-    
-    func mapView(_ view: MFTMapView, didSelectMarker marker: MFTMarker, atScreenPosition position: CGPoint) {
-        if let mapview = self.mapview {
-        
-        }
-    }
-    
-    
-}
 
-extension ViewController : MapSingleTapGestureDelegate {
-    
-    
-    func mapView(_ view: MFTMapView, recognizer: UIGestureRecognizer, shouldRecognizeSingleTapGesture location: CGPoint) -> Bool {
-        return true
-    }
-    
-    func mapView(_ view: MFTMapView, recognizer: UIGestureRecognizer, didRecognizeSingleTapGesture location: CGPoint) {
 
-    }
-    
-    
-    
-}
+
 
 
     

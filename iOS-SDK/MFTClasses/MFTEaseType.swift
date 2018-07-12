@@ -8,6 +8,7 @@
 import Foundation
 
 public enum MFTEaseType {
+    case linear
     case cubicIn
     case cubicOut
     case cubicInOut

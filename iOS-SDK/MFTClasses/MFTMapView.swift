@@ -256,6 +256,8 @@ open class MFTMapView: UIView {
         self.position = position
         tgMapView.animate(toPosition: TGGeoPointMake(position.longitude, position.latitude), withDuration: duration, with: TGEaseType(rawValue: easeType.hashValue) ?? .quartInOut)
         
+        
+        
     }
     
     private func animateTocenter(position: CLLocationCoordinate2D, duration: Float, easeType: MFTEaseType){
@@ -384,7 +386,11 @@ open class MFTMapView: UIView {
         if duration == 0 {
            tgMapView.rotation = rotationValue
         }
-        tgMapView.animate(toRotation: rotationValue, withDuration: duration, with: TGEaseType(rawValue: easeType.hashValue) ?? .quartInOut)
+            self.tgMapView.animate(toRotation: rotationValue, withDuration: duration, with: TGEaseType(rawValue: easeType.hashValue) ?? .quartInOut)
+        
+        
+        print("\(rotationValue)")
+        
     }
     
     /**
@@ -393,7 +399,7 @@ open class MFTMapView: UIView {
      */
     
     public func getRotation()->Float{
-        return tgMapView.rotation
+        return self.rotation
     }
     
     
