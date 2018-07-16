@@ -222,7 +222,7 @@ class Sample_AppTests: XCTestCase {
             
             XCTAssertNil(error, "Unexpected error occured: \(String(describing: error?.localizedDescription))")
             XCTAssertEqual(addresses![0].locality, "New York", file: "Locality was incorrect")
-            XCTAssertEqual(addresses![0].postalCode, "10011", file: "Locality was incorrect")
+            XCTAssertEqual(addresses![0].postalCode, "10001", file: "Locality was incorrect")
             XCTAssertEqual(addresses![0].streetAddress, "119 W 24th St", file: "address was incorrect")
             
             expect.fulfill()
@@ -620,6 +620,71 @@ class Sample_AppTests: XCTestCase {
         XCTAssertEqual(mapView.mapOptions.getGesturesEnabled(), false, file: "Mapview gestures is enabled")
 
     }
+    
+    func testCameraAnimation(){
+        
+        let expect = expectation(description: "Adding animation")
+        print("Before animation")
+        print(self.mapView.getZoom())
+        print(self.mapView.getTilt())
+        print(self.mapView.getRotation())
+        print(self.mapView.getCenter())
+        
+        
+        let orbitTrajectory = OrbitTrajectory()
+        var orbitAnimation:  Cinematography? = nil
+        var cameraAnimation: CameraAnimation? = nil
+        
+        let callBack: ()->AnimationCallback = {
+            
+            struct c : AnimationCallback {
+                
+                func onStart() {
+                   
+                }
+                
+                func onFinish() {
+                    
+                }
+            }
+            
+            return c() as AnimationCallback
+        }
+        
+        let pivotPosition = CLLocationCoordinate2D(latitude: 40.743502, longitude: -73.991667)
+        // define the options for the animation
+        
+        orbitTrajectory.loop(loop: false)
+        orbitTrajectory.pivot(position: pivotPosition, centerToPivot: true, duration: 1, easeType: .quartIn)
+        orbitTrajectory.duration(duration: 10)
+        orbitTrajectory.tiltTo(angle: 2, duration: 4, easeType: .linear)
+        orbitTrajectory.zoomTo(zoomLevel: 15, duration: 2, easeType: .expInOut)
+        orbitTrajectory.speedMultiplier(multiplier: 2) /* positive values will rotate anti-clockwise whereas negative values will rotate clockwise */
+        
+        // create the animation
+        if let mapview = self.mapView {
+            orbitAnimation = Cinematography(mapview)
+            
+            cameraAnimation = orbitAnimation?.create(cameraOptions: orbitTrajectory, cameraAnimationCallback: callBack)
+            cameraAnimation?.start()
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+                expect.fulfill()
+        }
+        
+        waitForExpectations(timeout: 5) { (error) in
+        
+            XCTAssertNotEqual(self.mapView.getZoom(), 0, file: "camera animation did not calculate accurate zoom")
+            XCTAssertNotEqual(self.mapView.getRotation(), 0, file: "camera animation is not rotating properly")
+            XCTAssertNotEqual(self.mapView.getCenter().latitude,  40.6892, file: "camera animation center latitude not being set properly")
+            XCTAssertNotEqual(self.mapView.getCenter().longitude, -74.044499999999999, file: "camera animation center longitude not being set properly")
+
+        }
+    
+
+    }
+    
 
     func testPerformanceExample() {
         // This is an example of a performance test case.
@@ -627,5 +692,7 @@ class Sample_AppTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
+    
+    
     
 }

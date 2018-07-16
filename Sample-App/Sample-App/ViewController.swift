@@ -16,6 +16,11 @@ class ViewController: UIViewController {
     var mapview: MFTMapView?
     var polygon: MFTPolygon?
     
+     var orbitTrajectory = OrbitTrajectory()
+     var orbitAnimation:  Cinematography? = nil
+     var cameraAnimation: CameraAnimation? = nil
+  
+    
 
     
     func setupNav(){
@@ -39,6 +44,9 @@ class ViewController: UIViewController {
         mapview?.addMarker(markerOptions, completion: { (marker, error) in
         
         })
+        
+        self.cameraAnimation?.stop()
+        
     }
     
     func setBounds(){
@@ -50,43 +58,39 @@ class ViewController: UIViewController {
         let callBack: ()->AnimationCallback = {
             struct c : AnimationCallback {
                 func onStart() {
-                    print("Started animation")
+                    // invoked when the animation is started
                 }
-
+                
                 func onFinish() {
-                     print("Finished animation")
+                    // invoked when the animation has ended
                 }
             }
-
+            
             return c() as AnimationCallback
         }
-
+        
         let pivotPosition = CLLocationCoordinate2D(latitude: 40.743502, longitude: -73.991667)
-
-        let orbitTrajectory = OrbitTrajectory()
-
+        // define the options for the animation
+       
         orbitTrajectory.loop(loop: false)
-        orbitTrajectory.pivot(position: pivotPosition, centerToPivot: true, duration: 0.5, easeType: .quartIn)
+        orbitTrajectory.pivot(position: pivotPosition, centerToPivot: true, duration: 1, easeType: .quartIn)
         orbitTrajectory.duration(duration: 10)
         orbitTrajectory.tiltTo(angle: 2, duration: 4, easeType: .linear)
-        orbitTrajectory.zoomTo(zoomLevel: 15, duration: 4, easeType: .linear)
+        orbitTrajectory.zoomTo(zoomLevel: 15, duration: 2, easeType: .expInOut)
+        orbitTrajectory.speedMultiplier(multiplier: 2) /* positive values will rotate anti-clockwise whereas negative values will rotate clockwise */
         
-        orbitTrajectory.speedMultiplier(multiplier: 2)
-
-
         // create the animation
         if let mapview = self.mapview {
-            let orbitAnimation = Cinematography(mapview)
-            let animation = orbitAnimation.create(cameraOptions: orbitTrajectory, cameraAnimationCallback: callBack)
-
-            //start the animation
-            animation.start()
-
+            self.orbitAnimation = Cinematography(mapview)
+            
+            
+            self.cameraAnimation = self.orbitAnimation?.create(cameraOptions: orbitTrajectory, cameraAnimationCallback: callBack)
+            self.cameraAnimation?.start()
+            
+            //stop the animation
+            //animation.stop()
+            
         }
-
-      
-
-        
         
     }
     
@@ -95,12 +99,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         self.mapview = MFTMapView(frame: view.bounds)
         self.mapview?.mapOptions.setTheme(theme: .night)
-        
-        
-        
         setupNav()
-
-       
         if let mapview = self.mapview {
             view.addSubview(mapview)
             mapview.setZoom(zoomLevel: 17)

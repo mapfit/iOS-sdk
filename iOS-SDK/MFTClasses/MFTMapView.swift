@@ -387,10 +387,6 @@ open class MFTMapView: UIView {
            tgMapView.rotation = rotationValue
         }
             self.tgMapView.animate(toRotation: rotationValue, withDuration: duration, with: TGEaseType(rawValue: easeType.hashValue) ?? .quartInOut)
-        
-        
-        print("\(rotationValue)")
-        
     }
     
     /**

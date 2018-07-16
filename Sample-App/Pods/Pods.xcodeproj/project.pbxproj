@@ -81,6 +81,10 @@
 		B6748554D22E24F04227A0F572D8310C /* MFTEaseType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60FBDB74E21821588B9AAC084D3A9BC1 /* MFTEaseType.swift */; };
 		B959DED3A351938D27362EFEE6F656D5 /* Zoom In.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D2D37A221A356EE772B8CA1825BC40F /* Zoom In.png */; };
 		BE9E16F9EB55B48A8AE2F091F5967D48 /* mapfit-night.yaml in Resources */ = {isa = PBXBuildFile; fileRef = F9E5991441D1F00784080C40B9EB585E /* mapfit-night.yaml */; };
+		BF2E72E720F8063700DD683D /* OrbitTrajectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E72E620F8063700DD683D /* OrbitTrajectory.swift */; };
+		BF2E72E920F8065000DD683D /* Cinematography.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E72E820F8065000DD683D /* Cinematography.swift */; };
+		BF2E72EB20F8067200DD683D /* OrbitAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E72EA20F8067200DD683D /* OrbitAnimation.swift */; };
+		BF2E72ED20F806EF00DD683D /* CameraProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E72EC20F806EF00DD683D /* CameraProtocols.swift */; };
 		C167109DC9F57D863F04C70B8EC91818 /* zoomOut.png in Resources */ = {isa = PBXBuildFile; fileRef = 42DDAC5A17E78CE966F1846CF7DFEEF2 /* zoomOut.png */; };
 		C3FF22F31E47198B41BCF9E568648557 /* Radius.png in Resources */ = {isa = PBXBuildFile; fileRef = 16D1073A3947915C08ABC4DEFF8674DE /* Radius.png */; };
 		C78FAD7828F259DA179D5A86FE4175B0 /* Zoom Out.png in Resources */ = {isa = PBXBuildFile; fileRef = EC0A37B4C11999C71B52B7CEE2FEE068 /* Zoom Out.png */; };
@@ -230,6 +234,10 @@
 		B8F1FD85A8D33E09CDBF437147641DF5 /* OpenSans-Bold.woff */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; path = "OpenSans-Bold.woff"; sourceTree = "<group>"; };
 		B9F23AA45D7F0BFE0EC8A961145AE298 /* compassNorth@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "compassNorth@2x.png"; path = "iOS-SDK/houseStyles.bundle/compassNorth@2x.png"; sourceTree = "<group>"; };
 		BAA655480644717DF2782C6DA7C38069 /* MFTPolyline.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MFTPolyline.swift; sourceTree = "<group>"; };
+		BF2E72E620F8063700DD683D /* OrbitTrajectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrbitTrajectory.swift; sourceTree = "<group>"; };
+		BF2E72E820F8065000DD683D /* Cinematography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cinematography.swift; sourceTree = "<group>"; };
+		BF2E72EA20F8067200DD683D /* OrbitAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrbitAnimation.swift; sourceTree = "<group>"; };
+		BF2E72EC20F806EF00DD683D /* CameraProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraProtocols.swift; sourceTree = "<group>"; };
 		C089C442D50195E72317D50A4DF452A9 /* Pods-Sample-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Sample-App.release.xcconfig"; sourceTree = "<group>"; };
 		C0F6ED0E2C1F8CD4CF19C077099265C1 /* Mapfit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Mapfit-umbrella.h"; sourceTree = "<group>"; };
 		C29B4A59FF557EDBEB19DD17B5832630 /* MFTPlaceInfoView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MFTPlaceInfoView.swift; sourceTree = "<group>"; };
@@ -477,7 +485,6 @@
 			children = (
 				CDF10B8E608E236C702F89C331142D62 /* LocationCorrectionEngine.swift */,
 				2772119D66DA26D31D77D7820A6095CA /* MFTAnnotations.swift */,
-				92DBC41C2A1DD8BC95A7EA6C51FACAA0 /* MFTCameraOptions.swift */,
 				F26DA7EDC8F27A7424D9030B8CC24AD2 /* MFTDirectionsOptions.swift */,
 				60FBDB74E21821588B9AAC084D3A9BC1 /* MFTEaseType.swift */,
 				4604E6E509D0E23906259D98AB060080 /* MFTLatLngBounds.swift */,
@@ -529,6 +536,18 @@
 				D35AF013A5F0BAD4F32504907A52519E /* iOS */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BF2E72E520F805FF00DD683D /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				92DBC41C2A1DD8BC95A7EA6C51FACAA0 /* MFTCameraOptions.swift */,
+				BF2E72E620F8063700DD683D /* OrbitTrajectory.swift */,
+				BF2E72E820F8065000DD683D /* Cinematography.swift */,
+				BF2E72EA20F8067200DD683D /* OrbitAnimation.swift */,
+				BF2E72EC20F806EF00DD683D /* CameraProtocols.swift */,
+			);
+			path = Camera;
 			sourceTree = "<group>";
 		};
 		C1AC6059A7E4BA77A89D795209D56C5B /* Support Files */ = {
@@ -584,6 +603,7 @@
 		F0DF4752E126926F7B85BF81C653FE36 /* Mapfit */ = {
 			isa = PBXGroup;
 			children = (
+				BF2E72E520F805FF00DD683D /* Camera */,
 				7F0E6B69F58DA532CC9187F63CEBBA1E /* API */,
 				23AA01EEFB5C8D57D56E21BF259E1D08 /* Extensions */,
 				5EAD08679A411E01B49AA1CC58E93E9C /* Helper */,
@@ -844,9 +864,11 @@
 				661AD31E9CED277BD6A8F37896CDAF9A /* MFTMarkerOptions.swift in Sources */,
 				905936484043AC2E21A2C6D284A9F6F7 /* MFTPlaceInfo.swift in Sources */,
 				F4396E3250112A719F3F308EFF73A994 /* MFTPlaceInfoAdapter.swift in Sources */,
+				BF2E72ED20F806EF00DD683D /* CameraProtocols.swift in Sources */,
 				AB06ACC85FBFC1A7494EA1F997E75621 /* MFTPlaceInfoView.swift in Sources */,
 				11198F1C938F99A6F819A299043E218C /* MFTPolygon.swift in Sources */,
 				B2F29596AB2D3E601A2B6FBE73F35768 /* MFTPolygonOptions.swift in Sources */,
+				BF2E72E920F8065000DD683D /* Cinematography.swift in Sources */,
 				6512FB93F2842D17EA69EAFF85C66C39 /* MFTPolyline.swift in Sources */,
 				6CB973C0BF00E7E807233308B17E7CD3 /* MFTPolylineOptions.swift in Sources */,
 				A3FCF5992D16D9FFF3F801980F4F5043 /* MFTPolyPointOptions.swift in Sources */,
@@ -855,8 +877,10 @@
 				DB60D3D95CD24D07325AB5D0605E6398 /* MFTZoomButtonView.swift in Sources */,
 				9873CCCF351A5A4BCAEA674BF2E0CF75 /* StyleGuide.swift in Sources */,
 				3863C1CF21CDC64253F3C8BC17DF6D3F /* TangramExtensions.swift in Sources */,
+				BF2E72E720F8063700DD683D /* OrbitTrajectory.swift in Sources */,
 				E26E77DE539E4C8BC4BAF101C789D077 /* UIKitExtensions.swift in Sources */,
 				5A66DC536B92CC1741E274AD7BAC8CDD /* Utilities.swift in Sources */,
+				BF2E72EB20F8067200DD683D /* OrbitAnimation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

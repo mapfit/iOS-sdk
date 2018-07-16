@@ -16,7 +16,6 @@
 		0338AFE4F1B16C13C6F70FD166C9B04F /* Pods-iOS-SDK-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-iOS-SDK-resources.sh"; sourceTree = "<group>"; };
 		16EC4A5070A7BF2C62364E9B3064CB64 /* Pods-iOS-SDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-iOS-SDK.debug.xcconfig"; sourceTree = "<group>"; };
 		23C442E520932E99827480D4BFFD57B5 /* Pods-iOS-SDK-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-iOS-SDK-umbrella.h"; sourceTree = "<group>"; };
-		2A12DB0E769538511CCD4AD93D6ED1E0 /* TangramMap.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TangramMap.framework; path = "tetragon-release-1.1.1/TangramMap.framework"; sourceTree = "<group>"; };
 		6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		7501D89B2F5E3397C4D204746DAA80D0 /* Pods-iOS-SDK-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-iOS-SDK-acknowledgements.markdown"; sourceTree = "<group>"; };
 		80030041F6BCD3FB0C03129C9CE6A55D /* Pods_iOS_SDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_iOS_SDK.framework; path = "Pods-iOS-SDK.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -26,6 +25,7 @@
 		A866B30C7695F0A2AA42493F3DADBDA7 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BB8F9C59F6C4E5C81069B77A3A2D4ACE /* Pods-iOS-SDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-iOS-SDK.release.xcconfig"; sourceTree = "<group>"; };
 		E4DDB27DD02D3332EE568D9717864270 /* Pods-iOS-SDK-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-iOS-SDK-dummy.m"; sourceTree = "<group>"; };
+		F4BA0E84A2984410793537FD6F31EFC8 /* TangramMap.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TangramMap.framework; path = "tetragon-release-1.3.1/TangramMap.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +73,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		5BAC3C963AC687FB0FD6965477C02C60 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F4BA0E84A2984410793537FD6F31EFC8 /* TangramMap.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		7DB346D0F39D3F0E887471402A8071AB = {
 			isa = PBXGroup;
 			children = (
@@ -82,14 +90,6 @@
 				28B9986EFB4D33C7A5FBC5C20D6744E8 /* Products */,
 				EC85B926B37D48AF1BE5EEE88EA95F3A /* Targets Support Files */,
 			);
-			sourceTree = "<group>";
-		};
-		7DF770576362E0D57A9B6876E5CDAB1D /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				2A12DB0E769538511CCD4AD93D6ED1E0 /* TangramMap.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
@@ -111,7 +111,7 @@
 		E394B056391C13717138EF682A550222 /* Tetragon-mobile */ = {
 			isa = PBXGroup;
 			children = (
-				7DF770576362E0D57A9B6876E5CDAB1D /* Frameworks */,
+				5BAC3C963AC687FB0FD6965477C02C60 /* Frameworks */,
 			);
 			name = "Tetragon-mobile";
 			path = "Tetragon-mobile";
