@@ -87,6 +87,7 @@
 		BF1871E7210A45EF00E2731D /* Cinematography.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1871E2210A45EF00E2731D /* Cinematography.swift */; };
 		BF1871E8210A45EF00E2731D /* OrbitAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1871E3210A45EF00E2731D /* OrbitAnimation.swift */; };
 		BF2EFE34211389CB001B8B2D /* BuildingExtruder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2EFE33211389CB001B8B2D /* BuildingExtruder.swift */; };
+		BFD2991E211B89350075B607 /* BuildingExtruder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2991D211B89350075B607 /* BuildingExtruder.swift */; };
 		C18E0D39288206115B555CD73D3A3467 /* currentLocation@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9AAECA925750ABA8E1202FD3DF3EDA7A /* currentLocation@3x.png */; };
 		C31BFAABA1BED6E8F8157C1AA0154054 /* MFTDirections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2451BB80E516C824E71337A8808941EB /* MFTDirections.swift */; };
 		C6CF518FDB42102A8C9FFEF4DA57E1A2 /* MFTBuildingOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C020D38A1358BF8B92552750D736A6 /* MFTBuildingOptions.swift */; };
@@ -244,6 +245,7 @@
 		BF1871E2210A45EF00E2731D /* Cinematography.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cinematography.swift; sourceTree = "<group>"; };
 		BF1871E3210A45EF00E2731D /* OrbitAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrbitAnimation.swift; sourceTree = "<group>"; };
 		BF2EFE33211389CB001B8B2D /* BuildingExtruder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingExtruder.swift; sourceTree = "<group>"; };
+		BFD2991D211B89350075B607 /* BuildingExtruder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BuildingExtruder.swift; path = "/Users/zain/Desktop/iOS-sdk/iOS-SDK/MFTClasses/BuildingExtruder.swift"; sourceTree = "<absolute>"; };
 		C089C442D50195E72317D50A4DF452A9 /* Pods-Sample-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Sample-App.release.xcconfig"; sourceTree = "<group>"; };
 		C2B4D9955D9DD9244C8A1680EC4BF78D /* location.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = location.png; path = "iOS-SDK/houseStyles.bundle/location.png"; sourceTree = "<group>"; };
 		C87B8C8B80DF4E5A660912DE7D0817D6 /* MFTGeocoder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MFTGeocoder.swift; sourceTree = "<group>"; };
@@ -560,6 +562,7 @@
 		C96FAD4200366A0864CC061A01A1B063 /* MFTClasses */ = {
 			isa = PBXGroup;
 			children = (
+				BFD2991D211B89350075B607 /* BuildingExtruder.swift */,
 				27F22E08F27CB31892991F9513A708C1 /* LocationCorrectionEngine.swift */,
 				FA46FC3FC2CEF10638065DED2A7CBFD7 /* MFTAnnotations.swift */,
 				D8C020D38A1358BF8B92552750D736A6 /* MFTBuildingOptions.swift */,
@@ -845,6 +848,7 @@
 				AA6931D2385BE544A0813F7BA6A65319 /* BundleExtension.swift in Sources */,
 				E08693C2A31C95A0C4DC891FEDC6A7E5 /* DecodeFunctions.swift in Sources */,
 				974DF4148FEA04F5BAA900C88B1052A8 /* DictionaryExtensions.swift in Sources */,
+				BFD2991E211B89350075B607 /* BuildingExtruder.swift in Sources */,
 				36B2C9F7A499B645F4089133D5FCCA2C /* LocationCorrectionEngine.swift in Sources */,
 				BB3FAC6B7E11BD25624F32334D7033F9 /* Mapfit-dummy.m in Sources */,
 				6D19B6B924EE3989790366AEE4BC7CEC /* MFTAnnotations.swift in Sources */,
