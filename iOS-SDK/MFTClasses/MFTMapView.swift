@@ -1,4 +1,3 @@
-//
 //  MFTMapView.swift
 //  iOS.SDK
 //
@@ -32,6 +31,8 @@ open class MFTMapView: UIView {
     private var dataMFTLayer: TGMapData?
     private var placeMarkMarker: MFTMarker?
     private var placeInfoTapGesture = UITapGestureRecognizer()
+    internal var extrudedBuildingIds = [String : String]()
+    
     
     /// The current center of the map.
     internal var position: CLLocationCoordinate2D
@@ -150,7 +151,8 @@ open class MFTMapView: UIView {
     
     //Legal Notices button
     lazy var legalButton: UIButton = UIButton()
-
+    
+    private var buildingExtruder: BuildingExtruder?
     
     
     //MARK: - Creating Instances
@@ -177,7 +179,9 @@ open class MFTMapView: UIView {
         self.rotation = 0
         self.tilt = 0
         
+        
         super.init(frame: frame)
+        self.buildingExtruder = BuildingExtruder(mapView: self)
         self.directionsOptions.setMapView(self)
         self.mapOptions.setMapView(mapView: self)
         self.mapOptions.setTheme(theme: .day)
@@ -203,6 +207,7 @@ open class MFTMapView: UIView {
         self.directionsOptions.setMapView(self)
         self.mapOptions = MFTMapOptions(mapView: self)
         self.mapOptions.setTheme(theme: mapStyle)
+        //self.buildingExtruder = BuildingExtruder(mapView: self)
     }
     
     public init(frame: CGRect, customMapStyle: String) {
@@ -222,6 +227,7 @@ open class MFTMapView: UIView {
         self.tilt = 0
         
         super.init(frame: frame)
+        self.buildingExtruder = BuildingExtruder(mapView: self)
         self.directionsOptions.setMapView(self)
         self.mapOptions.setMapView(mapView: self)
         self.mapOptions.setTheme(theme: .custom)
@@ -881,6 +887,10 @@ open class MFTMapView: UIView {
         tgMapView.mapViewDelegate = self
         tgMapView.gestureDelegate = self
         zoomButtonsView.delegate = self
+        self.featureSelectDelegate = self
+        
+        
+        
     }
     
     private func setUpView(frame: CGRect, position: CLLocationCoordinate2D, customTheme: String?){
@@ -1175,31 +1185,7 @@ extension MFTMapView : TGMapViewDelegate, MapPlaceInfoSelectDelegate {
         
         
     }
-    
 
-    
-    open func mapView(_ mapView: TGMapViewController, didSelectFeature feature: [String : String]?, atScreenPosition position: CGPoint) {
-        guard let feature = feature else { return }
-        featureSelectDelegate?.mapView(self, didSelectFeature: feature, atScreenPosition: position)
-        guard let featureID = feature["uuid"] else { return }
-        
-        for annotation in currentAnnotations {
-            if annotation.key.uuidString == featureID {
-                
-                
-                if feature["type"] == "polygon" {
-                    polygonSelectDelegate?.mapView(self, didSelectPolygon: annotation.value as! MFTPolygon, atScreenPosition: position)
-                }
-                
-                
-                if feature["type"] == "polyline" {
-                    polylineSelectDelegate?.mapView(self, didSelectPolyline: annotation.value as! MFTPolyline, atScreenPosition: position)
-                }
-            }
-        }
-        
-    }
-    
     open func mapView(_ mapView: TGMapViewController, didSelectLabel labelPickResult: TGLabelPickResult?, atScreenPosition position: CGPoint) {
         guard let labelPickResult = labelPickResult else { return }
         labelSelectDelegate?.mapView(self, didSelectLabel: labelPickResult, atScreenPosition: position)
@@ -1591,11 +1577,6 @@ extension MFTMapView {
     
 }
 
-
-
-
-
-
 extension MFTMapView {
     
     private func setMFTPlaceInfoViewSize() -> CGSize{
@@ -1703,7 +1684,8 @@ extension MFTMapView {
      - returns: CLLocationCoordinate of the given point.
      */
    public func screenPositionToLatLng(_ point: CGPoint) -> CLLocationCoordinate2D{
-        return point.toCLLocationCoordinate2D(zoomLevel: self.getZoom())
+        let tg = tgMapView.screenPosition(toLngLat: point)
+        return CLLocationCoordinate2D(latitude: tg.latitude, longitude: tg.longitude)
     }
     
     /**
@@ -1712,10 +1694,83 @@ extension MFTMapView {
      - returns: CGPoint of the given CLLocationCoordinate.
      */
     public func latLngToScreenPosition(_ latLng: CLLocationCoordinate2D) -> CGPoint{
-        return latLng.toPoint(zoomLevel: self.getZoom())
+        return tgMapView.lngLat(toScreenPosition: TGGeoPoint(coordinate: latLng))
     }
     
 }
+
+extension MFTMapView {
+    
+    public func updateSceneAsync(_ updates: [MFTSceneUpdate]) {
+        var tgUpdates = [TGSceneUpdate]()
+        for update in updates {
+            tgUpdates.append(TGSceneUpdate(path: update.path, value: update.value))
+        }
+        tgMapView.updateSceneAsync(tgUpdates)
+    }
+    
+    
+}
+
+extension MFTMapView : MapFeatureSelectDelegate {
+    
+    open func mapView(_ mapView: TGMapViewController, didSelectFeature feature: [String : String]?, atScreenPosition position: CGPoint) {
+        guard let unWrappedFeature = feature else { return }
+        featureSelectDelegate?.mapView(self, didSelectFeature: unWrappedFeature, atScreenPosition: position)
+    }
+    
+    
+    func mapView(_ view: MFTMapView, didSelectFeature feature: [String : String], atScreenPosition position: CGPoint) {
+        
+        if let featureID = feature["uuid"]  {
+            for annotation in currentAnnotations {
+                if annotation.key.uuidString == featureID {
+                    if feature["type"] == "polygon" {
+                        polygonSelectDelegate?.mapView(self, didSelectPolygon: annotation.value as! MFTPolygon, atScreenPosition: position)
+                    }
+                    
+                    
+                    if feature["type"] == "polyline" {
+                        polylineSelectDelegate?.mapView(self, didSelectPolyline: annotation.value as! MFTPolyline, atScreenPosition: position)
+                    }
+                }
+            }
+        }
+        
+        //Handle Building Extruding
+        if let extruder = buildingExtruder {
+            extruder.handleFeature(properties: feature)
+        }
+    
+    }
+    
+    
+    
+    /**
+     * Extrudes the building on given [LatLng]. To extrude, the buildings should be visible in the
+     * current map view. Else it will be ignored. Additionally, this call will force a scene update.
+     *
+     * @param latLng coordinates of the building
+     * @param buildingOptions applies all extruded buildings
+     */
+    public func extrudeBuildings(latLngs: [CLLocationCoordinate2D], buildingOptions: MFTBuildingOptions){
+        guard let extruder = buildingExtruder else { return }
+        DispatchQueue.main.async {
+            extruder.extrude(latlngs: latLngs, buildingOptions: buildingOptions)
+        }
+    }
+    
+    public func flattenBuilding(latLngs: [CLLocationCoordinate2D]){
+        guard let extruder = buildingExtruder else { return }
+        DispatchQueue.main.async {
+            extruder.flatten(latLngs: latLngs)
+        }
+    }
+  
+}
+
+
+
 
 
 
