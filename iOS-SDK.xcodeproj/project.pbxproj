@@ -51,6 +51,8 @@
 		BF4BA7A220616B45001F2FE3 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4BA7A120616B45001F2FE3 /* Utilities.swift */; };
 		BF4BA7A420616B69001F2FE3 /* MFTLocationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4BA7A320616B68001F2FE3 /* MFTLocationProvider.swift */; };
 		BFC5B5532044AFBE00696417 /* DecodeFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC5B5522044AFBE00696417 /* DecodeFunctions.swift */; };
+		BFD2991B211B88090075B607 /* BuildingExtruder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD29919211B88090075B607 /* BuildingExtruder.swift */; };
+		BFD2991C211B88090075B607 /* MFTBuildingOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2991A211B88090075B607 /* MFTBuildingOptions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -101,6 +103,8 @@
 		BF4BA7A120616B45001F2FE3 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utilities.swift; path = MFTClasses/Utilities.swift; sourceTree = "<group>"; };
 		BF4BA7A320616B68001F2FE3 /* MFTLocationProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTLocationProvider.swift; path = MFTClasses/MFTLocationProvider.swift; sourceTree = "<group>"; };
 		BFC5B5522044AFBE00696417 /* DecodeFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DecodeFunctions.swift; path = Extensions/DecodeFunctions.swift; sourceTree = "<group>"; };
+		BFD29919211B88090075B607 /* BuildingExtruder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingExtruder.swift; path = MFTClasses/BuildingExtruder.swift; sourceTree = "<group>"; };
+		BFD2991A211B88090075B607 /* MFTBuildingOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTBuildingOptions.swift; path = MFTClasses/MFTBuildingOptions.swift; sourceTree = "<group>"; };
 		E47C08BF50D46AC96C60A204 /* Pods-iOS-SDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-SDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iOS-SDK/Pods-iOS-SDK.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -146,6 +150,8 @@
 		BF121B682034A56A00B55A75 /* iOS-SDK */ = {
 			isa = PBXGroup;
 			children = (
+				BFD29919211B88090075B607 /* BuildingExtruder.swift */,
+				BFD2991A211B88090075B607 /* MFTBuildingOptions.swift */,
 				BF2E72FF20F90ADF00DD683D /* MFTAnnotations.swift */,
 				BF2E72FB20F90ADF00DD683D /* MFTEaseType.swift */,
 				BF2E72F920F90ADF00DD683D /* MFTMapOptions.swift */,
@@ -353,7 +359,9 @@
 				BF462C842034AFFF001EE738 /* MFTZoomButtonView.swift in Sources */,
 				BF462C802034AF5B001EE738 /* MFTManager.swift in Sources */,
 				BF2E730520F90AE000DD683D /* MFTEaseType.swift in Sources */,
+				BFD2991B211B88090075B607 /* BuildingExtruder.swift in Sources */,
 				BF462C732034AF13001EE738 /* BundleExtension.swift in Sources */,
+				BFD2991C211B88090075B607 /* MFTBuildingOptions.swift in Sources */,
 				BF462C632034AEE2001EE738 /* MFTLatLngBounds.swift in Sources */,
 				BF2E730920F90AE000DD683D /* MFTAnnotations.swift in Sources */,
 				BF462C682034AF06001EE738 /* MFTAPIObjects.swift in Sources */,
