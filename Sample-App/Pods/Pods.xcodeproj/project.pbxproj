@@ -88,6 +88,13 @@
 		BF1871E8210A45EF00E2731D /* OrbitAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1871E3210A45EF00E2731D /* OrbitAnimation.swift */; };
 		BF2EFE34211389CB001B8B2D /* BuildingExtruder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2EFE33211389CB001B8B2D /* BuildingExtruder.swift */; };
 		BFD2991E211B89350075B607 /* BuildingExtruder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2991D211B89350075B607 /* BuildingExtruder.swift */; };
+		BFD29921211B91FB0075B607 /* SnakeAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD29920211B91FB0075B607 /* SnakeAnimation.swift */; };
+		BFD29923211B92090075B607 /* SnakeAnimationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD29922211B92090075B607 /* SnakeAnimationOptions.swift */; };
+		BFD29925211B92320075B607 /* MFTAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD29924211B92320075B607 /* MFTAnimation.swift */; };
+		BFD29927211B931A0075B607 /* AnimationListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD29926211B931A0075B607 /* AnimationListener.swift */; };
+		BFD29929211B94240075B607 /* AnimationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD29928211B94240075B607 /* AnimationOptions.swift */; };
+		BFD2992B211C98410075B607 /* RouteEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2992A211C98410075B607 /* RouteEvaluator.swift */; };
+		BFD2992D211C99290075B607 /* PolylineAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2992C211C99290075B607 /* PolylineAnimation.swift */; };
 		C18E0D39288206115B555CD73D3A3467 /* currentLocation@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9AAECA925750ABA8E1202FD3DF3EDA7A /* currentLocation@3x.png */; };
 		C31BFAABA1BED6E8F8157C1AA0154054 /* MFTDirections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2451BB80E516C824E71337A8808941EB /* MFTDirections.swift */; };
 		C6CF518FDB42102A8C9FFEF4DA57E1A2 /* MFTBuildingOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C020D38A1358BF8B92552750D736A6 /* MFTBuildingOptions.swift */; };
@@ -246,6 +253,13 @@
 		BF1871E3210A45EF00E2731D /* OrbitAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrbitAnimation.swift; sourceTree = "<group>"; };
 		BF2EFE33211389CB001B8B2D /* BuildingExtruder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingExtruder.swift; sourceTree = "<group>"; };
 		BFD2991D211B89350075B607 /* BuildingExtruder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BuildingExtruder.swift; path = "/Users/zain/Desktop/iOS-sdk/iOS-SDK/MFTClasses/BuildingExtruder.swift"; sourceTree = "<absolute>"; };
+		BFD29920211B91FB0075B607 /* SnakeAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnakeAnimation.swift; sourceTree = "<group>"; };
+		BFD29922211B92090075B607 /* SnakeAnimationOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnakeAnimationOptions.swift; sourceTree = "<group>"; };
+		BFD29924211B92320075B607 /* MFTAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFTAnimation.swift; sourceTree = "<group>"; };
+		BFD29926211B931A0075B607 /* AnimationListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationListener.swift; sourceTree = "<group>"; };
+		BFD29928211B94240075B607 /* AnimationOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationOptions.swift; sourceTree = "<group>"; };
+		BFD2992A211C98410075B607 /* RouteEvaluator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteEvaluator.swift; sourceTree = "<group>"; };
+		BFD2992C211C99290075B607 /* PolylineAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolylineAnimation.swift; sourceTree = "<group>"; };
 		C089C442D50195E72317D50A4DF452A9 /* Pods-Sample-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Sample-App.release.xcconfig"; sourceTree = "<group>"; };
 		C2B4D9955D9DD9244C8A1680EC4BF78D /* location.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = location.png; path = "iOS-SDK/houseStyles.bundle/location.png"; sourceTree = "<group>"; };
 		C87B8C8B80DF4E5A660912DE7D0817D6 /* MFTGeocoder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MFTGeocoder.swift; sourceTree = "<group>"; };
@@ -543,9 +557,24 @@
 			path = Camera;
 			sourceTree = "<group>";
 		};
+		BFD2991F211B915F0075B607 /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				BFD29920211B91FB0075B607 /* SnakeAnimation.swift */,
+				BFD29922211B92090075B607 /* SnakeAnimationOptions.swift */,
+				BFD29924211B92320075B607 /* MFTAnimation.swift */,
+				BFD29926211B931A0075B607 /* AnimationListener.swift */,
+				BFD29928211B94240075B607 /* AnimationOptions.swift */,
+				BFD2992A211C98410075B607 /* RouteEvaluator.swift */,
+				BFD2992C211C99290075B607 /* PolylineAnimation.swift */,
+			);
+			path = Animation;
+			sourceTree = "<group>";
+		};
 		C73CC8F71CEBA7572C73C8257DB67F46 /* Mapfit */ = {
 			isa = PBXGroup;
 			children = (
+				BFD2991F211B915F0075B607 /* Animation */,
 				BF1871DE210A45EF00E2731D /* Camera */,
 				7AADB0B7A88CA160F4ACFA98DF2D672A /* API */,
 				BEB03E99CFAAEB8C1E30A85CA25E4556 /* Extensions */,
@@ -846,12 +875,15 @@
 				6FB98C7F5601DB45C05DB54CB51ACD8A /* APPLFrameworkExtentions.swift in Sources */,
 				BF1871E7210A45EF00E2731D /* Cinematography.swift in Sources */,
 				AA6931D2385BE544A0813F7BA6A65319 /* BundleExtension.swift in Sources */,
+				BFD29929211B94240075B607 /* AnimationOptions.swift in Sources */,
 				E08693C2A31C95A0C4DC891FEDC6A7E5 /* DecodeFunctions.swift in Sources */,
 				974DF4148FEA04F5BAA900C88B1052A8 /* DictionaryExtensions.swift in Sources */,
 				BFD2991E211B89350075B607 /* BuildingExtruder.swift in Sources */,
 				36B2C9F7A499B645F4089133D5FCCA2C /* LocationCorrectionEngine.swift in Sources */,
 				BB3FAC6B7E11BD25624F32334D7033F9 /* Mapfit-dummy.m in Sources */,
+				BFD29927211B931A0075B607 /* AnimationListener.swift in Sources */,
 				6D19B6B924EE3989790366AEE4BC7CEC /* MFTAnnotations.swift in Sources */,
+				BFD29923211B92090075B607 /* SnakeAnimationOptions.swift in Sources */,
 				5DD996FBA1C4B67316A9CEF4F99C2FEE /* MFTAPIObjects.swift in Sources */,
 				C6CF518FDB42102A8C9FFEF4DA57E1A2 /* MFTBuildingOptions.swift in Sources */,
 				C31BFAABA1BED6E8F8157C1AA0154054 /* MFTDirections.swift in Sources */,
@@ -868,6 +900,7 @@
 				913C76EDE9CD6CFED0AF10C1F68E6D16 /* MFTMarker.swift in Sources */,
 				A5C9FFCAAEECA31F1DF0246FDA2016B4 /* MFTMarkerOptions.swift in Sources */,
 				62F40313C2427828F16AAB725CA9BF73 /* MFTPlaceInfo.swift in Sources */,
+				BFD2992D211C99290075B607 /* PolylineAnimation.swift in Sources */,
 				38A8A5D767122AE3819193476FEB77C5 /* MFTPlaceInfoAdapter.swift in Sources */,
 				F616C77235C8E1D7926560E771CE4FE0 /* MFTPlaceInfoView.swift in Sources */,
 				3A59388573DA93818D1539933315DEE0 /* MFTPolygon.swift in Sources */,
@@ -880,8 +913,11 @@
 				BF1871E8210A45EF00E2731D /* OrbitAnimation.swift in Sources */,
 				6B388E51623E549B75312ACB8BA0F10E /* MFTThemes.swift in Sources */,
 				DA6C09649CA9642964646780AF8A7727 /* MFTZoomButtonView.swift in Sources */,
+				BFD2992B211C98410075B607 /* RouteEvaluator.swift in Sources */,
 				0999470FA6B1EAF5468F676EA6855BFE /* StyleGuide.swift in Sources */,
+				BFD29925211B92320075B607 /* MFTAnimation.swift in Sources */,
 				EFB3634C4EB3960E76063A292E0AFE47 /* TangramExtensions.swift in Sources */,
+				BFD29921211B91FB0075B607 /* SnakeAnimation.swift in Sources */,
 				BF1871E4210A45EF00E2731D /* OrbitTrajectory.swift in Sources */,
 				7D4189BFAAD7B8090EDA515C172BA993 /* UIKitExtensions.swift in Sources */,
 				BF1871E6210A45EF00E2731D /* CameraProtocols.swift in Sources */,

@@ -95,7 +95,7 @@ public class MFTPolyline : NSObject, MFTAnnotation {
     internal var tgPolyline: TGGeoPolyline?  {
         didSet {
             guard let tg  = tgPolyline else { return }
-            for point in points[0] {
+            for point in points {
                 tg.add(TGGeoPoint(longitude: point.longitude, latitude: point.latitude))
             }
             
@@ -122,10 +122,10 @@ public class MFTPolyline : NSObject, MFTAnnotation {
     /**
      Returns an array of the points defining the polyline outline.
      */
-    public var points: [[CLLocationCoordinate2D]] = [[]]
+    public var points: [CLLocationCoordinate2D] = []
     
     
-    public func addPoints(_ points: [[CLLocationCoordinate2D]]){
+    public func addPoints(_ points: [CLLocationCoordinate2D]){
         self.points = points
     }
     
@@ -153,10 +153,8 @@ public class MFTPolyline : NSObject, MFTAnnotation {
     
     public func getLatLngBounds()->MFTLatLngBounds{
         var latLngBounds = MFTLatLngBounds.Builder()
-        for point in self.points{
-            for coordinate in point {
+        for coordinate in self.points{
                 latLngBounds.add(latLng: coordinate)
-            }
         }
         
         return latLngBounds.build()

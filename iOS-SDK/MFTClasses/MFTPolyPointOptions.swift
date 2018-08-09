@@ -16,5 +16,5 @@ public protocol MFTPolyPointOptions {
     func setDrawOrder(_ order: Int)
     func setLineCapType(_ type: MFTLineCapType)
     func setLineJoinType(_ type: MFTLineJoinType)
-    func addPoints(_ points: [[CLLocationCoordinate2D]])
+    //func addPoints(_ points: [[CLLocationCoordinate2D]])
 }

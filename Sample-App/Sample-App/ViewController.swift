@@ -34,9 +34,42 @@ class ViewController: UIViewController {
     
     @objc func leftButtonTapped(){
         
-        let buildingOptions = MFTBuildingOptions()
-            self.mapview?.extrudeBuildings(latLngs: [CLLocationCoordinate2D(latitude: 40.702238, longitude: -73.987440), CLLocationCoordinate2D(latitude: 40.701953719842678, longitude: -73.988017183898293)], buildingOptions: buildingOptions)
+        struct animListener: AnimationListener {
+            func onStart(animatable: Animatable) {
+                
+            }
+            
+            func onFinish(animatable: Animatable) {
+                
+            }
+ 
+        }
+        
+        var snakeAnimationOptions = SnakeAnimationOptions()
+        snakeAnimationOptions.duration(<#T##duration: Int##Int#>)
+        snakeAnimationOptions.interpolator(Interpolator)
+        snakeAnimationOptions.animationListener(animListener)
+
+        var snakeAnimation = SnakeAnimation(snakeAnimationOptions)
+        var polylineOptions = MFTPolylineOptions()
+
+        var polyline = mapview?.addPolyline(options: polylineOptions)
+
+       // polyline.animation.start
+//
+        
+        
+        
+        
     }
+        
+        
+    
+   
+        
+//        let buildingOptions = MFTBuildingOptions()
+//            self.mapview?.extrudeBuildings(latLngs: [CLLocationCoordinate2D(latitude: 40.702238, longitude: -73.987440), CLLocationCoordinate2D(latitude: 40.701953719842678, longitude: -73.988017183898293)], buildingOptions: buildingOptions)
+//    }
     
     func setBounds(){
         

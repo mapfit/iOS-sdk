@@ -124,7 +124,7 @@ public class MFTDirectionsOptions {
         guard let path = decodePolyline(shape) else { return }
         
         let opt = options ?? MFTPolylineOptions()
-        opt.addpoints([path])
+        opt.addpoints(path)
         let polyline = mapView?.addPolyline(options: opt)
         completion(polyline, nil)
         

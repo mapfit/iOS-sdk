@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../iOS-SDK/MFTClasses/MFTMapView.swift"
-            timestampString = "555452740.657146"
+            timestampString = "555545682.477865"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1709"
-            endingLineNumber = "1709"
+            startingLineNumber = "1708"
+            endingLineNumber = "1708"
             landmarkName = "updateSceneAsync(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../iOS-SDK/MFTClasses/MFTMapView.swift"
-            timestampString = "555452740.6572551"
+            timestampString = "555545682.4779871"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1456"
-            endingLineNumber = "1456"
+            startingLineNumber = "1455"
+            endingLineNumber = "1455"
             landmarkName = "mapView(_:didLoadScene:withError:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../iOS-SDK/MFTClasses/MFTMapView.swift"
-            timestampString = "555452740.657316"
+            timestampString = "555545682.478042"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1740"
-            endingLineNumber = "1740"
+            startingLineNumber = "1739"
+            endingLineNumber = "1739"
             landmarkName = "mapView(_:didSelectFeature:atScreenPosition:)"
             landmarkType = "7">
          </BreakpointContent>

@@ -25,9 +25,11 @@ public class MFTPolylineOptions : NSObject, MFTPolyPointOptions{
     internal var drawOrder: Int
     internal var lineCapType: MFTLineCapType
     internal var lineJoinType: MFTLineJoinType
-    internal var points: [[CLLocationCoordinate2D]]
+    internal var points: [CLLocationCoordinate2D]
     
-    public func addpoints(_ points: [[CLLocationCoordinate2D]]){
+    internal var animation: PolylineAnimation? = nil
+    
+    public func addpoints(_ points: [CLLocationCoordinate2D]){
         self.points = points
     }
 
@@ -66,9 +68,13 @@ public class MFTPolylineOptions : NSObject, MFTPolyPointOptions{
      Adds new point to the polyline.
      - parameter point: The new point to be drawn in the polyline.
      */
-    public func addPoints(_ points: [[CLLocationCoordinate2D]]){
+    public func addPoints(_ points: [CLLocationCoordinate2D]){
         self.points = points
     }
+    
+    
+    //func <T: PolylineAnimation> animation(_ animation: T): p
+    
 
 //Default Init
 override public init() {
@@ -79,7 +85,7 @@ override public init() {
     drawOrder = 501
     lineCapType = .bound
     lineJoinType = .round
-    points = [[]]
+    points = []
     super.init()
     
 }

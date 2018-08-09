@@ -876,8 +876,7 @@ open class MFTMapView: UIView {
     }
     
     private func drawPolyline(polyline: MFTPolyline){
-        let points = polyline.points[0]
-        for point in points {
+        for point in polyline.points {
             polyline.tgPolyline?.add(TGGeoPointMake(point.longitude, point.latitude))
         }
     }
