@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/zain/Desktop/iOS-sdk/iOS-SDK/MFTClasses/BuildingExtruder.swift">
-   </FileRef>
-   <FileRef
       location = "group:Sample-App.xcodeproj">
    </FileRef>
    <FileRef

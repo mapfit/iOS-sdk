@@ -86,7 +86,6 @@
 		BF1871E6210A45EF00E2731D /* CameraProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1871E1210A45EF00E2731D /* CameraProtocols.swift */; };
 		BF1871E7210A45EF00E2731D /* Cinematography.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1871E2210A45EF00E2731D /* Cinematography.swift */; };
 		BF1871E8210A45EF00E2731D /* OrbitAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1871E3210A45EF00E2731D /* OrbitAnimation.swift */; };
-		BF2EFE34211389CB001B8B2D /* BuildingExtruder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2EFE33211389CB001B8B2D /* BuildingExtruder.swift */; };
 		BFD2991E211B89350075B607 /* BuildingExtruder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2991D211B89350075B607 /* BuildingExtruder.swift */; };
 		C18E0D39288206115B555CD73D3A3467 /* currentLocation@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9AAECA925750ABA8E1202FD3DF3EDA7A /* currentLocation@3x.png */; };
 		C31BFAABA1BED6E8F8157C1AA0154054 /* MFTDirections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2451BB80E516C824E71337A8808941EB /* MFTDirections.swift */; };
@@ -244,7 +243,6 @@
 		BF1871E1210A45EF00E2731D /* CameraProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraProtocols.swift; sourceTree = "<group>"; };
 		BF1871E2210A45EF00E2731D /* Cinematography.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cinematography.swift; sourceTree = "<group>"; };
 		BF1871E3210A45EF00E2731D /* OrbitAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrbitAnimation.swift; sourceTree = "<group>"; };
-		BF2EFE33211389CB001B8B2D /* BuildingExtruder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingExtruder.swift; sourceTree = "<group>"; };
 		BFD2991D211B89350075B607 /* BuildingExtruder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BuildingExtruder.swift; path = "/Users/zain/Desktop/iOS-sdk/iOS-SDK/MFTClasses/BuildingExtruder.swift"; sourceTree = "<absolute>"; };
 		C089C442D50195E72317D50A4DF452A9 /* Pods-Sample-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Sample-App.release.xcconfig"; sourceTree = "<group>"; };
 		C2B4D9955D9DD9244C8A1680EC4BF78D /* location.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = location.png; path = "iOS-SDK/houseStyles.bundle/location.png"; sourceTree = "<group>"; };
@@ -567,7 +565,6 @@
 				FA46FC3FC2CEF10638065DED2A7CBFD7 /* MFTAnnotations.swift */,
 				D8C020D38A1358BF8B92552750D736A6 /* MFTBuildingOptions.swift */,
 				855F75EE085953C03FE6F4C83DBCEB92 /* MFTDirectionsOptions.swift */,
-				BF2EFE33211389CB001B8B2D /* BuildingExtruder.swift */,
 				4E5B381766070F7BE006EFD07BBFB4BA /* MFTEaseType.swift */,
 				B062D00B4A19A14545E58D58C6CE4BD4 /* MFTLatLngBounds.swift */,
 				83AC81FA6DA1EC477AA2C275C5FBFAFD /* MFTLayer.swift */,
@@ -842,7 +839,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF2EFE34211389CB001B8B2D /* BuildingExtruder.swift in Sources */,
 				6FB98C7F5601DB45C05DB54CB51ACD8A /* APPLFrameworkExtentions.swift in Sources */,
 				BF1871E7210A45EF00E2731D /* Cinematography.swift in Sources */,
 				AA6931D2385BE544A0813F7BA6A65319 /* BundleExtension.swift in Sources */,

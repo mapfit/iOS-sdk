@@ -473,7 +473,7 @@ class Sample_AppTests: XCTestCase {
     
     func testInitializingMapWithCustomTheme(){
         
-        if let path = Bundle.main.path(forResource: "mapfit-day", ofType: "yaml")  {
+        if let path = Bundle.main.path(forResource: "day-theme", ofType: "yaml")  {
             self.mapView = MFTMapView(frame: .zero, customMapStyle: "file:///\(path)")
         }
         XCTAssertEqual(mapView.mapOptions.getTheme(), .custom, file: "custom theme now set")
