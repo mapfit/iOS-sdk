@@ -15,6 +15,12 @@ class ViewController: UIViewController {
     let button: UIButton = UIButton()
     var mapview: MFTMapView?
     var polygon: MFTPolygon?
+    
+     var orbitTrajectory = OrbitTrajectory()
+     var orbitAnimation:  Cinematography? = nil
+     var cameraAnimation: CameraAnimation? = nil
+  
+    
 
     
     func setupNav(){
@@ -27,12 +33,10 @@ class ViewController: UIViewController {
     }
     
     @objc func leftButtonTapped(){
-        let markerOptions = MFTMarkerOptions()
-        markerOptions.setStreetAddress(streetAddress: "119 w 24th street ny, ny", geocode: true)
-        markerOptions.setIcon(.airport)
-        mapview?.addMarker(markerOptions, completion: { (marker, error) in
+
         
-        })
+        let buildingOptions = MFTBuildingOptions()
+            self.mapview?.extrudeBuildings(latLngs: [CLLocationCoordinate2D(latitude: 40.702238, longitude: -73.987440), CLLocationCoordinate2D(latitude: 40.701953719842678, longitude: -73.988017183898293)], buildingOptions: buildingOptions)
     }
     
     func setBounds(){
@@ -40,29 +44,67 @@ class ViewController: UIViewController {
     }
     
     @objc func rightButtonTapped(){
-        if !(mapview?.mapOptions.getTheme() == .night){
-            self.mapview?.mapOptions.setTheme(theme: .night)
-        }else{
-            self.mapview?.mapOptions.setTheme(theme: .day)
-        }
+        
+        
+        self.mapview?.flattenBuilding(latLngs: [CLLocationCoordinate2D(latitude: 40.702238, longitude: -73.987440), CLLocationCoordinate2D(latitude: 40.701953719842678, longitude: -73.988017183898293)])
+        
+//        let callBack: ()->AnimationCallback = {
+//            struct c : AnimationCallback {
+//                func onStart() {
+//                    // invoked when the animation is started
+//                }
+//
+//                func onFinish() {
+//                    // invoked when the animation has ended
+//                }
+//            }
+//
+//            return c() as AnimationCallback
+//        }
+//
+//        let pivotPosition = CLLocationCoordinate2D(latitude: 40.743502, longitude: -73.991667)
+//        // define the options for the animation
+//
+//        orbitTrajectory.loop(loop: false)
+//        orbitTrajectory.pivot(position: pivotPosition, centerToPivot: true, duration: 1, easeType: .quartIn)
+//        orbitTrajectory.duration(duration: 10)
+//        orbitTrajectory.tiltTo(angle: 2, duration: 4, easeType: .linear)
+//        orbitTrajectory.zoomTo(zoomLevel: 15, duration: 2, easeType: .expInOut)
+//        orbitTrajectory.speedMultiplier(multiplier: 2) /* positive values will rotate anti-clockwise whereas negative values will rotate clockwise */
+//
+//        // create the animation
+//        if let mapview = self.mapview {
+//            self.orbitAnimation = Cinematography(mapview)
+//
+//            self.cameraAnimation = self.orbitAnimation?.create(cameraOptions: orbitTrajectory, cameraAnimationCallback: callBack)
+//            self.cameraAnimation?.start()
+//
+//            //stop the animation
+//            //animation.stop()
+//
+//        }
         
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+//        if let path = Bundle.main.path(forResource: "day-theme", ofType: "yaml")  {
+//            self.mapview = MFTMapView(frame: view.bounds, customMapStyle: "file://\(path)")
+//        }
+        
         self.mapview = MFTMapView(frame: view.bounds)
-        mapview?.markerSelectDelegate = self
-        mapview?.singleTapGestureDelegate = self
         
-        
-        setupNav()
-
        
+        setupNav()
         if let mapview = self.mapview {
+            
+    
+            
             view.addSubview(mapview)
-            mapview.setZoom(zoomLevel: 15)
-            mapview.setCenter(position: CLLocationCoordinate2D(latitude: 40.74405, longitude: -73.99324))
+            mapview.setZoom(zoomLevel: 17)
+            mapview.setCenter(position: CLLocationCoordinate2D(latitude: 40.702238, longitude: -73.987440))
         }
  
 
@@ -73,34 +115,15 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-}
-
-
-extension ViewController : MapMarkerSelectDelegate {
-    
-    func mapView(_ view: MFTMapView, didSelectMarker marker: MFTMarker, atScreenPosition position: CGPoint) {
-        if let mapview = self.mapview {
-        
-        }
-    }
-    
-    
-}
-
-extension ViewController : MapSingleTapGestureDelegate {
-    
-    
-    func mapView(_ view: MFTMapView, recognizer: UIGestureRecognizer, shouldRecognizeSingleTapGesture location: CGPoint) -> Bool {
-        return true
-    }
-    
-    func mapView(_ view: MFTMapView, recognizer: UIGestureRecognizer, didRecognizeSingleTapGesture location: CGPoint) {
-
-    }
     
     
     
 }
+
+
+
+
+
 
 
     

@@ -38,6 +38,7 @@ public struct Viewport: Decodable {
 public struct Building: Decodable {
    public var coordinates : [[[Double]]]?
    public var type: String?
+    
 }
 
 public struct Route : Decodable {

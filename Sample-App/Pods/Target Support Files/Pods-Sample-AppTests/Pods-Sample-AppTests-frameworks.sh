@@ -135,11 +135,11 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Mapfit/Mapfit.framework"
-  install_framework "${PODS_ROOT}/Tetragon-mobile/tetragon-release-1.2/TangramMap.framework"
+  install_framework "${PODS_ROOT}/Tetragon-mobile/tetragon-release-1.3.1/TangramMap.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Mapfit/Mapfit.framework"
-  install_framework "${PODS_ROOT}/Tetragon-mobile/tetragon-release-1.2/TangramMap.framework"
+  install_framework "${PODS_ROOT}/Tetragon-mobile/tetragon-release-1.3.1/TangramMap.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait

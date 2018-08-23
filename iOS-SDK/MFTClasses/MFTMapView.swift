@@ -1,4 +1,3 @@
-//
 //  MFTMapView.swift
 //  iOS.SDK
 //
@@ -32,6 +31,8 @@ open class MFTMapView: UIView {
     private var dataMFTLayer: TGMapData?
     private var placeMarkMarker: MFTMarker?
     private var placeInfoTapGesture = UITapGestureRecognizer()
+    internal var extrudedBuildingIds = [String : String]()
+    
     
     /// The current center of the map.
     internal var position: CLLocationCoordinate2D
@@ -150,7 +151,8 @@ open class MFTMapView: UIView {
     
     //Legal Notices button
     lazy var legalButton: UIButton = UIButton()
-
+    
+    private var buildingExtruder: BuildingExtruder?
     
     
     //MARK: - Creating Instances
@@ -177,7 +179,9 @@ open class MFTMapView: UIView {
         self.rotation = 0
         self.tilt = 0
         
+        
         super.init(frame: frame)
+        self.buildingExtruder = BuildingExtruder(mapView: self)
         self.directionsOptions.setMapView(self)
         self.mapOptions.setMapView(mapView: self)
         self.mapOptions.setTheme(theme: .day)
@@ -203,6 +207,7 @@ open class MFTMapView: UIView {
         self.directionsOptions.setMapView(self)
         self.mapOptions = MFTMapOptions(mapView: self)
         self.mapOptions.setTheme(theme: mapStyle)
+        //self.buildingExtruder = BuildingExtruder(mapView: self)
     }
     
     public init(frame: CGRect, customMapStyle: String) {
@@ -222,6 +227,7 @@ open class MFTMapView: UIView {
         self.tilt = 0
         
         super.init(frame: frame)
+        self.buildingExtruder = BuildingExtruder(mapView: self)
         self.directionsOptions.setMapView(self)
         self.mapOptions.setMapView(mapView: self)
         self.mapOptions.setTheme(theme: .custom)
@@ -246,28 +252,22 @@ open class MFTMapView: UIView {
     /**
      Changes the center coordinate of the map.
      - parameter position: The center coordinate of the map.
-     */
-    
-    public func setCenter(position: CLLocationCoordinate2D){
-        tgMapView.position = TGGeoPointMake(position.longitude, position.latitude)
-        self.position = position
-    }
-    
-    
-    /**
-     Changes the center coordinate of the map.
-     - parameter position: The center coordinate of the map.
      - parameter duration: The duration of the centering animation.
      */
     
-    public func setCenter(position: CLLocationCoordinate2D, duration: Float){
+    public func setCenter(position: CLLocationCoordinate2D, duration: Float = 0, easeType: MFTEaseType = .quartInOut){
+        if duration == 0 {
+             tgMapView.position = TGGeoPointMake(position.longitude, position.latitude)
+        }
         self.position = position
-        tgMapView.animate(toPosition: TGGeoPointMake(position.longitude, position.latitude), withDuration: duration, with: .cubic)
+        tgMapView.animate(toPosition: TGGeoPointMake(position.longitude, position.latitude), withDuration: duration, with: TGEaseType(rawValue: easeType.hashValue) ?? .quartInOut)
+        
+        
         
     }
     
-    private func animateTocenter(position: CLLocationCoordinate2D, duration: Float){
-        tgMapView.animate(toPosition: TGGeoPointMake(position.longitude, position.latitude), withDuration: duration, with: .cubic)
+    private func animateTocenter(position: CLLocationCoordinate2D, duration: Float, easeType: MFTEaseType){
+        tgMapView.animate(toPosition: TGGeoPointMake(position.longitude, position.latitude), withDuration: duration, with: TGEaseType(rawValue: easeType.hashValue) ?? .quartInOut)
     }
     
     /**
@@ -275,7 +275,7 @@ open class MFTMapView: UIView {
      */
     
     public func reCenter(){
-        tgMapView.animate(toPosition: TGGeoPointMake(position.longitude, position.latitude), withDuration: easeDuration, with: .cubic)
+        tgMapView.animate(toPosition: TGGeoPointMake(position.longitude, position.latitude), withDuration: easeDuration, with: .quartInOut)
     }
     
     /**
@@ -286,7 +286,7 @@ open class MFTMapView: UIView {
      - parameter duration: The duration of the centering animation.
      */
     
-    public func setCenterWithOffset(latLng: CLLocationCoordinate2D, offsetX: CGFloat, offsetY: CGFloat, duration: Float){
+    public func setCenterWithOffset(latLng: CLLocationCoordinate2D, offsetX: CGFloat, offsetY: CGFloat, duration: Float = 0, easeType: MFTEaseType = .quartInOut){
         var screenPosition = latLng.toPoint(zoomLevel: self.getZoom())
         
         screenPosition.x += offsetX / UIScreen.main.scale
@@ -294,7 +294,7 @@ open class MFTMapView: UIView {
         
         let geoPosition = screenPosition.toCLLocationCoordinate2D(zoomLevel: self.getZoom())
         
-        setCenter(position: geoPosition, duration: duration)
+        setCenter(position: geoPosition, duration: duration, easeType: easeType)
     }
     
     private func computeOffsetToPoint(from: CLLocationCoordinate2D, distance: Double, heading: Double) -> CLLocationCoordinate2D {
@@ -325,29 +325,10 @@ open class MFTMapView: UIView {
     /**
      Changes the zoom level of the map.
      - parameter zoomLevel: The new zoom level of the map.
-     */
-    
-    public func setZoom(zoomLevel: Float){
-        var zoomL = zoomLevel
-        if zoomLevel > mapOptions.getMaxZoomLevel() {
-            zoomL = mapOptions.getMaxZoomLevel()
-        }
-        
-        if zoomLevel < mapOptions.getMinZoomLevel() {
-            zoomL = mapOptions.getMinZoomLevel()
-        }
-        
-        self.tgMapView.zoom = zoomL
-        self.zoom = zoomL
-    }
-    
-    /**
-     Changes the zoom level of the map.
-     - parameter zoomLevel: The new zoom level of the map.
      - parameter duration: The duration of the zooming animation.
+     - parameter duration: The easeType for the animation. 
      */
-    
-    public func setZoom(zoomLevel: Float, duration: Float){
+    public func setZoom(zoomLevel: Float, duration: Float = 0, easeType: MFTEaseType = .quartInOut){
         var zoomL = zoomLevel
         if zoomLevel > mapOptions.getMaxZoomLevel() {
             zoomL = mapOptions.getMaxZoomLevel()
@@ -358,10 +339,13 @@ open class MFTMapView: UIView {
         }
         
         self.zoom = zoomL
-        tgMapView.animate(toZoomLevel: zoomL, withDuration: duration, with: .cubic)
+        if duration == 0 {
+            self.tgMapView.zoom = zoomL
+        }
         
+        tgMapView.animate(toZoomLevel: zoomL, withDuration: duration, with: TGEaseType(rawValue: easeType.hashValue) ?? .quartInOut)
     }
-    
+
     /**
      Returns the zoom level of the map.
      - returns: The zoom level of the map.
@@ -370,26 +354,21 @@ open class MFTMapView: UIView {
     public func getZoom() -> Float {
         return self.zoom
     }
-    
-    /**
-     Changes the tilt level of the map.
-     - parameter tiltLevel: The new tilt level of the map.
-     */
-    
-    public func setTilt(tiltValue: Float){
-        self.tilt = tiltValue
-        tgMapView.tilt = tiltValue
-    }
+
     
     /**
      Changes the tilt level of the map.
      - parameter tiltLevel: The new tilt level of the map.
      - parameter duration: The duration of the tilt animation.
+     - parameter easeType: The easeType of the animation.
      */
     
-    public func setTilt(tiltValue: Float, duration: Float){
+    public func setTilt(tiltValue: Float, duration: Float = 0, easeType: MFTEaseType = .quartInOut){
         self.tilt = tiltValue
-        tgMapView.animate(toTilt: tiltValue, withDuration: duration)
+        if duration == 0 {
+              tgMapView.tilt = tiltValue
+        }
+        tgMapView.animate(toTilt: tiltValue, withDuration: duration, with: TGEaseType(rawValue: easeType.hashValue) ?? .quartInOut)
     }
     
     /**
@@ -400,26 +379,20 @@ open class MFTMapView: UIView {
     public func getTilt()->Float{
         return tgMapView.tilt
     }
-    
-    /**
-     Changes the rotation value of the map.
-     - parameter rotationValue: The new rotation value of the map.
-     */
-    
-    public func setRotation(rotationValue: Float){
-        self.rotation = rotationValue
-        tgMapView.rotation = rotationValue
-    }
-    
+
     /**
      Changes the rotation value of the map.
      - parameter rotationValue: The new rotation value of the map.
      - parameter duration: The duration of the rotation animation.
+     - parameter easeType: The easeType of the animation.
      */
     
-    public func setRotation(rotationValue: Float, duration: Float){
+    public func setRotation(rotationValue: Float, duration: Float = 0, easeType: MFTEaseType = .quartInOut){
         self.rotation = rotationValue
-        tgMapView.animate(toRotation: rotationValue, withDuration: duration, with: .cubic)
+        if duration == 0 {
+           tgMapView.rotation = rotationValue
+        }
+            self.tgMapView.animate(toRotation: rotationValue, withDuration: duration, with: TGEaseType(rawValue: easeType.hashValue) ?? .quartInOut)
     }
     
     /**
@@ -428,21 +401,9 @@ open class MFTMapView: UIView {
      */
     
     public func getRotation()->Float{
-        return tgMapView.rotation
+        return self.rotation
     }
     
-    
-    /**
-     Changes the map view to fit the given coordinate bounds.
-     - parameter bounds: The bounds coordinates for the new view.
-     - parameter padding: The minimum padding that will be visible around the given coordinate bounds.
-     */
-    
-    public func setLatLngBounds(bounds: MFTLatLngBounds, padding: Float){
-        let pair = bounds.getVisibleBounds(viewWidth: Float(tgMapView.view.bounds.width * UIScreen.main.scale), viewHeight: Float(tgMapView.view.bounds.height * UIScreen.main.scale), padding: padding)
-        self.setCenter(position: CLLocationCoordinate2D(latitude: pair.0.latitude, longitude: pair.0.longitude))
-        self.setZoom(zoomLevel: pair.1)
-    }
     
     /**
      Changes the map view to fit the given coordinate bounds.
@@ -451,12 +412,12 @@ open class MFTMapView: UIView {
      - parameter duration: The duration animation duration for the setting of the lat lng bounds.
      */
     
-    public func setLatLngBounds(bounds: MFTLatLngBounds, padding: Float, duration: Float){
+    public func setLatLngBounds(bounds: MFTLatLngBounds, padding: Float = 0, duration: Float = 0, easeType: MFTEaseType = .quartInOut){
         let pair = bounds.getVisibleBounds(viewWidth: Float(tgMapView.view.bounds.width * UIScreen.main.scale), viewHeight: Float(tgMapView.view.bounds.height * UIScreen.main.scale), padding: padding)
         let queue: OperationQueue = OperationQueue()
         queue.maxConcurrentOperationCount = (2)
-        queue.addOperation({self.setCenter(position: CLLocationCoordinate2D(latitude: pair.0.latitude, longitude: pair.0.longitude), duration: duration)})
-        queue.addOperation({self.setZoom(zoomLevel: pair.1, duration: duration)})
+        queue.addOperation({self.setCenter(position: CLLocationCoordinate2D(latitude: pair.0.latitude, longitude: pair.0.longitude), duration: duration, easeType: easeType)})
+        queue.addOperation({self.setZoom(zoomLevel: pair.1, duration: duration, easeType: easeType)})
     }
     
     /**
@@ -926,6 +887,10 @@ open class MFTMapView: UIView {
         tgMapView.mapViewDelegate = self
         tgMapView.gestureDelegate = self
         zoomButtonsView.delegate = self
+        self.featureSelectDelegate = self
+        
+        
+        
     }
     
     private func setUpView(frame: CGRect, position: CLLocationCoordinate2D, customTheme: String?){
@@ -1117,11 +1082,11 @@ open class MFTMapView: UIView {
     
     
     @objc private func zoomPlusButtonTapped(){
-        tgMapView.animate(toZoomLevel:zoom + 1, withDuration: easeDuration, with: .cubic)
+        tgMapView.animate(toZoomLevel:zoom + 1, withDuration: easeDuration, with: .quartInOut)
     }
     
     @objc private func zoomMinusButtonTapped(){
-        tgMapView.animate(toZoomLevel: zoom - 1, withDuration: easeDuration, with: .cubic)
+        tgMapView.animate(toZoomLevel: zoom - 1, withDuration: easeDuration, with: .quartInOut)
     }
     
     @objc private func recenterButtonTapped(){
@@ -1135,8 +1100,8 @@ open class MFTMapView: UIView {
         
         let queue: OperationQueue = OperationQueue()
         queue.maxConcurrentOperationCount = (2)
-        queue.addOperation({self.tgMapView.animate(toPosition: TGGeoPointMake(locationMarker.position.longitude, locationMarker.position.latitude), withDuration: self.easeDuration, with: .cubic)})
-        queue.addOperation({self.tgMapView.animate(toZoomLevel: 17, withDuration: self.easeDuration, with: .cubic)})
+        queue.addOperation({self.tgMapView.animate(toPosition: TGGeoPointMake(locationMarker.position.longitude, locationMarker.position.latitude), withDuration: self.easeDuration, with: .quartInOut)})
+        queue.addOperation({self.tgMapView.animate(toZoomLevel: 17, withDuration: self.easeDuration, with: .quartInOut)})
         
         mapOptions.adjustAccuracyCircle()
         
@@ -1162,7 +1127,7 @@ open class MFTMapView: UIView {
     }
     
     @objc private func compassButtonTapped(){
-        tgMapView.animate(toRotation: 0, withDuration: easeDuration, with: .cubic)
+        tgMapView.animate(toRotation: 0, withDuration: easeDuration, with: .quartInOut)
         
         UIView.animate(withDuration: 0.2) { // convert from degrees to radians
             self.compassButton.imageView?.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
@@ -1220,31 +1185,7 @@ extension MFTMapView : TGMapViewDelegate, MapPlaceInfoSelectDelegate {
         
         
     }
-    
 
-    
-    open func mapView(_ mapView: TGMapViewController, didSelectFeature feature: [String : String]?, atScreenPosition position: CGPoint) {
-        guard let feature = feature else { return }
-        featureSelectDelegate?.mapView(self, didSelectFeature: feature, atScreenPosition: position)
-        guard let featureID = feature["uuid"] else { return }
-        
-        for annotation in currentAnnotations {
-            if annotation.key.uuidString == featureID {
-                
-                
-                if feature["type"] == "polygon" {
-                    polygonSelectDelegate?.mapView(self, didSelectPolygon: annotation.value as! MFTPolygon, atScreenPosition: position)
-                }
-                
-                
-                if feature["type"] == "polyline" {
-                    polylineSelectDelegate?.mapView(self, didSelectPolyline: annotation.value as! MFTPolyline, atScreenPosition: position)
-                }
-            }
-        }
-        
-    }
-    
     open func mapView(_ mapView: TGMapViewController, didSelectLabel labelPickResult: TGLabelPickResult?, atScreenPosition position: CGPoint) {
         guard let labelPickResult = labelPickResult else { return }
         labelSelectDelegate?.mapView(self, didSelectLabel: labelPickResult, atScreenPosition: position)
@@ -1265,7 +1206,7 @@ extension MFTMapView : TGMapViewDelegate, MapPlaceInfoSelectDelegate {
                 return
             }
             
-            self.animateTocenter(position: marker.getPosition(), duration: 0.5)
+            self.animateTocenter(position: marker.getPosition(), duration: 0.5, easeType: MFTEaseType.quartInOut)
             if !(marker.title == "") || !(marker.subtitle1 == "") || !(marker.subtitle2 == "") {
                 createMFTPlaceInfoView(marker: marker)
             }
@@ -1636,11 +1577,6 @@ extension MFTMapView {
     
 }
 
-
-
-
-
-
 extension MFTMapView {
     
     private func setMFTPlaceInfoViewSize() -> CGSize{
@@ -1698,11 +1634,12 @@ extension MFTMapView  {
 
 extension MFTMapView: MFTZoomButtonsViewDelegate {
     func plusButtonTapped(_ sender: AnyObject) {
-        tgMapView.animate(toZoomLevel:zoom + 1, withDuration: easeDuration, with: .cubic)
+        tgMapView.animate(toZoomLevel:zoom + 1, withDuration: easeDuration, with: .quartInOut)
+       
     }
     
     func minusButtonTapped(_ sender: AnyObject) {
-        tgMapView.animate(toZoomLevel: zoom - 1, withDuration: easeDuration, with: .cubic)
+        tgMapView.animate(toZoomLevel: zoom - 1, withDuration: easeDuration, with: .quartInOut)
     }
 }
 
@@ -1747,7 +1684,8 @@ extension MFTMapView {
      - returns: CLLocationCoordinate of the given point.
      */
    public func screenPositionToLatLng(_ point: CGPoint) -> CLLocationCoordinate2D{
-        return point.toCLLocationCoordinate2D(zoomLevel: self.getZoom())
+        let tg = tgMapView.screenPosition(toLngLat: point)
+        return CLLocationCoordinate2D(latitude: tg.latitude, longitude: tg.longitude)
     }
     
     /**
@@ -1756,10 +1694,83 @@ extension MFTMapView {
      - returns: CGPoint of the given CLLocationCoordinate.
      */
     public func latLngToScreenPosition(_ latLng: CLLocationCoordinate2D) -> CGPoint{
-        return latLng.toPoint(zoomLevel: self.getZoom())
+        return tgMapView.lngLat(toScreenPosition: TGGeoPoint(coordinate: latLng))
     }
     
 }
+
+extension MFTMapView {
+    
+    public func updateSceneAsync(_ updates: [MFTSceneUpdate]) {
+        var tgUpdates = [TGSceneUpdate]()
+        for update in updates {
+            tgUpdates.append(TGSceneUpdate(path: update.path, value: update.value))
+        }
+        tgMapView.updateSceneAsync(tgUpdates)
+    }
+    
+    
+}
+
+extension MFTMapView : MapFeatureSelectDelegate {
+    
+    open func mapView(_ mapView: TGMapViewController, didSelectFeature feature: [String : String]?, atScreenPosition position: CGPoint) {
+        guard let unWrappedFeature = feature else { return }
+        featureSelectDelegate?.mapView(self, didSelectFeature: unWrappedFeature, atScreenPosition: position)
+    }
+    
+    
+    func mapView(_ view: MFTMapView, didSelectFeature feature: [String : String], atScreenPosition position: CGPoint) {
+        
+        if let featureID = feature["uuid"]  {
+            for annotation in currentAnnotations {
+                if annotation.key.uuidString == featureID {
+                    if feature["type"] == "polygon" {
+                        polygonSelectDelegate?.mapView(self, didSelectPolygon: annotation.value as! MFTPolygon, atScreenPosition: position)
+                    }
+                    
+                    
+                    if feature["type"] == "polyline" {
+                        polylineSelectDelegate?.mapView(self, didSelectPolyline: annotation.value as! MFTPolyline, atScreenPosition: position)
+                    }
+                }
+            }
+        }
+        
+        //Handle Building Extruding
+        if let extruder = buildingExtruder {
+            extruder.handleFeature(properties: feature)
+        }
+    
+    }
+    
+    
+    
+    /**
+     * Extrudes the building on given [LatLng]. To extrude, the buildings should be visible in the
+     * current map view. Else it will be ignored. Additionally, this call will force a scene update.
+     *
+     * @param latLng coordinates of the building
+     * @param buildingOptions applies all extruded buildings
+     */
+    public func extrudeBuildings(latLngs: [CLLocationCoordinate2D], buildingOptions: MFTBuildingOptions){
+        guard let extruder = buildingExtruder else { return }
+        DispatchQueue.main.async {
+            extruder.extrude(latlngs: latLngs, buildingOptions: buildingOptions)
+        }
+    }
+    
+    public func flattenBuilding(latLngs: [CLLocationCoordinate2D]){
+        guard let extruder = buildingExtruder else { return }
+        DispatchQueue.main.async {
+            extruder.flatten(latLngs: latLngs)
+        }
+    }
+  
+}
+
+
+
 
 
 
