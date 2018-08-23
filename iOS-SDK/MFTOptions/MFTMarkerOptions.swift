@@ -178,8 +178,6 @@ public class MFTMarkerOptions : NSObject{
      - parameter mapfitMarker: MFTMarker image for marker icon.
      */
     public func setIcon(_ mapfitMarker: MFTMarkerImage){
-        self.imageURL = nil
-        self.image = nil 
         self.mapfitMarker = mapfitMarker
     }
     
@@ -188,8 +186,6 @@ public class MFTMarkerOptions : NSObject{
      - parameter urlString: Url string for marker icon.
      */
     public func setIcon(_ urlString: String){
-        self.mapfitMarker = nil
-        self.image = nil
         self.imageURL = urlString
     }
     
@@ -198,8 +194,6 @@ public class MFTMarkerOptions : NSObject{
      - parameter image: image for marker icon.
      */
     public func setIcon(_ image: UIImage){
-        self.mapfitMarker = nil
-        self.imageURL = nil
         self.image = image
     }
     
@@ -224,8 +218,6 @@ public class MFTMarkerOptions : NSObject{
         building = false
         visible = true
         self.tag = nil
-        self.mapfitMarker = .defaultPin
-
         super.init()
     }
 }
