@@ -385,7 +385,7 @@ public class MFTMarker : NSObject, MFTAnnotation {
     }
     
     internal func setPositionWithEase(_ position: CLLocationCoordinate2D) {
-        tgMarker?.pointEased(TGGeoPointMake(position.longitude, position.latitude), seconds: 0.01, easeType: .cubic)
+        tgMarker?.pointEased(TGGeoPointMake(position.longitude, position.latitude), seconds: 0.01, easeType: .cubicIn)
         
     }
     

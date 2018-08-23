@@ -18,7 +18,6 @@
 		23C442E520932E99827480D4BFFD57B5 /* Pods-iOS-SDK-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-iOS-SDK-umbrella.h"; sourceTree = "<group>"; };
 		6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		7501D89B2F5E3397C4D204746DAA80D0 /* Pods-iOS-SDK-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-iOS-SDK-acknowledgements.markdown"; sourceTree = "<group>"; };
-		7A6E9D3F41472C1C9E7F77C3A981A6DA /* TangramMap.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TangramMap.framework; path = "tetragon-release-1.2/TangramMap.framework"; sourceTree = "<group>"; };
 		80030041F6BCD3FB0C03129C9CE6A55D /* Pods_iOS_SDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_iOS_SDK.framework; path = "Pods-iOS-SDK.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A08A5FA81C0DB81A727995CB526D4418 /* Pods-iOS-SDK.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-iOS-SDK.modulemap"; sourceTree = "<group>"; };
@@ -56,14 +55,6 @@
 			);
 			name = "Pods-iOS-SDK";
 			path = "Target Support Files/Pods-iOS-SDK";
-			sourceTree = "<group>";
-		};
-		159080604D8B47A3A4C65B1AFEC92547 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				7A6E9D3F41472C1C9E7F77C3A981A6DA /* TangramMap.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		28B9986EFB4D33C7A5FBC5C20D6744E8 /* Products */ = {
@@ -120,11 +111,7 @@
 		E394B056391C13717138EF682A550222 /* Tetragon-mobile */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
-				159080604D8B47A3A4C65B1AFEC92547 /* Frameworks */,
-=======
 				5BAC3C963AC687FB0FD6965477C02C60 /* Frameworks */,
->>>>>>> hotfix/tetragon1.3.1-build-issue
 			);
 			name = "Tetragon-mobile";
 			path = "Tetragon-mobile";

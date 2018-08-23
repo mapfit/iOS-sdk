@@ -8,64 +8,55 @@
 
 /* Begin PBXBuildFile section */
 		7BA011B502A814876D32ECF5 /* Pods_iOS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AFC15665857F92577016B8D /* Pods_iOS_SDK.framework */; };
+		BF048661212F291C0012C5E9 /* MFTMarkerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF17884212F27FE00C2671D /* MFTMarkerOptions.swift */; };
+		BF048662212F291C0012C5E9 /* MFTPolygonOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF17880212F27FE00C2671D /* MFTPolygonOptions.swift */; };
+		BF048663212F291C0012C5E9 /* MFTPolylineOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF17882212F27FE00C2671D /* MFTPolylineOptions.swift */; };
+		BF048664212F291C0012C5E9 /* MFTPolyPointOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF17883212F27FE00C2671D /* MFTPolyPointOptions.swift */; };
+		BF048666212F291C0012C5E9 /* MFTMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF1787A212F27EB00C2671D /* MFTMarker.swift */; };
+		BF048669212F291C0012C5E9 /* BuildingExtruder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD29919211B88090075B607 /* BuildingExtruder.swift */; };
+		BF04866A212F291C0012C5E9 /* MFTBuildingOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2991A211B88090075B607 /* MFTBuildingOptions.swift */; };
+		BF04866B212F291C0012C5E9 /* MFTAnnotations.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E72FF20F90ADF00DD683D /* MFTAnnotations.swift */; };
+		BF04866C212F291C0012C5E9 /* MFTEaseType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E72FB20F90ADF00DD683D /* MFTEaseType.swift */; };
+		BF04866D212F291C0012C5E9 /* MFTMapOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E72F920F90ADF00DD683D /* MFTMapOptions.swift */; };
+		BF048670212F291C0012C5E9 /* MFTPolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E72FE20F90ADF00DD683D /* MFTPolygon.swift */; };
+		BF048672212F291C0012C5E9 /* MFTPolyline.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E72F820F90ADF00DD683D /* MFTPolyline.swift */; };
+		BF048675212F291C0012C5E9 /* CameraProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E72F220F9073600DD683D /* CameraProtocols.swift */; };
+		BF048676212F291C0012C5E9 /* Cinematography.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E72EF20F9073600DD683D /* Cinematography.swift */; };
+		BF048677212F291C0012C5E9 /* MFTCameraOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E72F120F9073600DD683D /* MFTCameraOptions.swift */; };
+		BF048678212F291C0012C5E9 /* OrbitAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E72F020F9073600DD683D /* OrbitAnimation.swift */; };
+		BF048679212F291C0012C5E9 /* OrbitTrajectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E72EE20F9073600DD683D /* OrbitTrajectory.swift */; };
+		BF04867A212F291C0012C5E9 /* MFTSceneUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF36DD2220E6927D0071550B /* MFTSceneUpdate.swift */; };
+		BF04867B212F291C0012C5E9 /* MFTManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C7E2034AF5B001EE738 /* MFTManager.swift */; };
+		BF04867C212F291C0012C5E9 /* MFTThemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C7D2034AF5B001EE738 /* MFTThemes.swift */; };
+		BF04867D212F291C0012C5E9 /* MFTMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C812034AFFF001EE738 /* MFTMapView.swift */; };
+		BF04867E212F291C0012C5E9 /* MFTZoomButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C822034AFFF001EE738 /* MFTZoomButtonView.swift */; };
+		BF04867F212F291C0012C5E9 /* APPLFrameworkExtentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C6B2034AF13001EE738 /* APPLFrameworkExtentions.swift */; };
+		BF048680212F291C0012C5E9 /* BundleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C6D2034AF13001EE738 /* BundleExtension.swift */; };
+		BF048681212F291C0012C5E9 /* DictionaryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C6C2034AF13001EE738 /* DictionaryExtensions.swift */; };
+		BF048682212F291C0012C5E9 /* StyleGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C6F2034AF13001EE738 /* StyleGuide.swift */; };
+		BF048683212F291C0012C5E9 /* TangramExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C6E2034AF13001EE738 /* TangramExtensions.swift */; };
+		BF048684212F291C0012C5E9 /* UIKitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C702034AF13001EE738 /* UIKitExtensions.swift */; };
+		BF048685212F291C0012C5E9 /* MFTAPIObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C652034AF06001EE738 /* MFTAPIObjects.swift */; };
+		BF048686212F291C0012C5E9 /* MFTDirections.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C672034AF06001EE738 /* MFTDirections.swift */; };
+		BF048687212F291C0012C5E9 /* MFTGeocoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C662034AF06001EE738 /* MFTGeocoder.swift */; };
+		BF048688212F291C0012C5E9 /* DecodeFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC5B5522044AFBE00696417 /* DecodeFunctions.swift */; };
+		BF048689212F291C0012C5E9 /* MFTDirectionsOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C4F2034AEE2001EE738 /* MFTDirectionsOptions.swift */; };
+		BF04868A212F291C0012C5E9 /* MFTLatLngBounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C552034AEE2001EE738 /* MFTLatLngBounds.swift */; };
+		BF04868B212F291C0012C5E9 /* MFTLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C4E2034AEE1001EE738 /* MFTLayer.swift */; };
+		BF04868C212F291C0012C5E9 /* MFTMapViewGestrues.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C522034AEE2001EE738 /* MFTMapViewGestrues.swift */; };
+		BF04868D212F291C0012C5E9 /* MFTLocationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4BA7A320616B68001F2FE3 /* MFTLocationProvider.swift */; };
+		BF04868E212F291C0012C5E9 /* MFTPlaceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C542034AEE2001EE738 /* MFTPlaceInfo.swift */; };
+		BF04868F212F291C0012C5E9 /* MFTPlaceInfoAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C562034AEE2001EE738 /* MFTPlaceInfoAdapter.swift */; };
+		BF048690212F291C0012C5E9 /* MFTPlaceInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C4C2034AEE1001EE738 /* MFTPlaceInfoView.swift */; };
+		BF048691212F291C0012C5E9 /* LocationCorrectionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4BA79F20616845001F2FE3 /* LocationCorrectionEngine.swift */; };
+		BF048692212F291C0012C5E9 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4BA7A120616B45001F2FE3 /* Utilities.swift */; };
+		BF048693212F291C0012C5E9 /* iOS_SDK.h in Sources */ = {isa = PBXBuildFile; fileRef = BF121B692034A56A00B55A75 /* iOS_SDK.h */; };
+		BF048694212F291C0012C5E9 /* houseStyles.bundle in Sources */ = {isa = PBXBuildFile; fileRef = BF462C0F2034ABEE001EE738 /* houseStyles.bundle */; };
+		BF048695212F291C0012C5E9 /* mapfit.bundle in Sources */ = {isa = PBXBuildFile; fileRef = BF462C0D2034ABEE001EE738 /* mapfit.bundle */; };
+		BF048696212F291C0012C5E9 /* Info.plist in Sources */ = {isa = PBXBuildFile; fileRef = BF121B6A2034A56A00B55A75 /* Info.plist */; };
 		BF121B6B2034A56A00B55A75 /* iOS_SDK.h in Headers */ = {isa = PBXBuildFile; fileRef = BF121B692034A56A00B55A75 /* iOS_SDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BF2E72F320F9073600DD683D /* OrbitTrajectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E72EE20F9073600DD683D /* OrbitTrajectory.swift */; };
-		BF2E72F420F9073600DD683D /* Cinematography.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E72EF20F9073600DD683D /* Cinematography.swift */; };
-		BF2E72F520F9073600DD683D /* OrbitAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E72F020F9073600DD683D /* OrbitAnimation.swift */; };
-		BF2E72F620F9073600DD683D /* MFTCameraOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E72F120F9073600DD683D /* MFTCameraOptions.swift */; };
-		BF2E72F720F9073600DD683D /* CameraProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E72F220F9073600DD683D /* CameraProtocols.swift */; };
-		BF2E730220F90AE000DD683D /* MFTPolyline.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E72F820F90ADF00DD683D /* MFTPolyline.swift */; };
-		BF2E730320F90AE000DD683D /* MFTMapOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E72F920F90ADF00DD683D /* MFTMapOptions.swift */; };
-		BF2E730420F90AE000DD683D /* MFTPolyPointOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E72FA20F90ADF00DD683D /* MFTPolyPointOptions.swift */; };
-		BF2E730520F90AE000DD683D /* MFTEaseType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E72FB20F90ADF00DD683D /* MFTEaseType.swift */; };
-		BF2E730620F90AE000DD683D /* MFTPolylineOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E72FC20F90ADF00DD683D /* MFTPolylineOptions.swift */; };
-		BF2E730720F90AE000DD683D /* MFTPolygonOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E72FD20F90ADF00DD683D /* MFTPolygonOptions.swift */; };
-		BF2E730820F90AE000DD683D /* MFTPolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E72FE20F90ADF00DD683D /* MFTPolygon.swift */; };
-		BF2E730920F90AE000DD683D /* MFTAnnotations.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E72FF20F90ADF00DD683D /* MFTAnnotations.swift */; };
-		BF2E730A20F90AE000DD683D /* MFTMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E730020F90ADF00DD683D /* MFTMarker.swift */; };
-		BF2E730B20F90AE000DD683D /* MFTMarkerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E730120F90AE000DD683D /* MFTMarkerOptions.swift */; };
-		BF36DD2320E6927D0071550B /* MFTSceneUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF36DD2220E6927D0071550B /* MFTSceneUpdate.swift */; };
 		BF462C142034ABEE001EE738 /* mapfit.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BF462C0D2034ABEE001EE738 /* mapfit.bundle */; };
 		BF462C162034ABEE001EE738 /* houseStyles.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BF462C0F2034ABEE001EE738 /* houseStyles.bundle */; };
-		BF462C5A2034AEE2001EE738 /* MFTPlaceInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C4C2034AEE1001EE738 /* MFTPlaceInfoView.swift */; };
-		BF462C5C2034AEE2001EE738 /* MFTLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C4E2034AEE1001EE738 /* MFTLayer.swift */; };
-		BF462C5D2034AEE2001EE738 /* MFTDirectionsOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C4F2034AEE2001EE738 /* MFTDirectionsOptions.swift */; };
-		BF462C602034AEE2001EE738 /* MFTMapViewGestrues.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C522034AEE2001EE738 /* MFTMapViewGestrues.swift */; };
-		BF462C622034AEE2001EE738 /* MFTPlaceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C542034AEE2001EE738 /* MFTPlaceInfo.swift */; };
-		BF462C632034AEE2001EE738 /* MFTLatLngBounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C552034AEE2001EE738 /* MFTLatLngBounds.swift */; };
-		BF462C642034AEE2001EE738 /* MFTPlaceInfoAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C562034AEE2001EE738 /* MFTPlaceInfoAdapter.swift */; };
-		BF462C682034AF06001EE738 /* MFTAPIObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C652034AF06001EE738 /* MFTAPIObjects.swift */; };
-		BF462C692034AF06001EE738 /* MFTGeocoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C662034AF06001EE738 /* MFTGeocoder.swift */; };
-		BF462C6A2034AF06001EE738 /* MFTDirections.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C672034AF06001EE738 /* MFTDirections.swift */; };
-		BF462C712034AF13001EE738 /* APPLFrameworkExtentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C6B2034AF13001EE738 /* APPLFrameworkExtentions.swift */; };
-		BF462C722034AF13001EE738 /* DictionaryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C6C2034AF13001EE738 /* DictionaryExtensions.swift */; };
-		BF462C732034AF13001EE738 /* BundleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C6D2034AF13001EE738 /* BundleExtension.swift */; };
-		BF462C742034AF13001EE738 /* TangramExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C6E2034AF13001EE738 /* TangramExtensions.swift */; };
-		BF462C752034AF13001EE738 /* StyleGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C6F2034AF13001EE738 /* StyleGuide.swift */; };
-		BF462C762034AF13001EE738 /* UIKitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C702034AF13001EE738 /* UIKitExtensions.swift */; };
-		BF462C7F2034AF5B001EE738 /* MFTThemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C7D2034AF5B001EE738 /* MFTThemes.swift */; };
-		BF462C802034AF5B001EE738 /* MFTManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C7E2034AF5B001EE738 /* MFTManager.swift */; };
-		BF462C832034AFFF001EE738 /* MFTMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C812034AFFF001EE738 /* MFTMapView.swift */; };
-		BF462C842034AFFF001EE738 /* MFTZoomButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF462C822034AFFF001EE738 /* MFTZoomButtonView.swift */; };
-		BF4BA7A020616845001F2FE3 /* LocationCorrectionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4BA79F20616845001F2FE3 /* LocationCorrectionEngine.swift */; };
-		BF4BA7A220616B45001F2FE3 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4BA7A120616B45001F2FE3 /* Utilities.swift */; };
-		BF4BA7A420616B69001F2FE3 /* MFTLocationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4BA7A320616B68001F2FE3 /* MFTLocationProvider.swift */; };
-<<<<<<< HEAD
-		BFBE573F20D18ECF00C537EA /* MFTMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBE573E20D18ECE00C537EA /* MFTMarker.swift */; };
-		BFBE574320D18EE600C537EA /* MFTAnnotations.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBE574020D18EE600C537EA /* MFTAnnotations.swift */; };
-		BFBE574420D18EE600C537EA /* MFTPolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBE574120D18EE600C537EA /* MFTPolygon.swift */; };
-		BFBE574520D18EE600C537EA /* MFTPolyline.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBE574220D18EE600C537EA /* MFTPolyline.swift */; };
-		BFBE574720D18EF800C537EA /* MFTSceneUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBE574620D18EF800C537EA /* MFTSceneUpdate.swift */; };
-		BFBE574D20D18F2A00C537EA /* MFTMarkerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBE574820D18F2A00C537EA /* MFTMarkerOptions.swift */; };
-		BFBE574E20D18F2A00C537EA /* MFTMapOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBE574920D18F2A00C537EA /* MFTMapOptions.swift */; };
-		BFBE574F20D18F2A00C537EA /* MFTPolyPointOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBE574A20D18F2A00C537EA /* MFTPolyPointOptions.swift */; };
-		BFBE575020D18F2A00C537EA /* MFTPolylineOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBE574B20D18F2A00C537EA /* MFTPolylineOptions.swift */; };
-		BFBE575120D18F2A00C537EA /* MFTPolygonOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBE574C20D18F2A00C537EA /* MFTPolygonOptions.swift */; };
-=======
->>>>>>> hotfix/tetragon1.3.1-build-issue
-		BFC5B5532044AFBE00696417 /* DecodeFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC5B5522044AFBE00696417 /* DecodeFunctions.swift */; };
-		BFD2991B211B88090075B607 /* BuildingExtruder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD29919211B88090075B607 /* BuildingExtruder.swift */; };
-		BFD2991C211B88090075B607 /* MFTBuildingOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2991A211B88090075B607 /* MFTBuildingOptions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -81,14 +72,9 @@
 		BF2E72F220F9073600DD683D /* CameraProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraProtocols.swift; path = Camera/CameraProtocols.swift; sourceTree = SOURCE_ROOT; };
 		BF2E72F820F90ADF00DD683D /* MFTPolyline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTPolyline.swift; path = MFTClasses/MFTPolyline.swift; sourceTree = "<group>"; };
 		BF2E72F920F90ADF00DD683D /* MFTMapOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTMapOptions.swift; path = MFTClasses/MFTMapOptions.swift; sourceTree = "<group>"; };
-		BF2E72FA20F90ADF00DD683D /* MFTPolyPointOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTPolyPointOptions.swift; path = MFTClasses/MFTPolyPointOptions.swift; sourceTree = "<group>"; };
 		BF2E72FB20F90ADF00DD683D /* MFTEaseType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTEaseType.swift; path = MFTClasses/MFTEaseType.swift; sourceTree = "<group>"; };
-		BF2E72FC20F90ADF00DD683D /* MFTPolylineOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTPolylineOptions.swift; path = MFTClasses/MFTPolylineOptions.swift; sourceTree = "<group>"; };
-		BF2E72FD20F90ADF00DD683D /* MFTPolygonOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTPolygonOptions.swift; path = MFTClasses/MFTPolygonOptions.swift; sourceTree = "<group>"; };
 		BF2E72FE20F90ADF00DD683D /* MFTPolygon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTPolygon.swift; path = MFTClasses/MFTPolygon.swift; sourceTree = "<group>"; };
 		BF2E72FF20F90ADF00DD683D /* MFTAnnotations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTAnnotations.swift; path = MFTClasses/MFTAnnotations.swift; sourceTree = "<group>"; };
-		BF2E730020F90ADF00DD683D /* MFTMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTMarker.swift; path = MFTClasses/MFTMarker.swift; sourceTree = "<group>"; };
-		BF2E730120F90AE000DD683D /* MFTMarkerOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTMarkerOptions.swift; path = MFTClasses/MFTMarkerOptions.swift; sourceTree = "<group>"; };
 		BF36DD2220E6927D0071550B /* MFTSceneUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTSceneUpdate.swift; path = MFTClasses/MFTSceneUpdate.swift; sourceTree = "<group>"; };
 		BF462C0D2034ABEE001EE738 /* mapfit.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = mapfit.bundle; sourceTree = "<group>"; };
 		BF462C0F2034ABEE001EE738 /* houseStyles.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = houseStyles.bundle; sourceTree = "<group>"; };
@@ -115,7 +101,6 @@
 		BF4BA79F20616845001F2FE3 /* LocationCorrectionEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationCorrectionEngine.swift; path = MFTClasses/LocationCorrectionEngine.swift; sourceTree = "<group>"; };
 		BF4BA7A120616B45001F2FE3 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utilities.swift; path = MFTClasses/Utilities.swift; sourceTree = "<group>"; };
 		BF4BA7A320616B68001F2FE3 /* MFTLocationProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTLocationProvider.swift; path = MFTClasses/MFTLocationProvider.swift; sourceTree = "<group>"; };
-<<<<<<< HEAD
 		BFBE573E20D18ECE00C537EA /* MFTMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTMarker.swift; path = MFTAnnotations/MFTMarker.swift; sourceTree = "<group>"; };
 		BFBE574020D18EE600C537EA /* MFTAnnotations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTAnnotations.swift; path = MFTAnnotations/MFTAnnotations.swift; sourceTree = "<group>"; };
 		BFBE574120D18EE600C537EA /* MFTPolygon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTPolygon.swift; path = MFTAnnotations/MFTPolygon.swift; sourceTree = "<group>"; };
@@ -126,11 +111,14 @@
 		BFBE574A20D18F2A00C537EA /* MFTPolyPointOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTPolyPointOptions.swift; path = MFTOptions/MFTPolyPointOptions.swift; sourceTree = "<group>"; };
 		BFBE574B20D18F2A00C537EA /* MFTPolylineOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTPolylineOptions.swift; path = MFTOptions/MFTPolylineOptions.swift; sourceTree = "<group>"; };
 		BFBE574C20D18F2A00C537EA /* MFTPolygonOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTPolygonOptions.swift; path = MFTOptions/MFTPolygonOptions.swift; sourceTree = "<group>"; };
-=======
->>>>>>> hotfix/tetragon1.3.1-build-issue
 		BFC5B5522044AFBE00696417 /* DecodeFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DecodeFunctions.swift; path = Extensions/DecodeFunctions.swift; sourceTree = "<group>"; };
 		BFD29919211B88090075B607 /* BuildingExtruder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingExtruder.swift; path = MFTClasses/BuildingExtruder.swift; sourceTree = "<group>"; };
 		BFD2991A211B88090075B607 /* MFTBuildingOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTBuildingOptions.swift; path = MFTClasses/MFTBuildingOptions.swift; sourceTree = "<group>"; };
+		BFF1787A212F27EB00C2671D /* MFTMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MFTMarker.swift; sourceTree = "<group>"; };
+		BFF17880212F27FE00C2671D /* MFTPolygonOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTPolygonOptions.swift; path = MFTOptions/MFTPolygonOptions.swift; sourceTree = "<group>"; };
+		BFF17882212F27FE00C2671D /* MFTPolylineOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTPolylineOptions.swift; path = MFTOptions/MFTPolylineOptions.swift; sourceTree = "<group>"; };
+		BFF17883212F27FE00C2671D /* MFTPolyPointOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTPolyPointOptions.swift; path = MFTOptions/MFTPolyPointOptions.swift; sourceTree = "<group>"; };
+		BFF17884212F27FE00C2671D /* MFTMarkerOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MFTMarkerOptions.swift; path = MFTOptions/MFTMarkerOptions.swift; sourceTree = "<group>"; };
 		E47C08BF50D46AC96C60A204 /* Pods-iOS-SDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-SDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iOS-SDK/Pods-iOS-SDK.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -162,6 +150,7 @@
 				BF121B672034A56A00B55A75 /* Products */,
 				20F0C65A876E81CB581AA7C9 /* Pods */,
 				CBC4FE5371613C802482ED8E /* Frameworks */,
+				BFF17877212F27A100C2671D /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -176,37 +165,24 @@
 		BF121B682034A56A00B55A75 /* iOS-SDK */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
-				BFBE574920D18F2A00C537EA /* MFTMapOptions.swift */,
-				BFBE574820D18F2A00C537EA /* MFTMarkerOptions.swift */,
-				BFBE574C20D18F2A00C537EA /* MFTPolygonOptions.swift */,
-				BFBE574B20D18F2A00C537EA /* MFTPolylineOptions.swift */,
-				BFBE574A20D18F2A00C537EA /* MFTPolyPointOptions.swift */,
-				BFBE574620D18EF800C537EA /* MFTSceneUpdate.swift */,
-				BFBE574020D18EE600C537EA /* MFTAnnotations.swift */,
-				BFBE574120D18EE600C537EA /* MFTPolygon.swift */,
-				BFBE574220D18EE600C537EA /* MFTPolyline.swift */,
-				BFBE573E20D18ECE00C537EA /* MFTMarker.swift */,
-=======
+				BFF17884212F27FE00C2671D /* MFTMarkerOptions.swift */,
+				BFF17880212F27FE00C2671D /* MFTPolygonOptions.swift */,
+				BFF17882212F27FE00C2671D /* MFTPolylineOptions.swift */,
+				BFF17883212F27FE00C2671D /* MFTPolyPointOptions.swift */,
+				BF2E72FE20F90ADF00DD683D /* MFTPolygon.swift */,
+				BF2E72F820F90ADF00DD683D /* MFTPolyline.swift */,
+				BFF1787A212F27EB00C2671D /* MFTMarker.swift */,
 				BFD29919211B88090075B607 /* BuildingExtruder.swift */,
 				BFD2991A211B88090075B607 /* MFTBuildingOptions.swift */,
 				BF2E72FF20F90ADF00DD683D /* MFTAnnotations.swift */,
 				BF2E72FB20F90ADF00DD683D /* MFTEaseType.swift */,
 				BF2E72F920F90ADF00DD683D /* MFTMapOptions.swift */,
-				BF2E730020F90ADF00DD683D /* MFTMarker.swift */,
-				BF2E730120F90AE000DD683D /* MFTMarkerOptions.swift */,
-				BF2E72FE20F90ADF00DD683D /* MFTPolygon.swift */,
-				BF2E72FD20F90ADF00DD683D /* MFTPolygonOptions.swift */,
-				BF2E72F820F90ADF00DD683D /* MFTPolyline.swift */,
-				BF2E72FC20F90ADF00DD683D /* MFTPolylineOptions.swift */,
-				BF2E72FA20F90ADF00DD683D /* MFTPolyPointOptions.swift */,
 				BF2E72F220F9073600DD683D /* CameraProtocols.swift */,
 				BF2E72EF20F9073600DD683D /* Cinematography.swift */,
 				BF2E72F120F9073600DD683D /* MFTCameraOptions.swift */,
 				BF2E72F020F9073600DD683D /* OrbitAnimation.swift */,
 				BF2E72EE20F9073600DD683D /* OrbitTrajectory.swift */,
 				BF36DD2220E6927D0071550B /* MFTSceneUpdate.swift */,
->>>>>>> hotfix/tetragon1.3.1-build-issue
 				BF462C7E2034AF5B001EE738 /* MFTManager.swift */,
 				BF462C7D2034AF5B001EE738 /* MFTThemes.swift */,
 				BF462C812034AFFF001EE738 /* MFTMapView.swift */,
@@ -237,6 +213,23 @@
 				BF121B6A2034A56A00B55A75 /* Info.plist */,
 			);
 			path = "iOS-SDK";
+			sourceTree = "<group>";
+		};
+		BFF17877212F27A100C2671D /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				BFBE574B20D18F2A00C537EA /* MFTPolylineOptions.swift */,
+				BFBE574020D18EE600C537EA /* MFTAnnotations.swift */,
+				BFBE574820D18F2A00C537EA /* MFTMarkerOptions.swift */,
+				BFBE573E20D18ECE00C537EA /* MFTMarker.swift */,
+				BFBE574620D18EF800C537EA /* MFTSceneUpdate.swift */,
+				BFBE574A20D18F2A00C537EA /* MFTPolyPointOptions.swift */,
+				BFBE574220D18EE600C537EA /* MFTPolyline.swift */,
+				BFBE574C20D18F2A00C537EA /* MFTPolygonOptions.swift */,
+				BFBE574920D18F2A00C537EA /* MFTMapOptions.swift */,
+				BFBE574120D18EE600C537EA /* MFTPolygon.swift */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		CBC4FE5371613C802482ED8E /* Frameworks */ = {
@@ -366,70 +359,52 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF462C712034AF13001EE738 /* APPLFrameworkExtentions.swift in Sources */,
-				BF2E730720F90AE000DD683D /* MFTPolygonOptions.swift in Sources */,
-				BF2E72F620F9073600DD683D /* MFTCameraOptions.swift in Sources */,
-				BF462C5A2034AEE2001EE738 /* MFTPlaceInfoView.swift in Sources */,
-				BF4BA7A220616B45001F2FE3 /* Utilities.swift in Sources */,
-				BFBE575020D18F2A00C537EA /* MFTPolylineOptions.swift in Sources */,
-				BF462C622034AEE2001EE738 /* MFTPlaceInfo.swift in Sources */,
-				BF2E730A20F90AE000DD683D /* MFTMarker.swift in Sources */,
-				BF4BA7A020616845001F2FE3 /* LocationCorrectionEngine.swift in Sources */,
-				BF462C7F2034AF5B001EE738 /* MFTThemes.swift in Sources */,
-				BF462C752034AF13001EE738 /* StyleGuide.swift in Sources */,
-				BF2E730620F90AE000DD683D /* MFTPolylineOptions.swift in Sources */,
-				BF2E72F720F9073600DD683D /* CameraProtocols.swift in Sources */,
-				BF462C742034AF13001EE738 /* TangramExtensions.swift in Sources */,
-				BF4BA7A420616B69001F2FE3 /* MFTLocationProvider.swift in Sources */,
-				BF462C832034AFFF001EE738 /* MFTMapView.swift in Sources */,
-				BFBE574320D18EE600C537EA /* MFTAnnotations.swift in Sources */,
-				BFC5B5532044AFBE00696417 /* DecodeFunctions.swift in Sources */,
-				BFBE574D20D18F2A00C537EA /* MFTMarkerOptions.swift in Sources */,
-				BF462C642034AEE2001EE738 /* MFTPlaceInfoAdapter.swift in Sources */,
-				BF2E730220F90AE000DD683D /* MFTPolyline.swift in Sources */,
-				BF462C762034AF13001EE738 /* UIKitExtensions.swift in Sources */,
-				BFBE573F20D18ECF00C537EA /* MFTMarker.swift in Sources */,
-				BF462C692034AF06001EE738 /* MFTGeocoder.swift in Sources */,
-				BF462C722034AF13001EE738 /* DictionaryExtensions.swift in Sources */,
-<<<<<<< HEAD
-=======
-				BF2E72F420F9073600DD683D /* Cinematography.swift in Sources */,
-				BF2E730B20F90AE000DD683D /* MFTMarkerOptions.swift in Sources */,
->>>>>>> hotfix/tetragon1.3.1-build-issue
-				BF462C5D2034AEE2001EE738 /* MFTDirectionsOptions.swift in Sources */,
-				BF36DD2320E6927D0071550B /* MFTSceneUpdate.swift in Sources */,
-				BF462C6A2034AF06001EE738 /* MFTDirections.swift in Sources */,
-<<<<<<< HEAD
-				BFBE574720D18EF800C537EA /* MFTSceneUpdate.swift in Sources */,
-				BFBE574F20D18F2A00C537EA /* MFTPolyPointOptions.swift in Sources */,
-				BF462C602034AEE2001EE738 /* MFTMapViewGestrues.swift in Sources */,
-				BFBE574520D18EE600C537EA /* MFTPolyline.swift in Sources */,
-				BFBE575120D18F2A00C537EA /* MFTPolygonOptions.swift in Sources */,
-				BF462C842034AFFF001EE738 /* MFTZoomButtonView.swift in Sources */,
-				BF462C802034AF5B001EE738 /* MFTManager.swift in Sources */,
-				BFBE574E20D18F2A00C537EA /* MFTMapOptions.swift in Sources */,
-				BFBE574420D18EE600C537EA /* MFTPolygon.swift in Sources */,
-=======
-				BF2E72F520F9073600DD683D /* OrbitAnimation.swift in Sources */,
-				BF462C602034AEE2001EE738 /* MFTMapViewGestrues.swift in Sources */,
-				BF2E72F320F9073600DD683D /* OrbitTrajectory.swift in Sources */,
-				BF462C842034AFFF001EE738 /* MFTZoomButtonView.swift in Sources */,
-				BF462C802034AF5B001EE738 /* MFTManager.swift in Sources */,
-				BF2E730520F90AE000DD683D /* MFTEaseType.swift in Sources */,
-				BFD2991B211B88090075B607 /* BuildingExtruder.swift in Sources */,
->>>>>>> hotfix/tetragon1.3.1-build-issue
-				BF462C732034AF13001EE738 /* BundleExtension.swift in Sources */,
-				BFD2991C211B88090075B607 /* MFTBuildingOptions.swift in Sources */,
-				BF462C632034AEE2001EE738 /* MFTLatLngBounds.swift in Sources */,
-<<<<<<< HEAD
-=======
-				BF2E730920F90AE000DD683D /* MFTAnnotations.swift in Sources */,
->>>>>>> hotfix/tetragon1.3.1-build-issue
-				BF462C682034AF06001EE738 /* MFTAPIObjects.swift in Sources */,
-				BF2E730420F90AE000DD683D /* MFTPolyPointOptions.swift in Sources */,
-				BF2E730820F90AE000DD683D /* MFTPolygon.swift in Sources */,
-				BF462C5C2034AEE2001EE738 /* MFTLayer.swift in Sources */,
-				BF2E730320F90AE000DD683D /* MFTMapOptions.swift in Sources */,
+				BF048661212F291C0012C5E9 /* MFTMarkerOptions.swift in Sources */,
+				BF048662212F291C0012C5E9 /* MFTPolygonOptions.swift in Sources */,
+				BF048663212F291C0012C5E9 /* MFTPolylineOptions.swift in Sources */,
+				BF048664212F291C0012C5E9 /* MFTPolyPointOptions.swift in Sources */,
+				BF048666212F291C0012C5E9 /* MFTMarker.swift in Sources */,
+				BF048669212F291C0012C5E9 /* BuildingExtruder.swift in Sources */,
+				BF04866A212F291C0012C5E9 /* MFTBuildingOptions.swift in Sources */,
+				BF04866B212F291C0012C5E9 /* MFTAnnotations.swift in Sources */,
+				BF04866C212F291C0012C5E9 /* MFTEaseType.swift in Sources */,
+				BF04866D212F291C0012C5E9 /* MFTMapOptions.swift in Sources */,
+				BF048670212F291C0012C5E9 /* MFTPolygon.swift in Sources */,
+				BF048672212F291C0012C5E9 /* MFTPolyline.swift in Sources */,
+				BF048675212F291C0012C5E9 /* CameraProtocols.swift in Sources */,
+				BF048676212F291C0012C5E9 /* Cinematography.swift in Sources */,
+				BF048677212F291C0012C5E9 /* MFTCameraOptions.swift in Sources */,
+				BF048678212F291C0012C5E9 /* OrbitAnimation.swift in Sources */,
+				BF048679212F291C0012C5E9 /* OrbitTrajectory.swift in Sources */,
+				BF04867A212F291C0012C5E9 /* MFTSceneUpdate.swift in Sources */,
+				BF04867B212F291C0012C5E9 /* MFTManager.swift in Sources */,
+				BF04867C212F291C0012C5E9 /* MFTThemes.swift in Sources */,
+				BF04867D212F291C0012C5E9 /* MFTMapView.swift in Sources */,
+				BF04867E212F291C0012C5E9 /* MFTZoomButtonView.swift in Sources */,
+				BF04867F212F291C0012C5E9 /* APPLFrameworkExtentions.swift in Sources */,
+				BF048680212F291C0012C5E9 /* BundleExtension.swift in Sources */,
+				BF048681212F291C0012C5E9 /* DictionaryExtensions.swift in Sources */,
+				BF048682212F291C0012C5E9 /* StyleGuide.swift in Sources */,
+				BF048683212F291C0012C5E9 /* TangramExtensions.swift in Sources */,
+				BF048684212F291C0012C5E9 /* UIKitExtensions.swift in Sources */,
+				BF048685212F291C0012C5E9 /* MFTAPIObjects.swift in Sources */,
+				BF048686212F291C0012C5E9 /* MFTDirections.swift in Sources */,
+				BF048687212F291C0012C5E9 /* MFTGeocoder.swift in Sources */,
+				BF048688212F291C0012C5E9 /* DecodeFunctions.swift in Sources */,
+				BF048689212F291C0012C5E9 /* MFTDirectionsOptions.swift in Sources */,
+				BF04868A212F291C0012C5E9 /* MFTLatLngBounds.swift in Sources */,
+				BF04868B212F291C0012C5E9 /* MFTLayer.swift in Sources */,
+				BF04868C212F291C0012C5E9 /* MFTMapViewGestrues.swift in Sources */,
+				BF04868D212F291C0012C5E9 /* MFTLocationProvider.swift in Sources */,
+				BF04868E212F291C0012C5E9 /* MFTPlaceInfo.swift in Sources */,
+				BF04868F212F291C0012C5E9 /* MFTPlaceInfoAdapter.swift in Sources */,
+				BF048690212F291C0012C5E9 /* MFTPlaceInfoView.swift in Sources */,
+				BF048691212F291C0012C5E9 /* LocationCorrectionEngine.swift in Sources */,
+				BF048692212F291C0012C5E9 /* Utilities.swift in Sources */,
+				BF048693212F291C0012C5E9 /* iOS_SDK.h in Sources */,
+				BF048694212F291C0012C5E9 /* houseStyles.bundle in Sources */,
+				BF048695212F291C0012C5E9 /* mapfit.bundle in Sources */,
+				BF048696212F291C0012C5E9 /* Info.plist in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
